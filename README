@@ -1,0 +1,33 @@
+
+Port Center
+
+The port center (pc) is an OS directory that contains a few Bash Scripts and Make Files, which can help one install open source developer tools on a Mac; formerly OS X, now macOS. Some open source packages, required to build, test, and use GNU GCC are listed below in some detail.
+
+The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on OS X Yosemite (10.10). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type:
+
+~/pc/port --help
+
+Installation Script
+
+To install a package, one has to run the "port" command to create an archive that will be processed by the system installer. This "port" command cannot uninstall packages and shouldn't be on the path.
+The installation process is logically divided in three phases. At first, one can run the command "./port details <package>" to examine in advance the installation details of a package, without download it; this command will print the relevant url's, configuration options, and installation paths for that package.
+
+After, one can archive a package with a single command or on a step-by-step basis. Specifically, one can download, extract, patch, configure, make, place, pack, and archive a package. These steps are also options of the port command. Running the "port" command with the option "place" will install files to a temporary directory located at "/tmp/<package>.dst"; this is the destination root in Apple's parlance that will be packed and archived.
+
+Finally, one can invoke the system installer to process the archive; possibly, by double clicking it. If you build and install a package on the same machine you can simply run: "./port install <package>". 
+
+DOWNLOAD & SETUP
+
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-05-21.tar.xz), the following four commands will setup the port center:
+
+install -d ~/pc 
+cd ~/pc 
+tar xf ~/Downloads/pc-rules-2017-05-21.tar.xz 
+ln -sf rules/port port
+
+*SHA1 d1d1842b3f2fc3df636928280ca717a274715c74 
+
+To see ie the build instructions for gcc-4.8, type:
+
+./port details gcc48
+
