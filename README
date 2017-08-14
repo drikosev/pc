@@ -16,6 +16,8 @@ After, one can archive a package with a single command or on a step-by-step basi
 
 Finally, one can invoke the system installer to process the archive; possibly, by double clicking it. If you build and install a package on the same machine you can simply run: "./port install <package>". 
 
+The file pc2gfortran.spec provides instructions to help you transfer the Fortran patches to a Source RPM for a Linux installation.
+
 DOWNLOAD & SETUP
 
 Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-05-21.tar.xz), the following four commands will setup the port center:
@@ -30,4 +32,3 @@ ln -sf rules/port port
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc48
-
