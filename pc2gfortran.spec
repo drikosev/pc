@@ -23,9 +23,9 @@ Many bugs are solved but there are case where a bug solved by a patch (ie 52832)
 reappears after some other patches have been applied. In most cases this doesn't
 happen however.
 
-The program "slop.f90" below (in Appendix D) exchibits a bug in gfortran-4.8.5 on
+The program "slop.f90" below (in Appendix D) exhibits a bug in gfortran-4.8.5 on
 RHEL 7.3, which doesn't appear in gfortran-4.8.5 built by the "pc" in a mac. This
-was the reason I started this document but unfortunatelly the problem isn't solved
+was the reason I started this document but unfortunately the problem isn't solved
 in Linux.
 
 
@@ -76,7 +76,7 @@ At the end of this document there is also an appendix with some test failures.
 Instructions (step-by-step)
 ---------------------------
 
-a) Install any official recommended updates and the Source RPM of gcc-4.8.5
+1) Install any official recommended updates and the Source RPM of gcc-4.8.5
 
 If you don't have subscribed to the sources chanel, type first:
 sudo  subscription-manager repos --enable=rhel-7-server-source-rpms
@@ -88,15 +88,15 @@ In my system the installed compiler has the same version with the compiler I'll 
 $ gcc --version
 gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16)
 
-b) Once the "pc" tarball has been extracted to $HOME/pc, run all the commands of Appendix A
+2) Once the "pc" tarball has been extracted to $HOME/pc, run all the commands of Appendix A
 
-c) Add all Patch Declarations of Appendix B below to the gcc.spec after the line:
+3) Add all Patch Declarations of Appendix B below to the gcc.spec after the line:
 Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
 
-d) Add all Patch Commands of Appendix C below to the gcc.spec after the line:
+4) Add all Patch Commands of Appendix C below to the gcc.spec after the line:
 %patch1200 -p0 -b .cloog-ppc64le-config~ 
 
-e) Run the following commands to build the "gcc-4.8.5-16.el7.src.rpm"
+5) Run the following commands to build the "gcc-4.8.5-16.el7.src.rpm"
   $ cd ~/rpmbuild
   $ export RPM_BUILD_NCPUS=4
   $ rpmbuild -ba SPECS/gcc.spec --target x86_64  
@@ -115,9 +115,9 @@ activated a subscription to it, type:
  $ sudo yum install glibc-devel.i686
 
 (try: sudo yum whatprovides /usr/lib/libc.so)
-(you might need: sudo rpm -e --justdb --nodeps glibc-2.17-196.el7.i686)
 
-f) Install the new Compiler
+
+6) Install the new Compiler
  
 cd ~/rpmbuild/RPMS/x86_64
 
