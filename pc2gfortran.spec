@@ -118,8 +118,50 @@ activated a subscription to it, type:
 (you might need: sudo rpm -e --justdb --nodeps glibc-2.17-196.el7.i686)
 
 f) Install the new Compiler
- $ sudo rpm -i --nodeps --force RPMS/gcc-4.8.5-16.el7.x86_64.rpm
+ 
+cd ~/rpmbuild/RPMS/x86_64
 
+sudo rpm --force -i libasan-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libasan-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libatomic-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libatomic-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgcc-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgfortran-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgfortran-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgnat-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgnat-devel-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgnat-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgo-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgo-devel-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgomp-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libgo-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libitm-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libitm-devel-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libitm-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libmudflap-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libmudflap-devel-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libmudflap-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libobjc-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libquadmath-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libquadmath-devel-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libquadmath-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libstdc++-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libstdc++-devel-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libstdc++-docs-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libstdc++-static-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libtsan-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i libtsan-static-4.8.5-16.el7.x86_64.rpm
+
+sudo rpm --force -i gcc-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-base-debuginfo-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-c++-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-debuginfo-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-gfortran-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-gnat-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-go-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-objc-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-objc++-4.8.5-16.el7.x86_64.rpm
+sudo rpm --force -i gcc-plugin-devel-4.8.5-16.el7.x86_64.rpm
 
 
 Appendix A
@@ -239,7 +281,8 @@ Appendix D
 
 ! program  slop.f90
 ! submited as a response to c.l.f to exhibit a bug
-! which appears in gfortran-4.8.5 on RHEL 7.3 
+! which appears in gfortran-4.8.5 on RHEL 7.3:
+! Fortran runtime error: Attempt to DEALLOCATE unallocated 'arg' 
 
       program main
  
