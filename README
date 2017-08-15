@@ -5,7 +5,7 @@ The port center (pc) is an OS directory that contains a few Bash Scripts and Mak
 
 The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on OS X Yosemite (10.10) or macOS Sierra (10.12). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
 
-Finally, you can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card which is used in a Mac Mini.
+Also, you can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card which is used in a Mac Mini.
 
 
 Installation Script
@@ -18,6 +18,9 @@ After, one can archive a package with a single command or on a step-by-step basi
 Finally, one can invoke the system installer to process the archive; possibly, by double clicking it. If you build and install a package on the same machine you can simply run: "./port install <package>". 
 
 The file pc2gfortran.spec provides instructions to help you transfer the Fortran patches to a Source RPM for a Linux installation.
+
+
+
 
 DOWNLOAD & SETUP
 
@@ -33,3 +36,73 @@ ln -sf rules/port port
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc48
+
+
+RPM (4.11.3)
+
+[2017-04-10]
+The RPM Package Manager (RPM ) is a command line driven package management system used in various Linux distributions, such as Red Hat Enterprise Linux, and SUSE Linux Enterprise. According to wikipedia, it has also been ported to other systems such as IBM's AIX .
+
+This package builds the fork distributed by rpm.org and now uses gnupg-2.0. This porting is still work in progress and hasn't passed yet adequate quality tests. In example, we haven't tested at all the RPM Plug-In functionality. If you face any problems with the Berkeley DataBase, configure it with the minimum options possible.
+
+To install this package and initialize the RPM DataBase, run:
+
+./port --nosudo install rpm
+
+If everything works as supposed to, a "postinstall" script will also initialize the RPM DataBase and populate it with all the packages installed by the Port Center along with any other JRE and JDK installed in your system. If not restricted by the SandBox it will attempt to process XQuartz also, otherwise one can run it manually on a later phase. These packages will go under the full control of RPM, you can uninstall them.
+
+The "postinstall" script will also run the "vpkg-provides.sh" script that creates a virtual package for all the libraries installed at /usr/lib. Further, all Frameworks in System Library are added as capabilities that the system provides.
+
+If everything has indeed worked as supposed to, you should be able to install easily at least a small RPM package, ie gnu sed.
+
+Below we give step by step instructions to download this small RPM package (sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.12).
+
+Download a source RPM Package
+
+cd ~/Downloads 
+curl -O http://public-yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackageSource/sed-4.2.2-5.el7.src.rpm 
+rpm -i sed-4.2.2-5.el7.src.rpm 
+ 
+
+The above command is not supposed to complain at all about signature problems, but you will likely see and it is safe to ignore the following two recurring warnings.
+
+warning: user mockbuild does not exist - using root 
+warning: group mockbuild does not exist - using root 
+ 
+
+In case you see a warning about the signature, run:
+sudo rpm --import /usr/local/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle-ol7
+
+Porting a source RPM package to Mac OS Sierra
+
+cd $HOME/rpmbuild 
+sed -i.sav "s/, [ ]*libselinux-devel//g" SPECS/sed.spec 
+sed -i.sav "s,/sbin/install-info,/usr/local/bin/install-info,g" SPECS/sed.spec 
+sed -i.sav "s/configure[ ]*--without-included-regex/configure --with-included-regex/g" SPECS/sed.spec 
+sed -i.sav "s/sed.info.gz/sed.info/g" SPECS/sed.spec 
+rm -f SPECS/sed.spec.sav
+
+Build & Install an RPM Package
+
+cd $HOME/rpmbuild 
+rpmbuild -ba SPECS/sed.spec --target x86_64 
+sudo rpm -i --nodeps --force RPMS/X86_64/sed-4.2.2-5.x86_64.rpm
+
+Without the option "--nodeps" the above command fails as the library "libintl.8.dylib" is found to be a missing resource. One workaround is to reinstall gettext as a regular rpm package with the following command "~/pc/port rpminstall gettext". Perhaps, this problem indicates that the conversion of a "*.pkg" to an "*.rpm" is anything else but perfect. 
+ 
+
+Uninstall an RPM Package
+
+Thereafter, one should be able to uninstall this package, which hasn't active dependents, with the following command:
+
+sudo rpm --erase sed-4.2.2-5
+
+Since various RPM Scripts depend on this package one will definitely reinstall it.
+
+Epilogue
+
+Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.3 uses this version of sed. Without any doupt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac.
+Once gnu sed is installed, one should be able to install without any modifications byacc, a prerequisite of gnu awk, which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
+
+[ The PC script was originally described at http://users.otenet.gr/~drikosev/ ]
+
