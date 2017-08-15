@@ -60,8 +60,8 @@ Although my system is x86_64, I had also to install the 686 version of glibc:
 Known Issues
 ------------
 
-The building process fails due to patch "gcc48-libgomp-20160715.patch", which
-means that the default compiler gcc-4.8.5-16 cannot build itself.
+The building process fails due to patch "gcc48-libgomp-20160715.patch", maybe
+because it conflicts with out patch pr56650.patch
 
 Since the default compiler is the only one in my system, I've commented the
 offensive patch:
