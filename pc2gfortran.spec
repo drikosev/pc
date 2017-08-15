@@ -92,7 +92,7 @@ Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
   $ rpmbuild -ba SPECS/gcc.spec --target x86_64  
 
 I started the building process on Aug 14, 2017 at 13:30 pm and it took more than 4 hours.
-I started the building process on Aug 15, 2017 at 17:40 and finished at ...
+I started the building process on Aug 15, 2017 at 17:40 and finished at 22:20.
 
 Let's see in some detail some issues.
 
