@@ -3,7 +3,7 @@ Port Center
 
 The port center (pc) is an OS directory that contains a few Bash Scripts and Make Files, which can help one install open source developer tools on a Mac; formerly OS X, now macOS.
 
-The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on OS X Yosemite (10.10) or macOS Sierra (10.12). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type:
+The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on OS X Yosemite (10.10) or macOS Sierra (10.12). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "./port help"
 
 Finally, you can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card which is used in a Mac Mini.
 
