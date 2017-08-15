@@ -60,8 +60,7 @@ Although my system is x86_64, I had also to install the 686 version of glibc:
 Known Issues
 ------------
 
-At the end of this document there is the Appendix E, with some test
-failures.
+Some test failures are listed at the end of this document, in Appendix E.
 
 
 Instructions (step-by-step)
