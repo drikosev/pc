@@ -6,10 +6,10 @@ Aug 14, 2017
                  -----------------------------------------
 
 This document describes how to manually extract some GNU Fortran patches from the
-file "pc-rules-2017-05-24.tar.xz" and transfer them to "gcc-4.8.5-16.el7.src.rpm"
+file "pc-rules-2017-08-15.tar.xz" and transfer them to "gcc-4.8.5-16.el7.src.rpm"
 in a RHEL 7.3 system. 
 
-In specific, the above mentioned script (pc-rules-2017-05-24.tar.xz) contains 31 
+In specific, the above mentioned script (pc-rules-2017-08-15.tar.xz) contains 31 
 unofficial GNU Fortran patches, mainly backports, which have been tested in macOS. 
 That is, the pc (port center) script cannot install the *gcc48* package in Linux.
 
@@ -60,27 +60,7 @@ Although my system is x86_64, I had also to install the 686 version of glibc:
 Known Issues
 ------------
 
-The building process fails due to patch "gcc48-libgomp-20160715.patch", maybe
-because it conflicts with out patch pr56650.patch
-
-Since the default compiler is the only one in my system, I've commented the
-offensive patch:
-
-#%patch35 -p0 -b .libgomp-20160715~ 
-
-The above patch creates the file "openacc.f90" which can be compiled ie
-by gfortran-7.1 but not by gfortran-4.8-5 which is the default compiler
-and the building process fails with the following error:
- _______________________________________________________________________
-|openacc.f90:910.56:                                                    |
-|                                                                       |
-|  acc_is_present_array_h = acc_is_present_l (a, sizeof (a)) == 1       |
-|                                                        1              |
-|Error: 'x' argument of 'sizeof' intrinsic at (1) shall not be TYPE(*)  |
- -----------------------------------------------------------------------
-
-
-At the end of this document there is also the Appendix E, with some test
+At the end of this document there is the Appendix E, with some test
 failures.
 
 
@@ -113,6 +93,7 @@ Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
   $ rpmbuild -ba SPECS/gcc.spec --target x86_64  
 
 I started the building process on Aug 14, 2017 at 13:30 pm and it took more than 4 hours.
+I started the building process on Aug 15, 2017 at 17:40 and finished at ...
 
 Let's see in some detail some issues.
 
@@ -211,7 +192,7 @@ cp gcc48-tc51976.patch     ~/rpmbuild/SOURCES
 cp gcc48-pr60593.patch     ~/rpmbuild/SOURCES
 cp gcc48-pr45689.patch     ~/rpmbuild/SOURCES
 cp gcc48-tc45689.patch     ~/rpmbuild/SOURCES
-
+cp gcc48-pr56650.relax     ~/rpmbuild/SOURCES
 
 Appendix B
 -------
@@ -248,7 +229,7 @@ Patch9069: gcc48-tc51976.patch
 Patch9070: gcc48-pr60593.patch   
 Patch9071: gcc48-pr45689.patch   
 Patch9072: gcc48-tc45689.patch   
-
+Patch9073: gcc48-pr56650.relax
 
 
 Appendix C
@@ -285,7 +266,7 @@ Appendix C
 %patch9070 -p0 -b .pr60593~   
 %patch9071 -p0 -b .pr45689~   
 %patch9072 -p0 -b .tc45689~   
-
+%patch9073 -p0 -b .pr56650_relax~
 
 Appendix D
 ----------
