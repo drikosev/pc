@@ -26,7 +26,7 @@ happen however.
 The program "slop.f90" below (in Appendix D) exhibits a bug in gfortran-4.8.5 on
 RHEL 7.3, which doesn't appear in gfortran-4.8.5 built by the "pc" in a mac. This
 was the reason I started this document but unfortunately the problem isn't solved
-in Linux when the 31 patches mentioned above are applied.
+in Linux when the above mentioned patches are applied.
 
 
 Environment
