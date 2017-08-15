@@ -19,14 +19,14 @@ To run the instructions of this document, you must be experienced in both the RP
 Building System and Bash scripts. If this isn't the case, contact an experienced
 professional.
 
-Many bugs are solved but there are case where a bug solved by a patch (ie 52832)
+Many bugs are solved but there are cases where a bug solved by a patch (ie 52832)
 reappears after some other patches have been applied. In most cases this doesn't
 happen however.
 
 The program "slop.f90" below (in Appendix D) exhibits a bug in gfortran-4.8.5 on
 RHEL 7.3, which doesn't appear in gfortran-4.8.5 built by the "pc" in a mac. This
 was the reason I started this document but unfortunately the problem isn't solved
-in Linux.
+in Linux when the 31 patches mentioned above are applied.
 
 
 Environment
