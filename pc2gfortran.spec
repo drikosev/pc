@@ -68,9 +68,20 @@ offensive patch:
 
 #%patch35 -p0 -b .libgomp-20160715~ 
 
-At the end of this document there is also an appendix with some test failures.
+The above patch creates the file "openacc.f90" which can be compiled ie
+by gfortran-7.1 but not by gfortran-4.8-5 which is the default compiler
+and the building process fails with the following error:
+ _______________________________________________________________________
+|openacc.f90:910.56:                                                    |
+|                                                                       |
+|  acc_is_present_array_h = acc_is_present_l (a, sizeof (a)) == 1       |
+|                                                        1              |
+|Error: 'x' argument of 'sizeof' intrinsic at (1) shall not be TYPE(*)  |
+ -----------------------------------------------------------------------
 
 
+At the end of this document there is also the Appendix E, with some test
+failures.
 
 
 Instructions (step-by-step)
