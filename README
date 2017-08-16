@@ -24,14 +24,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 
 DOWNLOAD & SETUP
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-08-15.tar.xz), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-08-16.tar.xz), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar xf ~/Downloads/pc-rules-2017-08-15.tar.xz 
+tar xf ~/Downloads/pc-rules-2017-08-16.tar.xz 
 ln -sf rules/port port
 
-*SHA1 1745021253f9fab4913786687e9505ce75110d64 
+*SHA1 d4b5e17cf2c7fadf5d8386f143a479f3fbbd0178 
 
 To see ie the build instructions for gcc-4.8, type:
 
