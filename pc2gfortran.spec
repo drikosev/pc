@@ -28,6 +28,11 @@ RHEL 7.3, which doesn't appear in gfortran-4.8.5 built by the "pc" in a mac. Thi
 was the reason I started this document but unfortunately the problem isn't solved
 in Linux when the above mentioned patches are applied.
 
+One workaround is to explicitly pass "-std=f2008" in the command line, ie:
+gfortran -std=f2008 slop.f90 -o slop; ./slop
+ 
+It would also work for "-std=gnu" or "-std=legacy", and so on.
+
 
 Environment
 -----------
