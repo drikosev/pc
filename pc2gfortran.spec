@@ -9,7 +9,7 @@ This document describes how to manually extract some GNU Fortran patches from th
 file "pc-rules-2017-08-19.tar.xz" and transfer them to "gcc-4.8.5-16.el7.src.rpm"
 in a RHEL 7.3 system. 
 
-In specific, the above mentioned script (pc-rules-2017-08-19.tar.xz) contains 33 
+In specific, the above mentioned script (pc-rules-2017-08-19.tar.xz) contains 30 
 unofficial GNU Fortran patches, mainly backports, which have been tested in macOS. 
 That is, the pc (port center) script cannot install the "gcc48" package in Linux,
 which enables bootstrap but one can install the "gcc4" package (disables bootstrap).
