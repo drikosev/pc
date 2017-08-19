@@ -1,19 +1,20 @@
 
-Aug 15, 2017 
+Aug 19, 2017 
 
 
                  FORTRAN PATCHES FOR GCC 4.8.5 in RHEL 7.3
                  -----------------------------------------
 
 This document describes how to manually extract some GNU Fortran patches from the
-file "pc-rules-2017-08-15.tar.xz" and transfer them to "gcc-4.8.5-16.el7.src.rpm"
+file "pc-rules-2017-08-19.tar.xz" and transfer them to "gcc-4.8.5-16.el7.src.rpm"
 in a RHEL 7.3 system. 
 
-In specific, the above mentioned script (pc-rules-2017-08-15.tar.xz) contains 31 
+In specific, the above mentioned script (pc-rules-2017-08-19.tar.xz) contains 33 
 unofficial GNU Fortran patches, mainly backports, which have been tested in macOS. 
-That is, the pc (port center) script cannot install the *gcc48* package in Linux.
+That is, the pc (port center) script cannot install the "gcc48" package in Linux,
+which enables bootstrap but one can install the "gcc4" package (disables bootstrap).
 
-Please, note that if you rebuild the compiler, it won't be supported by Red Hat.
+Please, note that if you rebuild the compiler, it might not be supported by Red Hat.
 
 To run the instructions of this document, you must be experienced in both the RPM 
 Building System and Bash scripts. If this isn't the case, contact an experienced
@@ -23,15 +24,13 @@ Many bugs are solved but there are cases where a bug solved by a patch (ie 52832
 reappears after some other patches have been applied. In most cases this doesn't
 happen however.
 
-The program "slop.f90" below (in Appendix D) exhibits a bug in gfortran-4.8.5 on
-RHEL 7.3, which doesn't appear in gfortran-4.8.5 built by the "pc" in a mac. This
-was the reason I started this document but unfortunately the problem isn't solved
-in Linux when the above mentioned patches are applied.
+The program "realloc0last.f90" below (Appendix D) exhibited a bug in gfortran-4.8.5
+on RHEL 7, which didn't appear in gfortran-4.8.5 built by the "pc" in a mac. This
+was the reason I started this document and created the patch "gcc48-realloc.patch".
 
-One workaround is to explicitly pass "-std=f2008" in the command line, ie:
-gfortran -std=f2008 slop.f90 -o slop; ./slop
- 
-It would also work for "-std=gnu" or "-std=legacy", and so on.
+Also, the patch "gcc48-assume.istat" is just a hack that can conditionally mute the
+same error message for invalid deallocations of arrays when a program is compiled
+with the option "-std=legacy" and without the option "-pedantic" (see 2slop.f90). 
 
 
 Environment
@@ -61,11 +60,22 @@ Although my system is x86_64, I had also to install the 686 version of glibc:
  c) glibc.x86_64
  d) glibc-devel.x86_64
 
+One package required for the tests is "autogen", not mentioned as a prerequisite.
+ a) autogen-5.18
 
 Known Issues
 ------------
 
-Some test failures are listed at the end of this document, in Appendix E.
+[2017-08-19] 
+When gcc4 is built in Linux the command make check-fortran reports no errors,
+whereas in OS X the option "-fsanitize=address" produces an error in one test
+case (see Appendix E).
+
+Some test failures during the RPM Build are listed in Appendix F. Most of 
+them aren't Fortran relevant though.
+
+[2017-08-18]
+Some test failures during a past RPM Build are listed in Appendix F.
 
 
 Instructions (step-by-step)
@@ -94,11 +104,13 @@ Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
 5) Run the following commands to build the "gcc-4.8.5-16.el7.src.rpm"
   $ cd ~/rpmbuild
   $ export RPM_BUILD_NCPUS=4
+  $ export LD_LIBRARY_PATH=""
+  $ export PATH=/usr/bin:/usr/sbin:/bin:/sbin:$PATH
   $ rpmbuild -ba SPECS/gcc.spec --target x86_64  
 
 I started the building process on Aug 15, 2017 at 17:40 and finished at 22:20.
 
-Let's see in some detail some issues.
+Let's see in some detail some issues I faced. You may face them also.
 
 -Many dependencies (ie sharutils) are found in the "optionals" chanel. If you have not
 activated a subscription to it, type: 
@@ -111,6 +123,10 @@ activated a subscription to it, type:
 
 (try: sudo yum whatprovides /usr/lib/libc.so)
 
+Also, some tests during the RPM building process require "autogen", which isn't
+mentioned in the RPM dependencies.
+
+ $ sudo yum install autogen-5.18
 
 6) Install the new Compiler
  
@@ -163,7 +179,6 @@ Appendix A
 -------
 cd ~/pc/rules/patches/gcc48
 
-
 cp gcc48-pr57549.patch     ~/rpmbuild/SOURCES
 cp gcc48-tc57549.patch     ~/rpmbuild/SOURCES
 cp gcc48-pr56650.patch     ~/rpmbuild/SOURCES
@@ -196,6 +211,10 @@ cp gcc48-pr60593.patch     ~/rpmbuild/SOURCES
 cp gcc48-pr45689.patch     ~/rpmbuild/SOURCES
 cp gcc48-tc45689.patch     ~/rpmbuild/SOURCES
 cp gcc48-pr56650.relax     ~/rpmbuild/SOURCES
+
+cp gcc48-realloc.patch     ~/rpmbuild/SOURCES
+cp gcc48-assumed.istat     ~/rpmbuild/SOURCES
+
 
 Appendix B
 -------
@@ -234,6 +253,9 @@ Patch9071: gcc48-pr45689.patch
 Patch9072: gcc48-tc45689.patch   
 Patch9073: gcc48-pr56650.relax
 
+Patch9074: gcc48-realloc.patch   
+Patch9075: gcc48-assumed.istat
+
 
 Appendix C
 -------
@@ -271,113 +293,160 @@ Appendix C
 %patch9072 -p0 -b .tc45689~   
 %patch9073 -p0 -b .pr56650_relax~
 
+%patch9074 -p0 -b .realloc.patch~   
+%patch9075 -p0 -b .assumed.istat~
+
+
 Appendix D
 ----------
-
-! program  slop.f90
-! submited as a response to c.l.f to exhibit a bug
-! which appears in gfortran-4.8.5 on RHEL 7.3:
-! Fortran runtime error: Attempt to DEALLOCATE unallocated 'arg' 
-
-      program main
+$ cat realloc0last.f90
+! program  realloc0last.f90
+! { dg-do run }
+program main
  
   integer, allocatable,  dimension(:) :: arg
   integer :: i, n
-  integer :: ierr
 
   allocate (arg(2), source = [0,0])
 
   do n = 2, 0, -1
-    call foo (arg, n)                  ! Explicit array bounds in assignment
-    print *, arg, ' size ', size(arg)
-    arg = 0
-  end do
-
-  print *, ''
-
-  do n = 2, 0, -1
     call bar (arg, n)                 ! Automatic alloc/realloc
-    print *, arg, ' size ', size(arg)
   end do
-  
+
   deallocate(arg)         ! Allocation in main program is not automatically deallocated
 
 contains
 
-  subroutine foo (argarray, j)
-    integer, allocatable,  dimension(:) :: argarray, localarray
-    integer :: i, j
-    localarray = [(i, i = 1, j)]
-    argarray(1:j) = localarray(1:j)   ! As in the report
-  end subroutine                      ! localarray is deallocated on going out of scope
-
   subroutine bar (argarray, j)
-    integer, allocatable,  dimension(:) :: argarray, localarray
+    integer, allocatable,  intent(inout), dimension(:) :: argarray 
+    integer, allocatable,                 dimension(:) ::  localarray
     integer :: i, j
     localarray = [(i, i = 1, j)]
     argarray = localarray             ! Automatic alloc/realloc
   end subroutine                      ! localarray is deallocated on going out of scope
 
 end program main
+
+The following program demonstrates what does the patch "gcc48-assume.istat".
    
-Appendix E - Test Failures
-----------------------
+$ /usr/bin/gfortran 2slop.f90 -o 2slop; ./2slop
+At line 6 of file 2slop.f90
+Fortran runtime error: Attempt to DEALLOCATE unallocated 'arg'
+$ /usr/bin/gfortran 2slop.f90 -o 2slop -std=legacy; ./2slop
+$ cat 2slop.f90
+!
+program main
+ 
+  integer, allocatable,  dimension(:) :: arg
 
-Some test failures include, but not limited to:
+  deallocate(arg)
 
-FAIL: gcc.c-torture/execute/pr51581-1.c compilation,  -O0 
-FAIL: tmpdir-g++.dg-struct-layout-1/t024 cp_compat_y_tst.o compile
-FAIL: 22_locale/time_get/get_monthname/wchar_t/3.cc (test for excess errors)
-FAIL: 23_containers/multimap/23781_neg.cc  (test for errors, line 27)
-FAIL: 23_containers/multimap/23781_neg.cc  (test for errors, line 28)
-FAIL: 23_containers/multimap/23781_neg.cc (test for excess errors)
+end program main
+
+
+Appendix E - Test Failures from the PC Package gcc4
+---------------------------------------------------
+
+In OS X, the test "elemental_allocate_1.f90" failed due to option "-fsanitize=address".
+
+When I compile and run this test manually, the error message is:
+$ ./a.out
+==32345== AddressSanitizer CHECK failed: ../../../../gcc-4.8.5/libsanitizer/asan/asan_rtl.cc:413 "((!asan_init_is_running && "ASan init calls itself!")) != (0)" (0x0, 0x0)
+
+
+
+Appendix F - Test Failures During the RPM Build
+-----------------------------------------------
+[2017-08-19]
+
+Some test failures (run on Aug 19, 2017) include, but not limited to:
+
+autogen -T ../../fixincludes/check.tpl ../../fixincludes/inclhack.def
+make[2]: autogen: Command not found
+
 FAIL: gcc.dg/fstack-protector-strong.c scan-assembler-times stack_chk_fail 10
+
+FAIL: c-c++-common/asan/use-after-free-1.c  -Os  output pattern test, is =================================================================
+==9703== ERROR: AddressSanitizer: heap-use-after-free on address 0x60040000dff5 at pc 0x4007ea bp 0x7ffe5e3dbf30 sp 0x7ffe5e3dbf20
+
+
+FAIL: c-c++-common/asan/heap-overflow-1.c  -O0  output pattern test, is =================================================================
+==7924== ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60040000dffa at pc 0x400a95 bp 0x7ffda08a1410 sp 0x7ffda08a1400
+
+
+FAIL: c-c++-common/asan/null-deref-1.c  -O0  output pattern test, is ASAN:SIGSEGV
+=================================================================
+==10114== ERROR: AddressSanitizer: SEGV on unknown address 0x000000000028 (pc 0x0000004008d8 sp 0x7ffc9ea17410 bp 0x7ffc9ea17420 T0)
+
+FAIL: c-c++-common/asan/sanity-check-pure-c-1.c  -O0  output pattern test, is =================================================================
+==11211== ERROR: AddressSanitizer: heap-use-after-free on address 0x60040000dff5 at pc 0x40097b bp 0x7fffcb1050a0 sp 0x7fffcb105090
+
 FAIL: gcc.dg/stack-usage-1.c scan-file foo\t(256|264)\tstatic
 FAIL: gcc.dg/superblock.c scan-rtl-dump-times sched2 "ADVANCING TO" 2
-FAIL: g++.dg/template/ref7.C -std=c++98 (test for excess errors)
-FAIL: g++.dg/template/ref7.C -std=c++11 (test for excess errors)
-FAIL: g++.dg/fstack-protector-strong.C -std=gnu++98  scan-assembler-times stack_chk_fail 2
-FAIL: g++.dg/fstack-protector-strong.C -std=gnu++11  scan-assembler-times stack_chk_fail 2
-FAIL: gfortran.dg/elemental_allocate_1.f90  -O0  (test for excess errors)
-FAIL: gfortran.dg/elemental_allocate_1.f90  -O1  (test for excess errors)
-FAIL: gfortran.dg/elemental_allocate_1.f90  -O2  (test for excess errors)
-FAIL: gfortran.dg/elemental_allocate_1.f90  -O3 -fomit-frame-pointer  (test for excess errors)
-FAIL: gfortran.dg/elemental_allocate_1.f90  -O3 -fomit-frame-pointer -funroll-loops  (test for excess errors)
-FAIL: gfortran.dg/elemental_allocate_1.f90  -O3 -fomit-frame-pointer -funroll-all-loops -finline-functions  (test for excess errors)
-FAIL: gfortran.dg/elemental_allocate_1.f90  -O3 -g  (test for excess errors)
-FAIL: gfortran.dg/elemental_allocate_1.f90  -Os  (test for excess errors)
-FAIL: gcc.dg/guality/pr36728-1.c  -O2 -flto -fuse-linker-plugin -fno-fat-lto-objects  line 18 arg3 == 3
-FAIL: gcc.dg/guality/pr36728-3.c  -O1  line 14 arg3 == 3
---- FAIL: TestParseInSydney (0.00 seconds)
-	time_test.go:553: ParseInLocation(Feb 01 2013 EST, Sydney) = 2013-02-01 00:00:00 +0000 EST, want 2013-02-01 00:00:00 +1100 AEDT
---- FAIL: TestLoadFixed (0.00 seconds)
-	time_test.go:1326: Now().In(loc).Zone() = "-01", -3600, want "GMT+1", -3600
-FAIL
-FAIL: time
-make[4]: *** [time/check] Error 1
 
+		=== gcc Summary for unix//-fstack-protector ===
 
-
-		=== libstdc++ Summary ===
-
-# of expected passes		1277
+# of expected passes		15081
 # of unexpected failures	3
-# of expected failures		24
-# of unsupported tests		154
-
-
+# of expected failures		65
+# of unsupported tests		105
 
 		=== gcc Summary ===
 
-# of expected passes		42219
-# of unexpected failures	4
+# of expected passes		42221
+# of unexpected failures	3
 # of expected failures		130
-# of unresolved testcases	1
-# of unsupported tests		210
 
 
+FAIL: g++.dg/asan/asan_test.C  -O2  AddressSanitizer_SimpleStackTest A[kSize + 31] = 0 execution test
+FAIL: g++.dg/asan/asan_test.C  -O2  AddressSanitizer_SimpleStackTest A[kSize + 31] = 0 execution test
+FAIL: g++.dg/asan/asan_test.C  -O2  AddressSanitizer_SimpleStackTest A[kSize + 31] = 0 execution test
+FAIL: g++.dg/asan/asan_test.C  -O2  AddressSanitizer_SimpleStackTest A[kSize + 31] = 0 execution test
+FAIL: g++.dg/fstack-protector-strong.C -std=gnu++11  scan-assembler-times stack_chk_fail 2
+FAIL: gcc.dg/guality/pr54200.c  -Os  line 20 z == 3
+FAIL: gcc.dg/guality/pr54519-5.c  -O2 -flto -fuse-linker-plugin -fno-fat-lto-objects  line 17 y == 25
+FAIL: gcc.dg/guality/pr54693-2.c  -Os  line 21 x == 10 - i
+FAIL: gcc.dg/guality/pr36728-3.c  -Os  line 16 arg3 == 3
+FAIL: gcc.dg/guality/pr43051-1.c  -O3 -fomit-frame-pointer -funroll-loops  line 39 c == &a[0]
 
+...
+Running /home/suser/rpmbuild/BUILD/gcc-4.8.5-20150702/gcc/testsuite/gfortran.dg/dg.exp ...
 
+		=== gfortran Summary for unix/ ===
 
+# of expected passes		6116
+# of expected failures		6
+Running target unix//-fstack-protector
+...
+		=== gfortran Summary for unix//-fstack-protector ===
 
+# of expected passes		6338
+# of expected failures		2
+
+		=== gfortran Summary ===
+
+# of expected passes		12676
+# of expected failures		4
+...
+Running /home/suser/rpmbuild/BUILD/gcc-4.8.5-20150702/libffi/testsuite/libffi.call/call.exp ...
+--- FAIL: TestParseInSydney (0.32 seconds)
+	time_test.go:553: ParseInLocation(Feb 01 2013 EST, Sydney) = 2013-02-01 00:00:00 +0000 EST, want 2013-02-01 00:00:00 +1100 AEDT
+--- FAIL: TestLoadFixed (0.23 seconds)
+	time_test.go:1326: Now().In(loc).Zone() = "-01", -3600, want "GMT+1", -3600
+FAIL
+FAIL: time
+make[5]: *** [time/check] Error 1
+
+...
+
+PASS: text/template
+make[4]: Leaving directory `/home/suser/rpmbuild/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/x86_64-redhat-linux/libgo'
+make[3]: [check-am] Error 2 (ignored)
+make[3]: Leaving directory `/home/suser/rpmbuild/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/x86_64-redhat-linux/libgo'
+make[2]: *** [check-tail] Error 1
+make[2]: Target `check' not remade because of errors.
+make[2]: Leaving directory `/home/suser/rpmbuild/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/x86_64-redhat-linux/libgo'
+make[1]: *** [check-target-libgo] Error 2
+
+...
 
