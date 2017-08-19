@@ -105,7 +105,8 @@ Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
   $ export PATH=/usr/bin:/usr/sbin:/bin:/sbin:$PATH
   $ rpmbuild -ba SPECS/gcc.spec --target x86_64  
 
-I started the building process on Aug 15, 2017 at 17:40 and finished at 22:20.
+The first time I built this package on Aug 15, 2017, I started the building process
+at 17:40 and finished at 22:20 (4 hours and 40 minutes).
 
 Let's see in some detail some issues I faced. You may face them also.
 
