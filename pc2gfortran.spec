@@ -347,14 +347,14 @@ Appendix E - Test Failures from the PC Package gcc4
 
 In OS X, the test "elemental_allocate_1.f90" failed due to option "-fsanitize=address".
 
-When I compile and run this test manually, the error message is:
+When I compiled and run this test manually, the error message was:
 $ ./a.out
 ==32345== AddressSanitizer CHECK failed: ../../../../gcc-4.8.5/libsanitizer/asan/asan_rtl.cc:413 "((!asan_init_is_running && "ASan init calls itself!")) != (0)" (0x0, 0x0)
 
 
 Please note that when I build the package gcc or gcc48 I run only the Fortran tests (make check-fortran).
 
-Whereas in RHEL 7.3, this package didn't produce any Fortran errors!
+Whereas in RHEL 7.3, the package gcc4 didn't produce any Fortran errors!
 
 
 Appendix F - Test Failures During the RPM Build
