@@ -68,7 +68,7 @@ Known Issues
 
 [2017-08-19] 
 When gcc4 is built in Linux the command make check-fortran reports no errors,
-whereas in OS X the option "-fsanitize=address" produces an error in one test
+whereas in macOS the option "-fsanitize=address" produces an error in one test
 case (see Appendix E).
 
 Some test failures during the RPM Build are listed in Appendix F. Most of 
@@ -345,7 +345,7 @@ end program main
 Appendix E - Test Failures from the PC Package gcc4
 ---------------------------------------------------
 
-In OS X, the test "elemental_allocate_1.f90" failed due to option "-fsanitize=address".
+In macOS, the test "elemental_allocate_1.f90" failed due to option "-fsanitize=address".
 
 When I compiled and run this test manually, the error message was:
 $ ./a.out
