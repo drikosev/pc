@@ -74,9 +74,6 @@ case (see Appendix E).
 Some test failures during the RPM Build are listed in Appendix F. Most of 
 them aren't Fortran relevant though.
 
-[2017-08-18]
-Some test failures during a past RPM Build are listed in Appendix F.
-
 
 Instructions (step-by-step)
 ---------------------------
