@@ -350,6 +350,7 @@ When I compile and run this test manually, the error message is:
 $ ./a.out
 ==32345== AddressSanitizer CHECK failed: ../../../../gcc-4.8.5/libsanitizer/asan/asan_rtl.cc:413 "((!asan_init_is_running && "ASan init calls itself!")) != (0)" (0x0, 0x0)
 
+Please note that in OS X I run only "make check-fortran".
 
 
 Appendix F - Test Failures During the RPM Build
