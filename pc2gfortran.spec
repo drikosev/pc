@@ -354,7 +354,10 @@ $ ./a.out
 
 Please note that when I build the package gcc or gcc48 I run only the Fortran tests (make check-fortran).
 
-Whereas in RHEL 7.3, the package gcc4 didn't produce any Fortran errors!
+Whereas in RHEL 7.3, the package gcc4 didn't produce any Fortran errors and I confirmed again that
+the above test case doesn't fail in linux:
+
+make check-fortran RUNTESTFLAGS="dg.exp=elemental_allocate_1.f90"
 
 
 Appendix F - Test Failures During the RPM Build
