@@ -71,8 +71,8 @@ When gcc4 is built in Linux the command make check-fortran reports no errors,
 whereas in macOS the option "-fsanitize=address" produces an error in one test
 case (see Appendix E).
 
-Some test failures during the RPM Build are listed in Appendix F. Most of 
-them aren't Fortran relevant though.
+Some test failures during the RPM Build are listed in Appendix F. None of 
+them is Fortran relevant though.
 
 
 Instructions (step-by-step)
