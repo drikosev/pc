@@ -30,7 +30,7 @@ was the reason I started this document and created the patch "gcc48-realloc.patc
 
 Also, the patch "gcc48-assume.istat" is just a hack that can conditionally mute the
 same error message for invalid deallocations of arrays when a program is compiled
-with the option "-std=legacy" and without the option "-pedantic" (see 2slop.f90). 
+with the option "-std=legacy" but without the option "-pedantic" (see 2slop.f90). 
 
 
 Environment
