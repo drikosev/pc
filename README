@@ -5,7 +5,7 @@ The port center (pc) is an OS directory that contains a few Bash Scripts and Mak
 
 The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on OS X Yosemite (10.10) or macOS Sierra (10.12). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
 
-Also, you can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card which is used in a Mac Mini.
+Also, one can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card installed in older Mac hardware (Mac Mini & Mac Book Pro 2011, 2012).
 
 
 Installation Script
@@ -54,7 +54,8 @@ The "postinstall" script will also run the "vpkg-provides.sh" script that create
 
 If everything has indeed worked as supposed to, you should be able to install easily at least a small RPM package, ie gnu sed.
 
-Below we give step by step instructions to download this small RPM package (sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.12).
+Below there are step by step instructions to download this small RPM package (sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.12).
+
 
 Download a source RPM Package
 
@@ -72,7 +73,8 @@ warning: group mockbuild does not exist - using root
 In case you see a warning about the signature, run:
 sudo rpm --import /usr/local/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle-ol7
 
-Porting a source RPM package to Mac OS Sierra
+
+Porting a source RPM package to Mac OS Sierra (10.12)
 
 cd $HOME/rpmbuild 
 sed -i.sav "s/, [ ]*libselinux-devel//g" SPECS/sed.spec 
@@ -81,13 +83,14 @@ sed -i.sav "s/configure[ ]*--without-included-regex/configure --with-included-re
 sed -i.sav "s/sed.info.gz/sed.info/g" SPECS/sed.spec 
 rm -f SPECS/sed.spec.sav
 
+
 Build & Install an RPM Package
 
 cd $HOME/rpmbuild 
 rpmbuild -ba SPECS/sed.spec --target x86_64 
 sudo rpm -i --nodeps --force RPMS/X86_64/sed-4.2.2-5.x86_64.rpm
 
-Without the option "--nodeps" the above command fails as the library "libintl.8.dylib" is found to be a missing resource. One workaround is to reinstall gettext as a regular rpm package with the following command "~/pc/port rpminstall gettext". Perhaps, this problem indicates that the conversion of a "*.pkg" to an "*.rpm" is anything else but perfect. 
+Without the option "--nodeps" the above command fails as the library "libintl.8.dylib" is found to be a missing resource. One workaround is to reinstall gettext as a regular rpm package with the following command "~/pc/port --force rpminstall gettext". Obviously, this problem indicates that the conversion of a "*.pkg" to an "*.rpm" is anything else but perfect. 
  
 
 Uninstall an RPM Package
@@ -97,6 +100,7 @@ Thereafter, one should be able to uninstall this package, which hasn't active de
 sudo rpm --erase sed-4.2.2-5
 
 Since various RPM Scripts depend on this package one will definitely reinstall it.
+
 
 Epilogue
 
