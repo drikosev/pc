@@ -306,7 +306,7 @@ Appendix D
 
 - Patch "gcc48-realloc.patch" (5.1 backport)
   [2017-08-19] 
-  Solves a bug for reallocation of arrays with zero length (that's my diagnosis).
+  It solves a bug for reallocation of arrays with zero length (that's my diagnosis).
   The bug solved was producing a runtime error only in Linux (see "realloc0last.f90").
 
 - Patch "gcc48-assume.istat"
@@ -383,7 +383,7 @@ $ ./a.out
 ==32345== AddressSanitizer CHECK failed: ../../../../gcc-4.8.5/libsanitizer/asan/asan_rtl.cc:413 "((!asan_init_is_running && "ASan init calls itself!")) != (0)" (0x0, 0x0)
 
 
-Please note that when I build the package gcc or gcc48 I run only the Fortran tests (make check-fortran).
+Please note that when I build the package gcc4 or gcc48 I run only the Fortran tests (make check-fortran).
 
 Whereas in RHEL 7.3, the package gcc4 didn't produce any Fortran errors and I confirmed again that
 the above test case doesn't fail in linux:
