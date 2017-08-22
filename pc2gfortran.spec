@@ -323,7 +323,7 @@ Appendix D
   In macOS 10.12 this test case was crashing (Program received signal SIGABRT) but
   a manual test with "valgrind" proved a memory deallocation error in Linux also.
 
-- Patch "gcc48-pr63667.again" (7.1 backport)
+- Patch "gcc48-pr63667.patch" (7.1 backport)
   [2017-08-23]
   This patch fixes a bug that was producing an ICE as described here:
   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63667
