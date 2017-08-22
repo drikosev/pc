@@ -307,7 +307,7 @@ Appendix D
 - Patch "gcc48-realloc.patch" (5.1 backport)
   [2017-08-19] 
   Solves a bug for reallocation of arrays with zero length (that's my diagnosis).
-  The bug solved was occurring only in Linux. See the program "realloc0last.f90" below.
+  The bug solved was producing a runtime error only in Linux (see "realloc0last.f90").
 
 - Patch "gcc48-assume.istat"
   [2017-08-19] 
