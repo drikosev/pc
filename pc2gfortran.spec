@@ -359,10 +359,9 @@ end program main
 
 The following program demonstrates what does the patch "gcc48-assume.istat".
    
-$ /usr/bin/gfortran 2slop.f90 -o 2slop; ./2slop
+$ gfortran 2slop.f90 -o 2slop; ./2slop
 At line 6 of file 2slop.f90
 Fortran runtime error: Attempt to DEALLOCATE unallocated 'arg'
-$ /usr/bin/gfortran 2slop.f90 -o 2slop -std=legacy; ./2slop
 $ cat 2slop.f90
 !gfortran -std=legacy 2slop.f90
 program slop2
