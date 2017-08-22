@@ -300,8 +300,8 @@ Appendix D
 
 - Patch "gcc48-pr56650.relax" (7.1 backport)
   [2017-08-16]      
-  This patch restricts the conditions where an error message is issued. If one applies
-  the "gcc48-pr56650.patch" but without the "gcc48-pr56650.relax" the RPM Build fails 
+  This patch restricts the conditions that an error message is issued. If you apply
+  the "gcc48-pr56650.patch" but not the "gcc48-pr56650.relax", the RPM Build fails 
   (package "gcc-4.8.5-16.el7.src.rpm" in RHEL 7.3). 
 
 - Patch "gcc48-realloc.patch" (5.1 backport)
