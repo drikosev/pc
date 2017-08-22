@@ -24,7 +24,7 @@ Many bugs are solved but there are cases where a bug solved by a patch (ie 52832
 reappears after some other patches have been applied. In most cases this doesn't
 happen however.
 
-The program "realloc0last.f90" below (Appendix D) exhibited a bug in gfortran-4.8.5
+The program "realloc0last.f90" below (Appendix E) exhibited a bug in gfortran-4.8.5
 on RHEL 7, which didn't appear in gfortran-4.8.5 built by the "pc" in a mac. This
 was the reason I started this document and created the patch "gcc48-realloc.patch".
 
@@ -69,9 +69,9 @@ Known Issues
 [2017-08-19] 
 When gcc4 is built in Linux the command make check-fortran reports no errors,
 whereas in macOS the option "-fsanitize=address" produces an error in one test
-case (see Appendix E).
+case (see Appendix F).
 
-Some test failures during the RPM Build are listed in Appendix F. None of 
+Some test failures during the RPM Build are listed in Appendix G. None of 
 them is Fortran relevant though.
 
 
@@ -297,6 +297,37 @@ Appendix C
 
 Appendix D
 ----------
+
+- Patch "gcc48-pr56650.relax" (7.1 backport)
+  [2017-08-16]      
+  This patch restricts the conditions where an error message is issued. If one applies
+  the "gcc48-pr56650.patch" but without the "gcc48-pr56650.relax" the RPM Build fails 
+  (package "gcc-4.8.5-16.el7.src.rpm" in RHEL 7.3). 
+
+- Patch "gcc48-realloc.patch" (5.1 backport)
+  [2017-08-19] 
+  Solves a bug for reallocation of arrays with zero length (that's was my diagnosis).
+  The bug solved was occurring only in Linux. See the program "realloc0last.f90" below.
+
+- Patch "gcc48-assume.istat"
+  [2017-08-19] 
+  It's a hack that mutes some array deallocation errors with the option "-std=legacy"
+  but without the option "-pedantic". See the program "2slop.f90" below.
+  
+- Patch "gcc48-pr58586.again" (7.1 backport)
+  [2017-08-21]
+  Adds the second test case "alloc_comp_class_4.f03" which can be found also here:
+  https://gcc.gnu.org/viewcvs/gcc?view=revision&revision=225447
+  In macOS 10.12 this test case was crashing (Program received signal SIGABRT) but
+  a manual test with "valgrind" proved a memory deallocation error in Linux also.
+  [todo: check that this patch doesn't' spoil the RPM Build]
+
+Appendix E
+----------
+
+The following program demonstrates that the patch "gcc48-realloc.patch" avoids the error:
+  "Fortran runtime error: Attempt to DEALLOCATE unallocated 'arg'"
+
 $ cat realloc0last.f90
 ! program  realloc0last.f90
 ! { dg-do run }
@@ -325,6 +356,7 @@ contains
 
 end program main
 
+
 The following program demonstrates what does the patch "gcc48-assume.istat".
    
 $ /usr/bin/gfortran 2slop.f90 -o 2slop; ./2slop
@@ -333,16 +365,8 @@ Fortran runtime error: Attempt to DEALLOCATE unallocated 'arg'
 $ /usr/bin/gfortran 2slop.f90 -o 2slop -std=legacy; ./2slop
 $ cat 2slop.f90
 !
-program main
- 
-  integer, allocatable,  dimension(:) :: arg
 
-  deallocate(arg)
-
-end program main
-
-
-Appendix E - Test Failures from the PC Package gcc4
+Appendix F - Test Failures from the PC Package gcc4
 ---------------------------------------------------
 
 In macOS, the test "elemental_allocate_1.f90" failed due to option "-fsanitize=address".
@@ -360,7 +384,7 @@ the above test case doesn't fail in linux:
 make check-fortran RUNTESTFLAGS="dg.exp=elemental_allocate_1.f90"
 
 
-Appendix F - Test Failures During the RPM Build
+Appendix G - Test Failures During the RPM Build
 -----------------------------------------------
 [2017-08-19]
 
