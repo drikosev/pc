@@ -314,13 +314,20 @@ Appendix D
   It's a hack that mutes some array deallocation errors with the option "-std=legacy"
   but without the option "-pedantic". See the program "2slop.f90" below.
   
+  [todo: check that the patches below don't spoil the RPM Building process]
+
 - Patch "gcc48-pr58586.again" (7.1 backport)
   [2017-08-21]
   Adds the second test case "alloc_comp_class_4.f03" which can be found also here:
   https://gcc.gnu.org/viewcvs/gcc?view=revision&revision=225447
   In macOS 10.12 this test case was crashing (Program received signal SIGABRT) but
   a manual test with "valgrind" proved a memory deallocation error in Linux also.
-  [todo: check that this patch doesn't' spoil the RPM Build]
+
+- Patch "gcc48-pr63667.again" (7.1 backport)
+  [2017-08-23]
+  This patch fixes a bug that was producing an ICE as described here:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63667
+
 
 Appendix E
 ----------
