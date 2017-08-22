@@ -364,7 +364,15 @@ At line 6 of file 2slop.f90
 Fortran runtime error: Attempt to DEALLOCATE unallocated 'arg'
 $ /usr/bin/gfortran 2slop.f90 -o 2slop -std=legacy; ./2slop
 $ cat 2slop.f90
-!
+!gfortran -std=legacy 2slop.f90
+program slop2
+ 
+  integer, allocatable,  dimension(:) :: arg
+  integer  istat
+  deallocate(arg)
+
+end program slop2
+
 
 Appendix F - Test Failures from the PC Package gcc4
 ---------------------------------------------------
