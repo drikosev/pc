@@ -323,11 +323,26 @@ Appendix D
   In macOS 10.12 this test case was crashing (Program received signal SIGABRT) but
   a manual test with "valgrind" proved a memory deallocation error in Linux also.
 
-- Patch "gcc48-pr63667.patch" (7.1 backport)
+- Patch "gcc48-pr63667.patch" 
   [2017-08-23]
-  This patch fixes a bug that was producing an ICE as described here:
+  This test case confirms a bug fix for the ICE described at:
   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63667
+  [Note: If the test case is reduced to one class (t6) both 4.8.5 & 7.1 crash.]
 
+- Patch "gcc48-tc64230.patch"
+  [2017-08-23]
+  This test case confirms a bug fix for the ICE described at:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64230  
+
+- Patch "gcc48-tc64980.patch"
+  [2017-08-23]
+  This test case confirms a bug fix for the ICE described at:  
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64980
+
+-Patch "gcc48-fnosanitize.patch"
+  [2017-08-28]
+  This patch is applied in MaOS Sierra 10.12 and negates the "-fsanitize" option
+  in the Test Case "gfortran.dg/elemental_allocate_1.f90". 
 
 Appendix E
 ----------
