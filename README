@@ -3,7 +3,7 @@ Port Center
 
 The port center (pc) is an OS directory that contains a few Bash Scripts and Make Files, which can help one install open source developer tools on a Mac; formerly OS X, now macOS.
 
-The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on OS X Yosemite (10.10) or macOS Sierra (10.12). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
+The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on macOS Sierra (10.12). In the past I'd tested it also in OS X Yosemite (10.10). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
 
 Also, one can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card installed in older Mac hardware (Mac Mini & Mac Book Pro 2011, 2012).
 
@@ -20,27 +20,27 @@ Finally, one can invoke the system installer to process the archive; possibly, b
 The file pc2gfortran.spec provides instructions to help you transfer the Fortran patches to a Source RPM for a Linux installation.
 
 
-
-
 DOWNLOAD & SETUP
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-08-19.tar.xz), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-09-30.tar.xz), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar xf ~/Downloads/pc-rules-2017-08-19.tar.xz 
+tar xf ~/Downloads/pc-rules-2017-09-30.tar.xz 
 ln -sf rules/port port
 
-*SHA1 b3e5e4db6230b4b1404c2d52395977059fa59936 
+*SHA1  bc113e1485687586a636b2de152cca93b87e03d0 
 To see ie the build instructions for gcc-4.8, type:
 
-./port details gcc48
+./port details gcc4
+
+Likely, this is the first package to be installed on a Mac. On Linux use gcc48 instead. 
 
 
 RPM (4.11.3)
 
 [2017-04-10]
-The RPM Package Manager (RPM ) is a command line driven package management system used in various Linux distributions, such as Red Hat Enterprise Linux, and SUSE Linux Enterprise. According to wikipedia, it has also been ported to other systems such as IBM's AIX .
+The RPM Package Manager (RPM) is a command line driven package management system used in various Linux distributions, such as Red Hat Enterprise Linux, and SUSE Linux Enterprise. According to wikipedia, it has also been ported to other systems such as IBM's AIX .
 
 This package builds the fork distributed by rpm.org and now uses gnupg-2.0. This porting is still work in progress and hasn't passed yet adequate quality tests. In example, we haven't tested at all the RPM Plug-In functionality. If you face any problems with the Berkeley DataBase, configure it with the minimum options possible.
 
@@ -104,8 +104,8 @@ Since various RPM Scripts depend on this package one will definitely reinstall i
 
 Epilogue
 
-Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.3 uses this version of sed. Without any doupt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac.
-Once gnu sed is installed, one should be able to install without any modifications byacc, a prerequisite of gnu awk, which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
+Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.3 uses this version of sed. Without any doubt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac.
+Once "gnu sed" is installed, one should be able to install without any modifications "byacc", a prerequisite of "gnu awk", which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
 
-[ The PC script was originally described at http://users.otenet.gr/~drikosev/ ]
 
+[ The PC script was originally available at http://users.otenet.gr/~drikosev/ ]
