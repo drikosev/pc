@@ -1,36 +1,27 @@
 
-Aug 19, 2017 
+Sep 30, 2017 
 
 
                  FORTRAN PATCHES FOR GCC 4.8.5 in RHEL 7.3
                  -----------------------------------------
 
-This document describes how to manually extract some GNU Fortran patches from the
-file "pc-rules-2017-08-19.tar.xz" and transfer them to "gcc-4.8.5-16.el7.src.rpm"
+This document describes how you can manually extract some GNU Fortran patches from
+the zip file "pc-rules-2017-08-19.tar.xz" and apply them to "gcc-4.8.5-16.el7.src.rpm"
 in a RHEL 7.3 system. 
 
-In specific, the above mentioned script (pc-rules-2017-08-19.tar.xz) contains 30 
-unofficial GNU Fortran patches, mainly backports, which have been tested in macOS. 
-That is, the pc (port center) script cannot install the "gcc48" package in Linux,
-which enables bootstrap but one can install the "gcc4" package (disables bootstrap).
+In specific, the above mentioned zip file (pc-rules-2017-08-19.tar.xz) contains 34 
+unofficial GNU Fortran patches, mainly backports, which have been tested in both 
+macOS and Linux. In addition, I've applied them to the source RPM and could build
+and test it without any Fortran regressions.  
 
 Please, note that if you rebuild the compiler, it might not be supported by Red Hat.
 
-To run the instructions of this document, you must be experienced in both the RPM 
+To run the instructions of this document, you must be familiar with both the RPM 
 Building System and Bash scripts. If this isn't the case, contact an experienced
 professional.
 
-Many bugs are solved but there are cases where a bug solved by a patch (ie 52832)
-reappears after some other patches have been applied. In most cases this doesn't
-happen however.
-
-The program "realloc0last.f90" below (Appendix E) exhibited a bug in gfortran-4.8.5
-on RHEL 7, which didn't appear in gfortran-4.8.5 built by the "pc" in a mac. This
-was the reason I started this document and created the patch "gcc48-realloc.patch".
-
-Also, the patch "gcc48-assume.istat" is just a hack that can conditionally mute the
-same error message for invalid deallocations of arrays when a program is compiled
-with the option "-std=legacy" but without the option "-pedantic" (see 2slop.f90). 
+From time to time, more Fortran related patches are applied to the compiler. See
+appendix D (this doesn't mean that I test each new patch in the source RPM).
 
 
 Environment
@@ -66,11 +57,6 @@ One package required for the tests is "autogen", not mentioned as a prerequisite
 Known Issues
 ------------
 
-[2017-08-19] 
-When gcc4 is built in Linux the command make check-fortran reports no errors,
-whereas in macOS the option "-fsanitize=address" produces an error in one test
-case (see Appendix F).
-
 Some test failures during the RPM Build are listed in Appendix G. None of 
 them is Fortran relevant though.
 
@@ -80,17 +66,20 @@ Instructions (step-by-step)
 
 1) Install any official recommended updates and the Source RPM of gcc-4.8.5
 
-If you don't have subscribed to the sources chanel, type first:
+If you don't have subscribed to the sources channel, type first:
 sudo  subscription-manager repos --enable=rhel-7-server-source-rpms
 
 Download the Source RPM for gcc, open a terminal in that directory and type:
 rpm -i gcc-4.8.5-16.el7.src.rpm
 
-In my system the installed compiler has the same version with the compiler I'll patch:
+In my system the installed compiler has the same version with the compiler I patch:
 $ gcc --version
 gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16)
 
 2) Once the "pc" tarball has been extracted to $HOME/pc, run all the commands of Appendix A
+  You should download a tested tarball. Cross check with the date reported in Appendix G.
+  curl -o https://github.com/drikosev/pc/blob/master/pc-rules-2017-08-19.tar.xz
+  *SHA1 b3e5e4db6230b4b1404c2d52395977059fa59936  
 
 3) Add all Patch Declarations of Appendix B below to the gcc.spec after the line:
 Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
@@ -99,18 +88,18 @@ Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
 %patch1200 -p0 -b .cloog-ppc64le-config~ 
 
 5) Run the following commands to build the "gcc-4.8.5-16.el7.src.rpm"
-  $ cd ~/rpmbuild
-  $ export RPM_BUILD_NCPUS=4
-  $ export LD_LIBRARY_PATH=""
-  $ export PATH=/usr/bin:/usr/sbin:/bin:/sbin:$PATH
-  $ rpmbuild -ba SPECS/gcc.spec --target x86_64  
+    cd ~/rpmbuild
+    export RPM_BUILD_NCPUS=4
+    export LD_LIBRARY_PATH=""
+    export PATH=/usr/bin:/usr/sbin:/bin:/sbin:$PATH
+    rpmbuild -ba SPECS/gcc.spec --target x86_64  
 
 The first time I built this package on Aug 15, 2017, I started the building process
 at 17:40 and finished at 22:20 (4 hours and 40 minutes).
 
-Let's see in some detail some issues I faced. You may face them also.
+Below are listed some issues I faced. You might face them also.
 
--Many dependencies (ie sharutils) are found in the "optionals" chanel. If you have not
+-Many dependencies (ie sharutils) are found in the "optionals" channel. If you have not
 activated a subscription to it, type: 
 
  $ sudo subscription-manager repos --enable=rhel-7-server-optional-rpms
@@ -298,51 +287,68 @@ Appendix C
 Appendix D
 ----------
 
-- Patch "gcc48-pr56650.relax" (7.1 backport)
+  The officially backported patches to 4.8.5, from 2014-12-23 to 2015-04-14, are:
+  PR's: 64244, 63733, 57023, 56867, 64528, 63744, 60898, 65024, 61138, 56674,
+  58813,59016, 59024.
+
+- Patch: "gcc48-pr56650.relax" (7.1 backport)
   [2017-08-16]      
   This patch restricts the conditions that an error message is issued. If you apply
   the "gcc48-pr56650.patch" but not the "gcc48-pr56650.relax", the RPM Build fails 
   (package "gcc-4.8.5-16.el7.src.rpm" in RHEL 7.3). 
 
-- Patch "gcc48-realloc.patch" (5.1 backport)
+- Patch: "gcc48-realloc.patch" (5.1 backport)
   [2017-08-19] 
   It solves a bug for reallocation of arrays with zero length (that's my diagnosis).
   The bug solved was producing a runtime error only in Linux (see "realloc0last.f90").
 
-- Patch "gcc48-assume.istat"
+- Patch: "gcc48-assume.istat"
   [2017-08-19] 
-  It's a hack that mutes some array deallocation errors with the option "-std=legacy"
+  It's a hack that mutes some deallocation errors with the option "-std=legacy"
   but without the option "-pedantic". See the program "2slop.f90" below.
-  
-  [todo: check that the patches below don't spoil the RPM Building process]
 
-- Patch "gcc48-pr58586.again" (7.1 backport)
+  ----------------------------------------------------------------------------------
+  The test results in Appendix G validate the above 34 Fortran patches (mentioned in
+  Appendixes A, B, and C). Which means that I've tested the 9 patches below only in
+  the PC script (on both Linux & Mac).
+  ----------------------------------------------------------------------------------
+
+- Patch: "gcc48-pr58586.again" (7.1 backport)
   [2017-08-21]
   Adds the second test case "alloc_comp_class_4.f03" which can be found also here:
   https://gcc.gnu.org/viewcvs/gcc?view=revision&revision=225447
   In macOS 10.12 this test case was crashing (Program received signal SIGABRT) but
   a manual test with "valgrind" proved a memory deallocation error in Linux also.
 
-- Patch "gcc48-pr63667.patch" 
+- Patches: "gcc48-pr63667.patch", "gcc48-tc64230.patch", "gcc48-tc64980.patch" 
   [2017-08-23]
-  This test case confirms a bug fix for the ICE described at:
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63667
-  [Note: If the test case is reduced to one class (t6) both 4.8.5 & 7.1 crash.]
+  These test cases confirm that the compiler doesn't have certain bugs described at:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63667 [ 64230 & 4980 ]
+  [If the test case in 63667 is reduced to one class (t6) both 4.8 & 7.1 crash.]
 
-- Patch "gcc48-tc64230.patch"
-  [2017-08-23]
-  This test case confirms a bug fix for the ICE described at:
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64230  
+-Patch: "gcc48-pr45516.patch", "gcc48-tc45516.patch" (7.1 backport)
+  [2017-09-02]
+  It solves a bug for recursive allocatable components of derived types as described
+  at (a) below, not for classes as described at (b) below:
 
-- Patch "gcc48-tc64980.patch"
-  [2017-08-23]
-  This test case confirms a bug fix for the ICE described at:  
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64980
+  (a) https://gcc.gnu.org/bugzilla/show_bug.cgi?id=45516
+  (b) https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82036  
 
--Patch "gcc48-fnosanitize.patch"
-  [2017-08-28]
-  This patch is applied in MaOS Sierra 10.12 and negates the "-fsanitize" option
-  in the Test Case "gfortran.dg/elemental_allocate_1.f90". 
+- Patch: "gcc48-pr52162.patch" (7.1 backport)
+  [2017-09-05] 
+  It solves a bug produced when the option " -fcheck=bounds" is passed, see:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52162
+
+- Patch: "gcc48-pr62174.patch"
+  [2017-09-25] 
+  It's a bug fix for Cray Pointers in Fortran, see:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=62174
+
+- Patch: "gcc48-pr64933.patch"
+  [2017-09-25] 
+  It's a bug fix for substring expressions in Fortran, see:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64933
+
 
 Appendix E
 ----------
@@ -381,35 +387,41 @@ end program main
 
 The following program demonstrates what does the patch "gcc48-assume.istat".
    
-$ gfortran 2slop.f90 -o 2slop; ./2slop
-At line 6 of file 2slop.f90
-Fortran runtime error: Attempt to DEALLOCATE unallocated 'arg'
+
+$ gfortran -std=legacy 2slop.f90 -o 2slop; ./2slop
+$ gfortran             2slop.f90 -o 2slop; ./2slop
+At line 9 of file 2slop.f90
+Fortran runtime error: Attempt to DEALLOCATE unallocated 'tmp'
 $ cat 2slop.f90
-!gfortran -std=legacy 2slop.f90
+! { dg-do run }
+! { dg-options "-std=legacy" }
+!
 program slop2
  
   integer, allocatable,  dimension(:) :: arg
-  integer  istat
+  integer, allocatable   ::  tmp 
+  
+  deallocate(tmp)
   deallocate(arg)
 
 end program slop2
 
-
-Appendix F - Test Failures from the PC Package gcc4
+Appendix F - Tests Results from the PC Package gcc4
 ---------------------------------------------------
+[2017-09-12]
 
-In macOS, the test "elemental_allocate_1.f90" failed due to option "-fsanitize=address".
+All Fortran Tests passed successfully in both MacOS (10.12) & RHEL (7.3). Try:
+make check-fortran
 
-When I compiled and run this test manually, the error message was:
-$ ./a.out
-==32345== AddressSanitizer CHECK failed: ../../../../gcc-4.8.5/libsanitizer/asan/asan_rtl.cc:413 "((!asan_init_is_running && "ASan init calls itself!")) != (0)" (0x0, 0x0)
+...
+		=== gfortran Summary ===
 
+# of expected passes		44119
+# of expected failures		42
+# of unsupported tests		70
+...
 
-Please note that when I build the package gcc4 or gcc48 I run only the Fortran tests (make check-fortran).
-
-Whereas in RHEL 7.3, the package gcc4 didn't produce any Fortran errors and I confirmed again that
-the above test case doesn't fail in linux:
-
+To run only the test case which has the option "-fsanitize=address", type:
 make check-fortran RUNTESTFLAGS="dg.exp=elemental_allocate_1.f90"
 
 
