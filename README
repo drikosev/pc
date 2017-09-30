@@ -127,7 +127,7 @@ Known Issues
 
   Although the PlugIn facilitates debugging for Fortran programs in Xcode (which uses only
   the LLDB), I've not tested it exhaustively. Yet, it can overcome few problems mainly on a
-  Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by the linker).
+  Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by the newer linker).
   
   Also, gcc-4.8.5 cannot parse some system headers in macOS Sierra. As a consequence clang
   compiles the packages "gettext" and "pkg-config". There is also a relevant test failure:
