@@ -13,6 +13,7 @@ Installation Script
 -------------------
 
 To install a package, one has to run the "port" command to create an archive that will be processed by the system installer. This "port" command cannot uninstall packages and shouldn't be on the path.
+
 The installation process is logically divided in three phases. At first, one can run the command "./port details <package>" to examine in advance the installation details of a package, without download it; this command will print the relevant url's, configuration options, and installation paths for that package.
 
 After, one can archive a package with a single command or on a step-by-step basis. Specifically, one can download, extract, patch, configure, make, place, pack, and archive a package. These steps are also options of the port command. Running the "port" command with the option "place" will install files to a temporary directory located at "/tmp/<package>.dst"; this is the destination root in Apple's parlance that will be packed and archived.
@@ -32,7 +33,7 @@ cd ~/pc
 tar xf ~/Downloads/pc-rules-2017-09-30.tar.xz 
 ln -sf rules/port port
 
-*SHA1  6550dfc6ce456cb08728ceb9181be66fed6cb90a 
+*SHA1  c57502f2b1c76271cbc89e191e65890a4612e391 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -134,8 +135,8 @@ Known Issues
   FAIL: gcc.dg/framework-1.c (test for excess errors)
 
   There are some failures with the "guality" tests on Linux (gcc.dg/quality/) whereas on a
-  Mac the PCH tests fail ("pch") because they interfere with a system security policy that
-  loads programs at randomly chosen memory addresses. Yet, the tests are setup to issue
+  Mac the PCH tests fail ("pch") because they don't comply with a system security policy 
+  that loads processes at randomly chosen memory addresses. Yet, the tests are setup to issue
   warnings on that case. Only in the Xcode environment I could successfully avoid them.
 
 - Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
