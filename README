@@ -108,4 +108,37 @@ Obviously, one can copy paste and execute the above commands in a Mac, as long a
 Once "gnu sed" is installed, one should be able to install without any modifications "byacc", a prerequisite of "gnu awk", which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
 
 
+Known Issues
+------------
+[2017-09-30]
+
+- The pc script should run immediately after you clean install macOS Sierra along with
+  Xcode and the Command Line Tools. Any other packages on path (ie at /opt/local) might
+  have undesirable side effects. A similar restriction applies for Linux as well. This 
+  is the only scenario I've successfully tested so far. 
+
+- To install gcc48 or gcc4 on Linux, you have to manually install its dependencies. The 
+  required dependencies in a RHEL 7.3 system can be satisfied by the official distribution
+  packages. So, the PC won't attempt to install ie gettext or pkg-config.
+
+  Although the PlugIn facilitates debugging for Fortran programs in Xcode (which uses only
+  the LLDB), I've not tested it exhaustively. Yet, it can overcome few problems mainly on a
+  Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by the linker).
+  
+  Also, gcc-4.8.5 cannot parse some system headers in macOS Sierra. As a consequence clang
+  compiles the packages "gettext" and "pkg-config". There is also a relevant test failure:
+  FAIL: gcc.dg/framework-1.c (test for excess errors)
+
+  There are some failures with the "guality" tests on Linux (gcc.dg/quality/) whereas on a
+  Mac the PCH tests fail ("pch") because they interfere with a system security policy that
+  loads programs at randomly chosen memory addresses. Yet, the tests are setup to issue
+  warnings on that case. Only in the Xcode environment I could successfully avoid them.
+
+- Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
+  Whereas the ratio of the failures is worse when one runs all the tests: 
+  https://bugs.kde.org/show_bug.cgi?id=365327#c23
+
+- If bash is asked to run a non existing command, you might face an unimportant Segmentation Fault. 
+
+
 [ The PC script was originally available at http://users.otenet.gr/~drikosev/ ]
