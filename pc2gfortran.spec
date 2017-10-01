@@ -93,7 +93,7 @@ Sep 30, 2017
 
    Some test failures during the RPM Build are listed in Appendix G. None of 
    them is Fortran relevant though. The ASAN test failures are likely caused
-   by the buggy test cases, rather than bugs of the sanitiser. 
+   by out of date test cases that don't match properly the sanitiser messages. 
 
 
    2) Step by Step Instructions to Apply the Fortran Patches
