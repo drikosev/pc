@@ -119,7 +119,7 @@ Known Issues
 
 - The pc script should run immediately after you clean install macOS Sierra along with
   Xcode and the Command Line Tools. Any other packages on path (ie at /opt/local) might
-  have undesirable side effects. A similar restriction applies for Linux as well. This 
+  have undesirable side effects; a similar restriction applies for Linux as well. This 
   is the only scenario I've successfully tested so far. 
 
 - To install gcc48 or gcc4 on Linux, you have to manually install its dependencies. The 
@@ -128,7 +128,7 @@ Known Issues
 
   Although the PlugIn facilitates debugging for Fortran programs in Xcode (which uses only
   the LLDB), I've not tested it exhaustively. Yet, it can overcome few problems mainly on a
-  Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by the newer linker).
+  Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac linkers).
   
   Also, gcc-4.8.5 cannot parse some system headers in macOS Sierra. As a consequence clang
   compiles the packages "gettext" and "pkg-config". There is also a relevant test failure:
@@ -146,4 +146,4 @@ Known Issues
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation Fault. 
 
 
-[ The PC script was originally available at http://users.otenet.gr/~drikosev/ ]
+[ The PC script was originally hosted at http://users.otenet.gr/~drikosev/ ]
