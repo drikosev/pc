@@ -47,7 +47,7 @@ Sep 30, 2017
    To run the instructions of this document you must be familiar with both the RPM
    Building System and Bash scripts. If this isn't the case contact a professional.
 
-   Occasionally, more Fortran related patches are applied to the compiler. See
+   Occasionally, more Fortran relevant patches are applied to the compiler. See
    Appendix E (this doesn't mean that I test each new patch in the source RPM).
 
 
