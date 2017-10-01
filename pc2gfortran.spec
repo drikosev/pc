@@ -14,8 +14,8 @@ Sep 30, 2017
       2.1) Download & Setup the PC Script
       2.2) Copy the Fortran Patches to the ~/rpmbuild/SOURCES Directory
       2.3) Install the Source RPM
-      2.4) Install any missing Prerequisites
-      2.5) Update the gcc.spec File
+      2.4) Update the gcc.spec File
+      2.5) Install any missing Prerequisites
       2.6) Build the RPM
       2.7) Install the new Compiler
 
@@ -137,7 +137,16 @@ Sep 30, 2017
    rpm -i gcc-4.8.5-16.el7.src.rpm
 
 
-   2.4) Install any missing Prerequisites
+   2.4) Update the gcc.spec File
+
+   Add all patch declarations listed in Appendix B below to the gcc.spec
+   file after the line: Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
+
+   Add all patch instructions listed in Appendix C below to the gcc.spec
+   file after the line: %patch1200 -p0 -b .cloog-ppc64le-config~ 
+
+
+   2.5) Install any missing Prerequisites
 
    Here are listed some issues I faced. You might face them also.
 
@@ -153,14 +162,6 @@ Sep 30, 2017
    Also, some tests during the RPM building process require "autogen", which isn't
    mentioned in the RPM dependencies. Type:
    sudo yum install autogen-5.18
-
-   2.5) Update the gcc.spec File
-
-   Add all patch declarations listed in Appendix B below to the gcc.spec
-   file after the line: Patch1200: cloog-%{cloog_version}-ppc64le-config.patch
-
-   Add all patch instructions listed in Appendix C below to the gcc.spec
-   file after the line: %patch1200 -p0 -b .cloog-ppc64le-config~ 
 
 
    2.6) Build the RPM
@@ -375,9 +376,9 @@ sudo rpm --force -i gcc-plugin-devel-4.8.5-16.el7.x86_64.rpm
 Appendix E
 ----------
 
-  The officially backported patches to 4.8.5, from 2014-12-23 to 2015-04-14, are:
-  PR's: 64244, 63733, 57023, 56867, 64528, 63744, 60898, 65024, 61138, 56674,
-  58813,59016, 59024.
+  The officially backported Fortran patches to 4.8.5, between 2014-12-23 and
+  2015-04-14, are: PR/64244, PR/63733, PR/57023, PR/56867, PR/64528, PR/63744,
+  PR/60898, PR/65024, PR/61138, PR/56674, PR/58813, PR/59016, and PR/59024.
 
 - Patch: "gcc48-pr56650.relax" (7.1 backport)
   [2017-08-16]      
