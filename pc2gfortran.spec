@@ -22,8 +22,8 @@ Sep 30, 2017
    3) Appendices
              A-D: text to copy/paste.
       Appendix F: sample code
-      Appendix E: a short list with the most recent added patches
-      Appendix G: the most recent RPM test results 
+      Appendix E: a short list with recently added patches
+      Appendix G: the last RPM test results 
 
 
    --------------------------------------------------------------------------------
