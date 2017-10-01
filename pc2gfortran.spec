@@ -61,9 +61,8 @@ Sep 30, 2017
    Kernel Version : 3.10.0-514.el7.x86_64
    System Compiler: gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16)
 
-   In my system the installed compiler has the same version with the compiler I patch:
-   $ gcc --version
-   gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16)
+   So, in my system the installed compiler has the same version with the compiler
+   I patch.
 
    The first time I built this package on Aug 15, 2017, I started the building
    process at 17:40 and finished at 22:20 (4 hours and 40 minutes).
