@@ -68,7 +68,7 @@ Sep 30, 2017
    1.2) Prerequisites & Dependencies
         ----------------------------
 
-   When you start the building process, you will be informed of any missing
+   When you start the building process, you will be informed about any missing
    dependencies but some packages aren't downloaded from the default repository.
 
    In addition to the default repo channel, I needed another two: 
