@@ -144,7 +144,8 @@ Known Issues
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
 
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
-  Fault. This problem is likely solved with the newer patches applied on 2017-10-02.
+  Fault. This problem is likely solved with the newer patches applied on 2017-10-02 (no,
+  the problem remains).
 
 
 [ The PC script was originally hosted at http://users.otenet.gr/~drikosev/ ]
