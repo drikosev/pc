@@ -54,7 +54,7 @@ Sep 30, 2017
    1.1) Environment
         -----------
 
-         Computer : Mac-Mini quad core i7 (late 2011)
+         Computer : Mac-Mini quad core i7 (Mid 2011)
               RAM : 4-GB
            Distro : RHEL 7.3 (Last Update on Aug 13, 2017)
           Machine : x86_64-redhat-linux
@@ -93,7 +93,7 @@ Sep 30, 2017
 
    Some test failures during the RPM Build are listed in Appendix G. None of 
    them is Fortran relevant though. The ASAN test failures are likely caused
-   by out of date test cases that don't match properly the sanitiser messages. 
+   by outdated test cases that don't match properly the sanitiser messages. 
 
 
    2) Step by Step Instructions to Apply the Fortran Patches
