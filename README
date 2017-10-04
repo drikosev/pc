@@ -26,14 +26,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-10-02.tar.xz), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-09-30.tar.xz), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar xf ~/Downloads/pc-rules-2017-10-02.tar.xz 
+tar xf ~/Downloads/pc-rules-2017-09-30.tar.xz 
 ln -sf rules/port port
 
-*SHA1  be3a5cbded54f5c206a2537b852fc9b785e53485 
+*SHA1  c57502f2b1c76271cbc89e191e65890a4612e391 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -144,8 +144,6 @@ Known Issues
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
 
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
-  Fault. This problem is likely solved with the newer patches applied on 2017-10-02 (no,
-  the problem remains).
-
+  Fault. This problem remains even with the newer patches applied on 2017-10-02.
 
 [ The PC script was originally hosted at http://users.otenet.gr/~drikosev/ ]
