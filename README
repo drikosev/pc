@@ -33,7 +33,7 @@ cd ~/pc
 tar -xjSf ~/Downloads/pc-rules-2017-10-23.tar.bz2 
 ln -sf rules/port port
 
-*SHA1  c4be4c8881265c00dbb5c43e166723d7281fb3a4 
+*SHA1  bbcbd68b8321e708fd4580cfc9af7de21b24b029 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
