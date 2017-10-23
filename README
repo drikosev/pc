@@ -26,19 +26,19 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-09-30.tar.xz), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-10-23.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar xf ~/Downloads/pc-rules-2017-09-30.tar.xz 
+tar -xjSf ~/Downloads/pc-rules-2017-10-23.tar.bz2 
 ln -sf rules/port port
 
-*SHA1  c57502f2b1c76271cbc89e191e65890a4612e391 
+*SHA1  80f90d4c0031882178f2784587a5acf2673f738f 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
 
-Likely, this is the first package to be installed on a Mac. On Linux use gcc48 instead. 
+Likely, this is the first package to be installed on a Mac. in Linux use gcc48 instead. 
 
 
 RPM (4.11.3)
@@ -63,7 +63,7 @@ Below there are step by step instructions to download this small RPM package (se
 
 
 Download a source RPM Package
-
+-----------------------------
 cd ~/Downloads 
 curl -O http://public-yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackageSource/sed-4.2.2-5.el7.src.rpm 
 rpm -i sed-4.2.2-5.el7.src.rpm 
@@ -80,7 +80,7 @@ sudo rpm --import /usr/local/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle-ol7
 
 
 Porting a source RPM package to Mac OS Sierra (10.12)
-
+-----------------------------------------------------
 cd $HOME/rpmbuild 
 sed -i.sav "s/, [ ]*libselinux-devel//g" SPECS/sed.spec 
 sed -i.sav "s,/sbin/install-info,/usr/local/bin/install-info,g" SPECS/sed.spec 
@@ -90,7 +90,7 @@ rm -f SPECS/sed.spec.sav
 
 
 Build & Install an RPM Package
-
+------------------------------
 cd $HOME/rpmbuild 
 rpmbuild -ba SPECS/sed.spec --target x86_64 
 sudo rpm -i --nodeps --force RPMS/X86_64/sed-4.2.2-5.x86_64.rpm
@@ -99,30 +99,32 @@ Without the option "--nodeps" the above command fails as the library "libintl.8.
  
 
 Uninstall an RPM Package
-
-Thereafter, one should be able to uninstall this package, which hasn't active dependents, with the following command:
+------------------------
+Thereafter, one should be able to uninstall this package, which hasn't any active dependents, with the following command:
 
 sudo rpm --erase sed-4.2.2-5
 
-Since various RPM Scripts depend on this package one will definitely reinstall it.
+Since various RPM Scripts depend on gnu sed, one will definitely reinstall it. If "autogen" is also installed one can make a complete check on gcc4 (make check), because the gcc-4.8.5 sub-package "fixincludes" depends on both of them.
 
 
 Epilogue
-
+--------
 Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.3 uses this version of sed. Without any doubt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac.
 Once "gnu sed" is installed, one should be able to install without any modifications "byacc", a prerequisite of "gnu awk", which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
 
+Once you have installed these source RPM packages, you can install "autogen" with the following command:
+ ~/pc/port --force rpminstall autogen 
 
 Known Issues
 ------------
-[2017-09-30]
+[2017-10-22]
 
 - The pc script should run immediately after you clean install macOS Sierra along with
-  Xcode and the Command Line Tools. Any other packages on path (ie at /opt/local) might
-  have undesirable side effects; a similar restriction applies for Linux as well. This 
+  the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
+  might have undesirable side effects; a similar restriction applies for Linux as well. This 
   is the only scenario I've successfully tested so far. 
 
-- To install gcc48 or gcc4 on Linux, you have to manually install its dependencies. The 
+- To install gcc48 or gcc4 in Linux, you have to manually install its dependencies. The 
   required dependencies in a RHEL 7.3 system can be satisfied by the official distribution
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
 
@@ -130,20 +132,25 @@ Known Issues
   the LLDB), I've not tested it exhaustively. Yet, it can overcome few problems mainly on a
   Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac linkers).
   
-  Also, gcc-4.8.5 cannot parse some system headers in macOS Sierra. As a consequence clang
-  compiles the packages "gettext" and "pkg-config". There is also a relevant test failure:
+  GNU gcc-4.8.5 can't parse some system headers in macOS Sierra. One test case (include.c) 
+  has been adjusted as in gcc-7.1 but another indicative failure is this:
   FAIL: gcc.dg/framework-1.c (test for excess errors)
 
-  There are some failures with the "guality" tests on Linux (gcc.dg/quality/) whereas on a
-  Mac the PCH tests fail ("pch") because they don't comply with a system security policy 
-  that loads processes at randomly chosen memory addresses. Yet, the tests are setup to issue
-  warnings in that case. Only in the Xcode environment I could successfully avoid them.
+  There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
+  Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
+  the warnings ie didn't comply with a system security policy that loads processes at 
+  randomly chosen memory addresses; I could avoid it only in the Xcode environment.
 
 - Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
   Whereas the ratio of the failures is worse when one runs all the tests: 
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
 
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
-  Fault. This problem remains even with the newer patches applied on 2017-10-02.
+  Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
+  on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin.
+
+- The PC script *IS NOT* ready for macOS High Sierra (10.13).
+                --------
+
 
 [ The PC script was originally hosted at http://users.otenet.gr/~drikosev/ ]
