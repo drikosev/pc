@@ -33,12 +33,12 @@ cd ~/pc
 tar -xjSf ~/Downloads/pc-rules-2017-10-23.tar.bz2 
 ln -sf rules/port port
 
-*SHA1  80f90d4c0031882178f2784587a5acf2673f738f 
+*SHA1  c4be4c8881265c00dbb5c43e166723d7281fb3a4 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
 
-Likely, this is the first package to be installed on a Mac. in Linux use gcc48 instead. 
+Likely, this is the first package to be installed in macOS (10.12). In older versions or in Linux try the package gcc48 instead. 
 
 
 RPM (4.11.3)
