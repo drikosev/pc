@@ -26,14 +26,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-10-23.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-10-26.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-10-23.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2017-10-26.tar.bz2 
 ln -sf rules/port port
 
-*SHA1  bbcbd68b8321e708fd4580cfc9af7de21b24b029 
+*SHA1   b5be71a862ca7c9020724c8970a51af7660f19fc 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -84,8 +84,10 @@ Porting a source RPM package to Mac OS Sierra (10.12)
 cd $HOME/rpmbuild 
 sed -i.sav "s/, [ ]*libselinux-devel//g" SPECS/sed.spec 
 sed -i.sav "s,/sbin/install-info,/usr/local/bin/install-info,g" SPECS/sed.spec 
-sed -i.sav "s/configure[ ]*--without-included-regex/configure --with-included-regex/g" SPECS/sed.spec 
-sed -i.sav "s/sed.info.gz/sed.info/g" SPECS/sed.spec 
+sed -i.sav "s/configure[ ]*--without-included-regex/configure --disable-nls --disable-i18n --with-included-regex/g" SPECS/sed.spec 
+sed -i.sav "s/sed.info.gz/sed.info/g" SPECS/sed.spec
+sed -i.sav "s/%find_lang/#%find_lang/g" SPECS/sed.spec
+sed -i.sav "s/\-f[ ]*%{name}.lang//g" SPECS/sed.spec  
 rm -f SPECS/sed.spec.sav
 
 
@@ -93,10 +95,8 @@ Build & Install an RPM Package
 ------------------------------
 cd $HOME/rpmbuild 
 rpmbuild -ba SPECS/sed.spec --target x86_64 
-sudo rpm -i --nodeps --force RPMS/X86_64/sed-4.2.2-5.x86_64.rpm
+sudo rpm -i RPMS/X86_64/sed-4.2.2-5.x86_64.rpm
 
-Without the option "--nodeps" the above command fails as the library "libintl.8.dylib" is found to be a missing resource. One workaround is to reinstall gettext as a regular rpm package with the following command "~/pc/port --force rpminstall gettext". Obviously, this problem indicates that the conversion of a "*.pkg" to an "*.rpm" is anything else but perfect. 
- 
 
 Uninstall an RPM Package
 ------------------------
@@ -104,7 +104,7 @@ Thereafter, one should be able to uninstall this package, which hasn't any activ
 
 sudo rpm --erase sed-4.2.2-5
 
-Since various RPM Scripts depend on gnu sed, one will definitely reinstall it. If "autogen" is also installed one can make a complete check on gcc4 (make check), because the gcc-4.8.5 sub-package "fixincludes" depends on both of them.
+Since various RPM Scripts depend on gnu sed, one will definitely reinstall it. Once "autogen" is also installed one can make a complete check on gcc4 (make check), because the gcc-4.8.5 sub-package "fixincludes" depends on both of them.
 
 
 Epilogue
