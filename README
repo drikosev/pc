@@ -151,7 +151,7 @@ Known Issues
 
 - The bcm43xx WiFi driver installed by the PC script has been tested in a RHEL 7.3 system 
   (with kernels 3.10.0-514.el7.x86_64 & 3.10.0-693.5.2.el7.x86_64). Support for the latter
-  was added on 2017-10-28. The PC script isn't suitable for newer kernels.
+  was added on 2017-10-28. The PC script cannot install this driver in newer kernels.
 
 - The PC script *IS NOT* ready for macOS High Sierra (10.13).
                 --------
