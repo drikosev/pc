@@ -6,7 +6,7 @@ The port center (pc) is an OS directory that contains a few Bash Scripts and Mak
 
 The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on macOS Sierra (10.12). In the past I'd tested it also in OS X Yosemite (10.10). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
 
-Also, one can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card installed in older Mac hardware (Mac Mini & Mac Book Pro 2011, 2012).
+Also, one can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card (kernels 3.10.0-514 & 3.10.0-693.5.2) installed in older Mac hardware (Mac Mini & Mac Book Pro 2011, 2012). 
 
 
 Installation Script
@@ -26,19 +26,19 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-10-26.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-10-28.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-10-26.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2017-10-28.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   fae3cc57d703df4ddd4d49388d566a5aa7a551d6 
+*SHA1   40441b204f790b9b7a63d7a5e99801b02ad59e9b 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
 
-Likely, this is the first package to be installed in macOS (10.12). In older versions or in Linux try the package gcc48 instead. 
+Likely, this is the first package to be installed in macOS (10.12). In a Linux system try the package gcc48 instead. 
 
 
 RPM (4.11.3)
@@ -147,10 +147,13 @@ Known Issues
 
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
-  on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin.
+  on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. 
+
+- The bcm43xx WiFi driver installed by the PC script has been tested in a RHEL 7.3 system 
+  (with kernels 3.10.0-514.el7.x86_64 & 3.10.0-693.5.2.el7.x86_64). Support for the latter
+  was added on 2017-10-28; The PC script isn't suitable for newer kernels.
 
 - The PC script *IS NOT* ready for macOS High Sierra (10.13).
                 --------
-
 
 [ The PC script was originally hosted at http://users.otenet.gr/~drikosev/ ]
