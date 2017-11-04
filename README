@@ -156,7 +156,7 @@ Known Issues
   "port" script depends on that functionality.
 
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
-  "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those messages.
+  "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
  
 - The "bcm43xx" WiFi driver is kernel specific and has to be reinstalled after a kernel upgrade. 
   Since distinct patching is required for nearly each newer kernel, the installation script is 
