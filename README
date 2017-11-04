@@ -6,7 +6,7 @@ The port center (pc) is an OS directory that contains a few Bash Scripts and Mak
 
 The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on macOS Sierra (10.12). In the past I'd tested it also in OS X Yosemite (10.10). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
 
-Also, one can run this script in RHEL or CentOS 7.3 to install two Linux Drivers for Apple Hardware, one for the Apple USB Super Drive (ausden) and a second for the bcm43xx WiFi card (kernels 3.10.0-514 & 3.10.0-693.5.2) installed in older Mac hardware (Mac Mini & Mac Book Pro 2011, 2012). 
+Also, one can run this script in a RHEL 7.4 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and a second for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed in older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific as explained at the end of this document (see "Known Issues"). 
 
 
 Installation Script
@@ -26,14 +26,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-10-28.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-04.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-10-28.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2017-11-04.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   40441b204f790b9b7a63d7a5e99801b02ad59e9b 
+*SHA1   4295ac34dc895898176d4ee0a22531c15a2d7239 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -109,19 +109,19 @@ Since various RPM Scripts depend on gnu sed, one will definitely reinstall it. O
 
 Epilogue
 --------
-Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.3 uses this version of sed. Without any doubt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac.
-Once "gnu sed" is installed, one should be able to install without any modifications "byacc", a prerequisite of "gnu awk", which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
+Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.3 uses this version of sed. Without any doubt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac. Once "gnu sed" is installed, one should be able to install without any modifications "byacc", a prerequisite of "gnu awk", which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
 
 Once you have installed these source RPM packages, you can install "autogen" with the following command:
  ~/pc/port --force rpminstall autogen 
 
+
 Known Issues
 ------------
-[2017-10-22]
+[2017-11-04]
 
-- The pc script should run immediately after you clean install macOS Sierra along with
-  the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
-  might have undesirable side effects; a similar restriction applies for Linux as well. This 
+- The installation script should run immediately after you clean install macOS Sierra along
+  with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
+  might have undesirable side effects; a similar restriction applies to Linux as well. This 
   is the only scenario I've successfully tested so far. 
 
 - To install gcc48 or gcc4 in Linux, you have to manually install its dependencies. The 
@@ -136,6 +136,9 @@ Known Issues
   has been adjusted as in gcc-7.1 but another indicative failure is this:
   FAIL: gcc.dg/framework-1.c (test for excess errors)
 
+  In macOS High Sierra (10.13), gcc (4.8 & 7.1) cannot parse in addition the system header
+  "syslog.h" which is required by the NSS package; thus, NSS is compiled by clang. 
+
   There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
   the warnings ie didn't comply with a system security policy that loads processes at 
@@ -149,11 +152,28 @@ Known Issues
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
   on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. 
 
-- The bcm43xx WiFi driver installed by the PC script has been tested in a RHEL 7.3 system 
-  (with kernels 3.10.0-514.el7.x86_64 & 3.10.0-693.5.2.el7.x86_64). Support for the latter
-  was added on 2017-10-28. The PC script cannot install this driver in newer kernels.
+  In macOS High Sierra (10.13), the read builtin command fails to process some strings. The
+  "port" script depends on that functionality.
 
-- The PC script *IS NOT* ready for macOS High Sierra (10.13).
-                --------
+- The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
+  "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those messages.
+ 
+- The "bcm43xx" WiFi driver is kernel specific and has to be reinstalled after a kernel upgrade. 
+  Since distinct patching is required for nearly each newer kernel, the installation script is 
+  suitable to install the driver only in certain kernels, which correspond to RHEL 6.0 - 7.4. 
 
-[ The PC script was originally hosted at http://users.otenet.gr/~drikosev/ ]
+  The installation script doesn't count on the system release though. Rather it takes into
+  account the booted kernel. That explained, the following command prints the system release
+  that corresponds to the latest installed kernel:
+  cat /etc/system-release-cpe | awk -F ":" '{print $5}'
+
+  The "bcm43xx" driver has been tested in a RHEL 7.3 system with kernel 3.10.0-514.el7.x86_64.
+  Support for the newer kernel 3.10.0-693.5.2.el7.x86_64 (RHEL 7.4) was added on 2017-10-28.
+
+- Just few packages have been ported to macOS 10.13, ie nss, gcc (4.8.5 & 7.1), thus the installation
+  script *IS NOT* ready for macOS High Sierra (10.13). 
+         --------
+
+
+
+[ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
