@@ -117,7 +117,7 @@ Once you have installed these source RPM packages, you can install "autogen" wit
 
 Known Issues
 ------------
-[2017-11-04]
+[2017-11-05]
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
@@ -136,8 +136,7 @@ Known Issues
   has been adjusted as in gcc-7.1 but another indicative failure is this:
   FAIL: gcc.dg/framework-1.c (test for excess errors)
 
-  In macOS High Sierra (10.13), gcc (4.8 & 7.1) cannot parse in addition the system header
-  "syslog.h" which is required by the NSS package; thus, NSS is compiled by clang. 
+  In macOS 10.13, gcc (4.8 & 7.1) cannot parse in addition the system header "syslog.h". 
 
   There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
@@ -170,9 +169,8 @@ Known Issues
   The "bcm43xx" driver has been tested in a RHEL 7.3 system with kernel 3.10.0-514.el7.x86_64.
   Support for the newer kernel 3.10.0-693.5.2.el7.x86_64 (RHEL 7.4) was added on 2017-10-28.
 
-- Just few packages have been ported to macOS 10.13, ie nss, gcc (4.8.5 & 7.1), thus the installation
-  script *IS NOT* ready for macOS High Sierra (10.13). 
-         --------
+- The installation script *IS NOT* ready for macOS High Sierra (10.13). 
+                          --------
 
 
 
