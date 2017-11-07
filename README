@@ -26,14 +26,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-06.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-07.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-11-06.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2017-11-07.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   8a203d94df929864fa2bf03dca835a0ebc81b6dc 
+*SHA1   725d2301f800129dccaac2102c47aea555fac3f3 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -119,7 +119,7 @@ Known Issues
 ------------
 [2017-11-07]
 
-- The weather forecast data published on Nov 6 & 7 by HNMS for the Olympic Stadium area are 
+- The weather forecast data published by HNMS on Nov 6 & 7 for the Olympic Stadium area are 
   garbages.
 
 - The installation script should run immediately after you clean install macOS Sierra along
