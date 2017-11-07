@@ -16,7 +16,7 @@ To install a package, one has to run the "port" command to create an archive tha
 
 The installation process is logically divided in three phases. At first, one can run the command "./port details <package>" to examine in advance the installation details of a package, without download it; this command will print the relevant url's, configuration options, and installation paths for that package.
 
-After, one can archive a package with a single command or on a step-by-step basis. Specifically, one can download, extract, patch, configure, make, place, pack, and archive a package. These steps are also options of the port command. Running the "port" command with the option "place" will install files to a temporary directory located at "/tmp/<package>.dst"; this is the destination root in Apple's parlance that will be packed and archived.
+After, one can archive a package with a single command or on a step-by-step basis. Specifically, one can download, extract, patch, configure, make, place, pack, and archive a package. These steps are also options of the port command. Running the "port" command with the option "place" will install files to a temporary directory located at "/tmp/<package>.dst"; which is the destination root that will be packed and archived.
 
 Finally, one can invoke the system installer to process the archive; possibly, by double clicking it. If you build and install a package on the same machine you can simply run: "./port install <package>". 
 
@@ -117,7 +117,10 @@ Once you have installed these source RPM packages, you can install "autogen" wit
 
 Known Issues
 ------------
-[2017-11-05]
+[2017-11-07]
+
+- The weather forecast data published on Nov 6 & 7 by HNMS for the Olympic Stadium area are 
+  garbages.
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
