@@ -119,8 +119,8 @@ Known Issues
 ------------
 [2017-11-07]
 
-- The weather forecast data published by HNMS on Nov 6 & 7 for the Olympic Stadium area are 
-  garbages.
+- The weather forecast data published by HNMS on Nov 6 & 7 for the Olympic Stadium area were 
+  garbages and changed default area to New Philadelpheia.
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
@@ -158,13 +158,6 @@ Known Issues
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
  
-- The "bcm43xx" WiFi driver is kernel specific and has to be reinstalled after a kernel upgrade. 
-  Since distinct patching is required for nearly each newer kernel, the installation script is 
-  suitable to install the driver only in certain kernels, which correspond to RHEL 6.0 - 7.4. 
-
-  The "bcm43xx" driver has been tested in a RHEL 7.3 system with kernel 3.10.0-514.el7.x86_64.
-  Support for the newer kernel 3.10.0-693.5.2.el7.x86_64 (RHEL 7.4) was added on 2017-10-28.
-
 - The installation script *IS NOT* ready for macOS High Sierra (10.13). 
                           --------
 
