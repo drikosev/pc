@@ -119,9 +119,6 @@ Known Issues
 ------------
 [2017-11-07]
 
-- The weather forecast data published by HNMS on Nov 6 & 7 for the Olympic Stadium area were 
-  garbages and changed default area to New Philadelpheia.
-
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
   might have undesirable side effects; a similar restriction applies to Linux as well. This 
