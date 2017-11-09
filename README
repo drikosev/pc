@@ -26,14 +26,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-07.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-09.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-11-07.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2017-11-09.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   725d2301f800129dccaac2102c47aea555fac3f3 
+*SHA1   70dbdec0d9bc806cc5721b3187ceb1d7b6477fa8 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -129,12 +129,15 @@ Known Issues
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
 
   Although the PlugIn facilitates debugging for Fortran programs in Xcode (which uses only
-  the LLDB), I've not tested it exhaustively. Yet, it can overcome few problems mainly on a
+  LLDB), I've not tested it exhaustively. Yet, it can overcome few problems mainly on a
   Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac linkers).
   
   GNU gcc-4.8.5 can't parse some system headers in macOS Sierra. One test case (include.c) 
   has been adjusted as in gcc-7.1 but another indicative failure is this:
   FAIL: gcc.dg/framework-1.c (test for excess errors)
+
+  The above problem has been classified as an enhancement request (69960). In 10.13, gcc4 might
+  issue in addition a warning, whereas gcc7 complaints only for the non constant assignment. 
 
   There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
