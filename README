@@ -33,7 +33,7 @@ cd ~/pc
 tar -xjSf ~/Downloads/pc-rules-2017-11-10.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   5d4a4abcd9791e03101f691b479e73009cfc3019 
+*SHA1   c7fa01a10488434bca5d07dbfb2215a15f520f1d 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -159,6 +159,12 @@ Known Issues
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
  
+- The build rules for package file (aka libmagic) were found to be spoiled on 2017-11-10 and
+  likely this has happened as soon as "guile 2.2" was ported to macOS 10.12 (likely on 2017/10/05). 
+  As some other packages in macOS 10.13, the package file included in the Command Line Tools is
+  newer that the package file installed by the PC but it doesn't contain a library required by 
+  Berkeley DB.
+
 - The installation script *IS NOT* ready for macOS High Sierra (10.13). 
                           --------
 
