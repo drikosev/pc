@@ -131,6 +131,7 @@ Known Issues
   Although the PlugIn facilitates debugging for Fortran programs in Xcode (which uses only
   LLDB), I've not tested it exhaustively. Yet, it can overcome few problems mainly on a
   Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac linkers).
+  In a Linux installation, the PlugIn can compile ie the Fortran program found in PR/82065.
   
   GNU gcc-4.8.5 can't parse some system headers in macOS Sierra. One test case (include.c) 
   has been adjusted as in gcc-7.1 but another indicative failure is this:
