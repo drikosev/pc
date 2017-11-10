@@ -137,7 +137,7 @@ Known Issues
   FAIL: gcc.dg/framework-1.c (test for excess errors)
 
   The above problem has been classified as an enhancement request (69960). In 10.13, gcc4 might
-  issue in addition a warning, whereas gcc7 complaints only for a non constant assignment. 
+  issue in addition a warning (whereas gcc7 fails only on a non constant assignment). 
 
   There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
