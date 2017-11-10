@@ -165,6 +165,8 @@ Known Issues
   newer that the package file installed by the PC but it doesn't contain a library required by 
   Berkeley DB.
 
+- The "popt" tests (@58) fail on both macOS 10.12 & 10.13. 
+
 - The installation script *IS NOT* ready for macOS High Sierra (10.13). 
                           --------
 
