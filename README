@@ -26,19 +26,19 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-10.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-12.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-11-10.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2017-11-12.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   c7fa01a10488434bca5d07dbfb2215a15f520f1d 
+*SHA1   5570f54e2abd68dee7ac825feec5b7cf8abf15a2 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
 
-Likely, this is the first package to be installed in macOS (10.12). In a Linux system try the package gcc48 instead. 
+Likely, this is the first package to be installed in macOS (10.12 or 10.13). In a Linux system try the package gcc48 instead. 
 
 
 RPM (4.11.3)
@@ -145,6 +145,9 @@ Known Issues
   the warnings ie didn't comply with a system security policy that loads processes at 
   randomly chosen memory addresses; I could avoid it only in the Xcode environment.
 
+  The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
+  has been deactivated; haven't figured out the reason, perhaps java version > 1.7 ?
+
 - Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
   Whereas the ratio of the failures is worse when one runs all the tests: 
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
@@ -153,23 +156,19 @@ Known Issues
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
   on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. 
 
-  In macOS High Sierra (10.13), the read builtin command fails to process some strings. The
-  "port" script depends on that functionality.
+  In macOS High Sierra (10.13), the read builtin command fails to process some strings and 
+  the "port" script depends on that functionality. Bash-3.81 installed by Apple's CLT seems 
+  to be a better choice. 
 
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
  
-- The build rules for package file (aka libmagic) were found to be spoiled on 2017-11-10 and
-  likely this has happened as soon as "guile 2.2" was ported to macOS 10.12 (likely on 2017/10/05). 
-  As some other packages in macOS 10.13, the package file included in the Command Line Tools is
-  newer that the package file installed by the PC but it doesn't contain a library required by 
-  Berkeley DB.
+- As some other packages in macOS 10.13, the command "file" installed by the Command Line Tools 
+  is newer that the package "file" installed by the PC but it doesn't contain a library required
+  by Berkeley DB.
 
-- The "popt" tests (@58) fail on both macOS 10.12 & 10.13. 
-
-- The installation script *IS NOT* ready for macOS High Sierra (10.13). 
-                          --------
-
-
+- The installation script seems to be ready for macOS High Sierra (10.13) but not very well tested
+  yet. On 2017-11-12 I could install gcc4 & RPM.
+  
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
