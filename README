@@ -166,7 +166,7 @@ Known Issues
  
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
   tested very well. On 2017-11-13 I have installed "gcc4", "RPM", and  "autogen" with just few 
-  casualties (ie bash & libunistring), which isn't unusual in Mac upgrades.
+  unsolved problems (ie bash & libunistring), which isn't unusual in Mac upgrades.
   
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
