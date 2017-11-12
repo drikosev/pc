@@ -165,8 +165,8 @@ Known Issues
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
  
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
-  tested very well. On 2017-11-13 I have installed gcc (4.8.5 & 7.1), autogen, and RPM with just
-  few additional open issues (ie bash & libunistring), which isn't unusual in Mac upgrades.
+  tested very well. On 2017-11-13 I have installed gcc (4.8.5 & 7.1), autogen, and RPM; with 
+  just few additional open issues (ie bash & libunistring) which isn't unusual in Mac upgrades.
   
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
