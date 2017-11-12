@@ -157,8 +157,8 @@ Known Issues
   on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. 
 
   In macOS High Sierra (10.13), the read builtin command fails to process some strings and 
-  the "port" script depends on that functionality. Bash-3.81 installed by Apple's CLT seems 
-  to be a better choice. 
+  the "port" script depends on that functionality. The pre-installed bash-3.81 seems to be 
+  a better choice. 
 
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
