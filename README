@@ -51,7 +51,7 @@ This package builds the fork distributed by rpm.org and now uses gnupg-2.0. This
 
 To install this package and initialize the RPM DataBase, run:
 
-./port --nosudo install rpm
+./port install rpm
 
 If everything works as supposed to, a "postinstall" script will also initialize the RPM DataBase and populate it with all the packages installed by the Port Center along with any other JRE and JDK installed in your system. If not restricted by the SandBox it will attempt to process XQuartz also, otherwise one can run it manually on a later phase. These packages will go under the full control of RPM, you can uninstall them.
 
@@ -59,7 +59,7 @@ The "postinstall" script will also run the "vpkg-provides.sh" script that create
 
 If everything has indeed worked as supposed to, you should be able to install easily at least a small RPM package, ie gnu sed.
 
-Below there are step by step instructions to download this small RPM package (sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.12).
+Below there are step by step instructions to help you download this small RPM package (sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.12).
 
 
 Download a source RPM Package
