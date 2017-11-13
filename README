@@ -33,7 +33,7 @@ cd ~/pc
 tar -xjSf ~/Downloads/pc-rules-2017-11-13.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   1603a3488aa5a1cfdc022f41c63c9f012c93e603 
+*SHA1   a5eb4a3c5a44441a7d947b26d831c7086784beb7 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -163,7 +163,11 @@ Known Issues
 
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
- 
+
+- In macOS 10.13 (likely after Yosemite), the CVS server should run with root privileges. If not,
+  only the CVS user can use PAM authentication (file /Library/LaunchDaemons/cvs.gnu.org.plist).
+  Also the "extssh" option in Eclipse Neon fails but the option "pserverssh2" is functional. 
+
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
   tested very well. On 2017-11-13 I have installed gcc (4.8.5 & 7.1), autogen, and RPM; with 
   just few additional open issues (ie bash & libunistring) which isn't unusual in Mac upgrades.
