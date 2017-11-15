@@ -125,12 +125,10 @@ Known Issues
   required dependencies in a RHEL 7.3 system can be satisfied by the official distribution
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
 
-
-
-  Although the PlugIn facilitates debugging for Fortran programs with LLDB in Xcode, I've not
-  tested it exhaustively (see ie PR/82995). Yet, it can overcome few problems mainly on a
-  Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac linkers).
-  In a Linux installation, the PlugIn can compile ie the Fortran program found in PR/82065.
+  Although the PlugIn facilitates debugging for Fortran programs with LLDB, one should expect
+  that it has bugs (PR/82995 uncovers a F2008 tricky bug). Yet, it can overcome few problems
+  mainly on a Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac
+  linkers). In Linux, the PlugIn can compile ie the Fortran program found in PR/82065.
   
   GNU gcc-4.8.5 can't parse some system headers in macOS Sierra. One test case (include.c) 
   has been adjusted as in gcc-7.1 but another indicative failure is this:
