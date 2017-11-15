@@ -114,7 +114,7 @@ Obviously, one can copy paste and execute the above commands in a Mac, as long a
 
 Known Issues
 ------------
-[2017-11-13]
+[2017-11-15]
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
@@ -163,6 +163,13 @@ Known Issues
 
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
+
+- The command gfc doesn't convert error messages marked as fatal (ie if the argument coarray
+  is ommitted when compiling the following program: gcc/testsuite/gfortran.dg/submodule_26.f08). 
+  A patch has been applied and will be available in next pc tarball (after 2017-11-13). 
+
+- gcc7.1 fails to parse the program found in PR/82934 which is a solved problem. A patch has been 
+  applied and will be available in next pc tarball (after 2017-11-13). 
 
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
   tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS; with 
