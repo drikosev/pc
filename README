@@ -114,7 +114,7 @@ Obviously, one can copy paste and execute the above commands in a Mac, as long a
 
 Known Issues
 ------------
-[2017-11-15]
+[2017-11-18]
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
@@ -122,7 +122,7 @@ Known Issues
   is the only scenario I've successfully tested so far. 
 
 - To install gcc48 or gcc4 in Linux, you have to manually install its dependencies. The 
-  required dependencies in a RHEL 7.3 system can be satisfied by the official distribution
+  required dependencies in a RHEL 7.4 system can be satisfied by the official distribution
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
 
   Although the PlugIn facilitates debugging for Fortran programs with LLDB, one should expect
@@ -145,6 +145,10 @@ Known Issues
   The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
   has been deactivated; haven't figured out why, perhaps when java version > 1.7 ?
 
+  An SSD/APFS related Bug (PR/81797) that spoils the gcc (7.1) build process has been reported
+  to https://gcc.gnu.org/bugzilla but isn't reproduced in a system with hard disks.
+
+
 - Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
   Whereas the ratio of the failures is worse when one runs all the tests: 
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
@@ -162,18 +166,23 @@ Known Issues
   sudo dscl . create /Users/${LOGNAME} UserShell /usr/local/bin/bash
 
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
-  "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore these messages.
+  "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those messages.
 
 - The command gfc doesn't convert error messages marked as fatal (ie if the argument coarray
-  is ommitted when compiling the following program: gcc/testsuite/gfortran.dg/submodule_26.f08). 
-  A patch has been applied and will be available in next pc tarball (after 2017-11-13). 
+  is omitted when compiling the following program: gcc/testsuite/gfortran.dg/submodule_26.f08).
+  This problem has been solved but one has to manually install gfc-2017-11-18.tar.bz2.
+
+  Also, the postinstall script of gfc in the PC, doesn't detect HomeBrew installations of gfortran. 
+  A workaround will be shortly available (after 2017-11-13). 
+
+- gcc7.1 is configured without "lto" and cannot compile the test case "submodule_6.f08".
 
 - gcc7.1 fails to parse the program found in PR/82934 which is a solved problem. A patch has been 
-  applied and will be available in next pc tarball (after 2017-11-13). 
+  applied and will be shortly available (after 2017-11-13). 
 
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
   tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS; with 
   just few additional open issues (ie bash & libunistring) which isn't unusual in Mac upgrades.
-  
+
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
