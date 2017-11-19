@@ -174,8 +174,8 @@ Known Issues
 
   Also, the postinstall script of gfc in the PC, doesn't detect HomeBrew installations of gfortran. 
   A workaround will be shortly available (after 2017-11-13). 
-
-- gcc7.1 is configured without "lto" and cannot compile the test case "submodule_6.f08".
+ 
+gcc7.1 is configured without "lto" and does not compile the test case "submodule_6.f08".
 
 - gcc7.1 fails to parse the program found in PR/82934 which is a solved problem. A patch has been 
   applied and will be shortly available (after 2017-11-13). 
