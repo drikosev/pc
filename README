@@ -26,14 +26,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-13.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-20.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-11-13.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2017-11-20.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   a5eb4a3c5a44441a7d947b26d831c7086784beb7 
+*SHA1   eca7e584881c10767ccfcbaa4eef5417c8b3b937 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -114,7 +114,7 @@ Obviously, one can copy paste and execute the above commands in a Mac, as long a
 
 Known Issues
 ------------
-[2017-11-18]
+[2017-11-20]
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
@@ -130,12 +130,9 @@ Known Issues
   mainly on a Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac
   linkers). In Linux, the PlugIn can compile ie the Fortran program found in PR/82065.
   
-  GNU gcc-4.8.5 can't parse some system headers in macOS Sierra. One test case (include.c) 
-  has been adjusted as in gcc-7.1 but another indicative failure is this:
+  GNU gcc-4.8.5 can't parse some system headers in macOS Sierra (PR/69960). One test case
+  (include.c) has been adjusted as in gcc-7.1 but another indicative failure is the following:
   FAIL: gcc.dg/framework-1.c (test for excess errors)
-
-  The above problem has been classified as an enhancement request (69960). In 10.13, gcc4 might
-  issue in addition a warning (whereas gcc7 fails only on a non constant assignment). 
 
   There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
@@ -145,9 +142,13 @@ Known Issues
   The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
   has been deactivated; haven't figured out why, perhaps when java version > 1.7 ?
 
-  An SSD/APFS related Bug (PR/81797) that spoils the gcc (7.1) build process has been reported
-  to https://gcc.gnu.org/bugzilla but isn't reproduced in a system with hard disks.
+  An SSD/APFS related Bug (PR/81797) that spoils the gcc (7.1) build process on Darwin has been
+  reported to https://gcc.gnu.org/bugzilla but the error isn't reproduced in a HFS+ system.
 
+  As of 2017-11-20, gcc (4.8.5) has experimental support for Fortran SubModules. An implementation
+  internal issue is that the submodule separator '@' has been replaced by '$' as three test cases
+  (7, 8, and 29) were failing due to assembly errors in both Linux and with the PlugIn. The test 
+  case "submodule_6.f08" was failing due to allocation errors and isn't included in the patch. 
 
 - Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
   Whereas the ratio of the failures is worse when one runs all the tests: 
@@ -167,18 +168,6 @@ Known Issues
 
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those messages.
-
-- The command gfc doesn't convert error messages marked as fatal (ie if the argument coarray
-  is omitted when compiling the following program: gcc/testsuite/gfortran.dg/submodule_26.f08).
-  This problem has been solved but one has to manually install gfc-2017-11-18.tar.bz2.
-
-  Also, the postinstall script of gfc in the PC, doesn't detect HomeBrew installations of gfortran. 
-  A workaround will be shortly available (after 2017-11-13). 
- 
-- gcc7.1 is configured without "lto" and does not compile the test case "submodule_6.f08".
-
-- gcc7.1 fails to parse the program found in PR/82934 which is a solved problem. A patch has been 
-  applied and will be shortly available (after 2017-11-13). 
 
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
   tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS; with 
