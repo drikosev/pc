@@ -4,7 +4,7 @@ Port Center
 
 The port center (pc) is an OS directory that contains a few Bash Scripts and Make Files, which can help one install open source developer tools on a Mac; formerly OS X, now macOS.
 
-The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on macOS Sierra (10.12). In the past I'd tested it also in OS X Yosemite (10.10). Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
+The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on macOS Sierra (10.12). In the past I'd tested it also in OS X Yosemite (10.10). 
 
 Also, one can run this script in a RHEL 7.4 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and a second for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed in older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade. 
 
@@ -20,20 +20,22 @@ After, one can archive a package with a single command or on a step-by-step basi
 
 Finally, one can invoke the system installer to process the archive; possibly, by double clicking it. If you build and install a package on the same machine you can simply run: "./port install <package>". 
 
+Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
+
 The file pc2gfortran.spec provides instructions to help you transfer the Fortran patches to a Source RPM for a Linux installation.
 
 
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-21.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-24.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-11-21.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2017-11-24.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   11cffeeb23af1e03460fbfbcbbd681e2bd9bef06 
+*SHA1   a3dd8487326e10696ce1acc9a8c9352ea7b07227 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -114,13 +116,18 @@ Obviously, one can copy paste and execute the above commands in a Mac, as long a
 
 Known Issues
 ------------
-[2017-11-20]
+[2017-11-24]
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
   might have undesirable side effects; a similar restriction applies to Linux as well. This 
   is the only scenario I've successfully tested so far. 
 
+- If you rebuild & install a package in Linux, check that the following two lines show up:
+  "packing     ... <pkg>.rpm" 
+  "installing  ... <pkg>.rpm"
+  If you don't see both lines, then an older RPM is installed (requires manual deletion). 
+  
 - To install gcc48 or gcc4 in Linux, you have to manually install its dependencies. The 
   required dependencies in a RHEL 7.4 system can be satisfied by the official distribution
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
@@ -142,8 +149,9 @@ Known Issues
   The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
   has been deactivated; haven't figured out why, perhaps when java version > 1.7 ?
 
-  An SSD/APFS related Bug (PR/81797) that spoils the gcc (7.1) build process on Darwin has been
-  reported to https://gcc.gnu.org/bugzilla but the error isn't reproduced in a HFS+ system.
+  An SSD/APFS related bug that spoils the gcc (7.1) build process on macOS (10.13) has been 
+  reported to https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81797 but the error isn't reproduced
+  in a HFS+ system.
 
   As of 2017-11-20, gcc (4.8.5) has experimental support for Fortran SubModules. An implementation
   internal issue is that the submodule separator '@' has been replaced by '$' as three test cases
