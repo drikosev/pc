@@ -654,3 +654,4 @@ error: Bad exit status from /var/tmp/rpm-tmp.CbcTIJ (%doc)
 RPM build errors:
     Bad exit status from /var/tmp/rpm-tmp.CbcTIJ (%doc)
 [suser@miniserver rpmbuild]$
+
