@@ -432,6 +432,29 @@ Appendix E
   It's a bug fix for substring expressions in Fortran, see:
   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64933
 
+The following patches below haven't been tested in the RPM build process
+
+- Patch: "gcc48-pr52846.patch", "gcc48-tc52846.patch" (7.1 backport)
+  [2017-11-18]
+  This is a collective patch for Fortran SubModules.
+
+- Patch: "gcc48-pr82814.patch"
+  [2017-11-18] 
+  It's a bug fix for submodule character functions that hasn't been finalised yet
+  and was submitted on 2017-11-17, see:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82814
+
+- Patch: "gcc48-pr60255.patch", "gcc48-tc60255.patch" (4.9 & 7.1 backport)
+  [2017-11-24]
+  This patch allows deferred character length variables to be associated with 
+  unlimited polymorphic entities, see:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=60255
+
+- Patch "gcc48-pr69566.patch", (6 backport)
+  [2017-11-25]
+  It contains a bug fix for the test case "unlimited_polymorphic_25.f03", see:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=69566
+
 
 Appendix F
 ----------
