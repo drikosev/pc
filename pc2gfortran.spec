@@ -455,6 +455,12 @@ The following patches below haven't been tested in the RPM build process
   It contains a bug fix for the test case "unlimited_polymorphic_25.f03", see:
   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=69566
 
+- Patch "gcc48-pr64578.patch", (5 backport)
+  [2017-11-26]
+  It contains a bug fix for the test case "unlimited_polymorphic_21.f90", see:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64578
+
+
 
 Appendix F
 ----------
