@@ -1,0 +1,520 @@
+#!/usr/local/bin/bash
+#-----------------------------------------------------------------------------
+#
+#    Copyright (C) 2016  Ev. Drikos (drikosev@gmail.com)
+#
+#    The newsloader is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    The newsloader is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#-----------------------------------------------------------------------------
+
+lc_date_time=$(date +"%Y-%m-%d:%H-%M-%j");
+today=${lc_date_time:0:10};
+dayofyear=${lc_date_time:17:3};
+
+this_year=${lc_date_time:0:4}
+
+verbose=0;
+
+site="http://www.eortologio.gr"
+julian="./julian";
+
+program=$(basename $0)
+
+version="0.97";
+
+show_version() {
+     echo "$version";
+}
+
+does_echo_needs_e() {
+
+E=$( echo -e );
+if [ "$E" = "" ] ; then
+  E="-e" ;
+#  echo "accepts e" ;
+else
+  E="" ;
+#  echo "doesn't accept e" ;
+fi
+
+}
+
+usage(){
+
+ echo "" ;
+
+ echo "Program: $program ($version)" ;
+
+ does_echo_needs_e ;
+ echo $E ""  ;
+ echo $E "This script can run in one of the following two modes:"   ;
+ echo $E ""  ;
+
+ echo $E "(1) $program [  --debug[={0|1|2] ] [ --use [ <year> | <date-time> ]"   ;
+ echo $E "(2) $program { --help | --version } "   ;
+
+ echo $E ""  ; 
+ echo $E "  --use"       '\x09' "either a four digits <year> or a full <date-time>"
+ echo $E ""        '\x09''\x09' 'formatted as `date +"%Y-%m-%d:%H-%M-%j"`' ; 
+ echo $E ""  ;
+ echo $E "  --debug"     '\x09' "Run in verbose mode, levels are 0 (default), 1, or 2." 
+ echo $E ""        '\x09''\x09' "In each level ${program} displays messages as explained below:."
+ echo $E ""        '\x09''\x09' "0: display only errors."
+ echo $E ""        '\x09''\x09' "1: display also the call sequence of routines.";
+ echo $E ""        '\x09''\x09' "2: display all dignostic messages."
+ echo $E "  --help"      '\x09' "Display $program options and exit."  ;
+ echo $E "  --version"   '\x09' "Display $program version and exit."  ;
+
+}
+
+help() {
+
+usage ; 
+
+echo $E ""  ;
+echo "The script calculates the Greek Orthodox Eastern Day,"  ;
+echo "if no date-time is given, it uses the system date-time."  ;
+
+echo $E ""  ;
+echo $E 'The date-time must have the same format printed by the command:' ;
+echo $E 'date +"%Y-%m-%d:%H-%M-%j"' ;
+echo $E ""  ;
+
+echo $E "The gaus algorithm used in the ${program} script has been found"  ;
+echo $E "at ${site}"  ;
+echo $E ""  ;
+
+}
+
+
+arguments() {
+ mode=1 ;
+ i=0;
+ argv[0]=$(basename $0) ;
+ let argc=( 1 ) ;
+ for arg in $@ ; do
+    argv[$argc]=$arg;
+    if [ $verbose -gt 1 ] ; then
+        echo "argv[$argc] = ${argv[argc]}" ;
+    fi ;
+    let argc=($argc+ 1 ) ;
+ done ;
+ if [ $verbose -gt 1 ] ; then
+     echo argc=$argc ;
+ fi
+ for (( i=1, last=$argc-1 ; i < $argc ; i++ )) ; do
+
+    arg=${argv[$i]};
+#   echo arg=$arg;
+    if [ "$arg" = "--help" ] ||  [ "${arg:0:2}" = "-h" ] ; then
+        mode=2 ;
+        help ;
+        if [ $i -eq 1 ] && [ $argc -eq 2 ] ; then exit 0; else exit -1 ; fi ;
+    elif [ "$arg" = "--version" ] ||  [ "${arg:0:2}" = "-v" ] ||  [ "${arg:0:2}" = "-V" ]; then
+        mode=2 ;
+        show_version ;
+        if [ $i -eq 1 ] && [ $argc -eq 2 ] ; then exit 0; else exit -1 ; fi ;
+    elif [ "${arg:0:7}" = "--debug" ] ; then
+        mode=1 ; 
+        mode1=1;
+        if [ "${arg:7:1}" = "=" ] && [ ! ${#arg} -lt 8 ]; then
+            dbglevel=${arg:8:1} ;
+            if [ ! "$dbglevel" = "0" ] && 
+               [ ! "$dbglevel" = "1" ] && 
+               [ ! "$dbglevel" = "2" ] && 
+               [ ! "$dbglevel" = "3" ] ; then
+                dbglevel=0;
+                usage ;
+                echo "error: After \"--debug\" you can optionally specify a debug level up to 2, the most verbose. Debug Level 0 is assumed as don't debug." 1>&2 ;
+                exit -1 ;
+            fi ;
+        else
+            dbglevel=1;
+        fi ;
+        verbose=$dbglevel ;
+        continue ;
+    elif [ "$arg" = "--use" ] ; then
+        mode=1 ;
+        mode1=1;
+#       echo i=$i, argc=$argc;
+        if [ $i -eq $last ] ; then
+            usage ;
+            echo "After \"--use\" you should specify a date-time." 1>&2 ;
+            exit -1 ;
+        elif [ ! "${argv[( $i + 1 )]}" = "" ] &&
+             [ ! "${argv[( $i + 2 )]}" = "" ]; then
+              usage ;
+              echo "After option \"--use\" you should specify a date-time and nothing else but you passed: ${argv[( $i + 2 )]}" 1>&2 ;
+              on_exit -1;
+        elif [ ! "${argv[( $i + 1 )]}" = "" ] ; then
+            tmp="${argv[( $i + 1 )]}" ;
+            if [ "${tmp:0:1}" = "-" ] ; then 
+             usage ;
+             echo "After option \"--use\" you should specify a date-time, not another option." 1>&2 ;
+             exit -1 ;              
+            fi
+            tmp_strnum=${argv[( $i + 1 )]};
+#           Validate the year
+            get_number ${tmp_strnum:0:4} ;
+            let tmp_num=( ${number} ) ;
+            if [ $tmp_num -lt 2000 ] ; then
+             echo "Only a year greater than 2000 is acceptable." 1>&2 ;
+             echo "year=${tmp_strnum:0:4}" 1>&2 ;
+             exit -1 ;              
+            fi
+            arg_year=$tmp_num;
+
+            let strlen=(${#argv[( $i + 1 )]}) ;
+#           echo strlen=$strlen;
+
+            if [ $strlen -gt 4 ] ; then 
+
+            if [ $strlen -ne 20 ] ; then
+              usage ;
+              echo "Two short <date-time>=${argv[( $i + 1 )]}" 1>&2 ;
+              exit -1 ; 
+            fi 
+#           Validate the month
+            get_number ${tmp_strnum:5:2} ;
+            let tmp_num=( ${number} ) ;
+            if [ ! $tmp_num -le 12 ]; then
+             echo "Only a month between 1-12 is acceptable." 1>&2 ;
+             echo "month=${tmp_strnum:5:2}" 1>&2 ;
+             exit -1 ;              
+            fi
+            arg_mm=${tmp_strnum:5:2};
+
+#           Validate the day
+            get_number ${tmp_strnum:8:2} ;
+            let tmp_num=( ${number} ) ;
+            if [ ! $tmp_num -le 31 ]; then
+             echo "Only a day between 1-31 is acceptable." 1>&2 ;
+             echo "day=${tmp_strnum:8:2}" 1>&2 ;
+             exit -1 ;              
+            fi
+            arg_dd=${tmp_strnum:8:2};
+
+#           Validate the year day
+            get_number ${tmp_strnum:17:3} ;
+            let tmp_num=( ${number} ) ;
+            if [ ! $tmp_num -le 365 ]; then
+             echo "Only a year day between 1-365 is acceptable." 1>&2 ;
+             echo "year day=${tmp_strnum:17:3}" 1>&2 ;
+             exit -1 ;              
+            fi
+
+#           validate mapping of year/day of year -> month/day 
+            let arg_day=$tmp_num;
+
+#           echo "calls: map_day_of_year $arg_year $arg_day"
+	    map_day_of_year $arg_year $arg_day ;
+            if [   "${map_mm}" = "${arg_mm}" ] &&
+               [   "${map_dd}" = "${arg_dd}" ]; then
+               echo "passed" > /dev/null ;
+            else  
+                 echo "error: or a script bug; day $arg_day corresponds to date  $arg_year-${map_mm}-${map_dd}" 1>&2;
+                 echo "error: read  ${arg_mm}-${arg_dd} " 1>&2 ; 
+               exit -1;
+            fi
+            
+#           if [ $strlen -gt 10 ] ; then
+            fi
+
+            let i=( $i + 1 ) ;
+            newsrun=1;
+            arg_use="--use" ;
+            lc_date_time=${tmp_strnum};
+            today=${lc_date_time:0:10};
+            dayofyear=${lc_date_time:17:3};
+
+            continue ;
+        else
+            usage ;
+            on_exit -1;
+        fi ;
+    elif [ "${arg:0:1}" = "-" ] ; then
+        mode=2 ;
+        usage ; exit -1 ;
+    else
+        usage ;
+        echo "error: unexpected argument ${arg}" ;
+        exit -1; 
+    fi
+ done ;
+
+ validate ;
+
+}
+
+validate() {
+ if [ $verbose -ge 1 ] ; then
+    echo "calls: validate( ${lc_date_time} ) " ;
+ fi
+ if [ "${arg_use}" = "" ] ; then 
+
+    get_number ${lc_date_time:0:4} ;
+    let def_year=( ${number} ) ;
+
+    get_number ${lc_date_time:17:3} ;
+    let def_day=( ${number} ) ;
+
+    map_day_of_year ${def_year} ${def_day} ;
+    if [   "${map_mm}" = "${lc_date_time:5:2}" ] &&
+       [   "${map_dd}" = "${lc_date_time:8:2}" ]; then
+       echo "passed" > /dev/null ;
+    else  
+       echo "error: script internal bug; day $arg_day corresponds to date  $arg_year-${map_mm}-${map_dd}" 1>&2;
+       exit -1;
+    fi
+ fi
+
+}
+
+get_number() {
+ strnum=$1 ;
+
+ if [ $verbose -ge 1 ] ; then
+    echo "calls: get_number( $1 ) " ;
+ fi
+
+ strnumlen=${#strnum} ;
+
+ number=0;
+
+ for (( lc_n=0 ; lc_n < $strnumlen ; lc_n++ )) ; do
+     let number=10*$number ;
+
+     case ${strnum:lc_n:1} in
+
+      0) let number=( $number + 0 ) ; ;;
+      1) let number=( $number + 1 ) ; ;;
+      2) let number=( $number + 2 ) ; ;;
+      3) let number=( $number + 3 ) ; ;;
+      4) let number=( $number + 4 ) ; ;;
+      5) let number=( $number + 5 ) ; ;;
+      6) let number=( $number + 6 ) ; ;;
+      7) let number=( $number + 7 ) ; ;;
+      8) let number=( $number + 8 ) ; ;;
+      9) let number=( $number + 9 ) ; ;;
+      *) echo "error: invalid number format $strnum" ; exit -1 ;;
+     esac 
+ done ;
+
+#log " numeric of $strnum is $number " ;
+
+}
+
+map_day_of_year() {
+
+ if [ $verbose -ge 1 ] ; then
+    echo "calls: map_day_of_year( $1 , $2 ) " ;
+ fi
+
+# arguments
+#
+  old_year=$1;
+  old_dayofyear=$2;
+
+# return values
+#
+  map_mm="01"; map_dd="01"
+
+  let   M4=( $old_year % 4   )
+  let M400=( $old_year % 400 )
+  let M100=( $old_year % 100 )
+
+  let lc_leap=(0);
+  if [ $M4   -eq 0 ] ; then
+    if [ $M400 -eq 0 ] ; then
+      let lc_leap=(1);
+    elif [ $M100 -ne 0 ] ; then
+      let lc_leap=(1);
+    fi
+  fi
+
+  
+  lc_m[0]=0;
+  lc_m[1]=31;
+  let  lc_m[2]=(59 + $lc_leap) ;
+  let  lc_m[3]=(31 + ${lc_m[2]}) ;
+  let  lc_m[4]=(30 + ${lc_m[3]}) ;
+  let  lc_m[5]=(31 + ${lc_m[4]}) ;
+  let  lc_m[6]=(30 + ${lc_m[5]}) ;
+  let  lc_m[7]=(31 + ${lc_m[6]}) ;
+  let  lc_m[8]=(31 + ${lc_m[7]}) ;
+  let  lc_m[9]=(30 + ${lc_m[8]}) ;
+  let lc_m[10]=(31 + ${lc_m[9]}) ;
+  let lc_m[11]=(30 + ${lc_m[10]}) ;
+  let lc_m[12]=(31 + ${lc_m[11]}) ;
+
+  for ((  m = 1 ;  m < 13 ;  m++ )) ; do
+
+     if  [ $old_dayofyear -le ${lc_m[m]} ] ; then
+
+         if [ $m -lt 10 ] ; then
+            map_mm="0$m";
+         else
+            map_mm="$m";
+         fi
+
+         let lc_remain=( $old_dayofyear - ${lc_m[( $m - 1)]} ) ;
+
+         if [ $lc_remain -lt 10 ] ; then
+            map_dd="0$lc_remain";
+         else
+            map_dd="$lc_remain";
+         fi
+
+         break ;
+     fi
+
+  done ;
+
+}
+
+
+#--------------------------------------------------------
+
+get_eastern() {
+#
+# we use the gaus algorithm found at www.eortologio.gr
+#
+  if [ $verbose -ge 1 ] ; then
+    echo "calls: get_eastern( $1 ) " ;
+  fi
+
+  l_date_time=$1;
+  l_year=${l_date_time:0:4}
+
+
+# =MOD(19*MOD(A1;19)+16;30)+MOD(2*MOD(A1;4) +4*MOD(A1;7)+6*MOD(19*MOD(A1;19)+16;30);7) +3
+#  -------a_term----------  ---------------------b-term------------------------------  -c-
+#
+  let a1=$l_year;
+
+  let MOD_A1_04=( $a1 % 4  );
+  let MOD_A1_07=( $a1 % 7  );
+  let MOD_A1_19=( $a1 % 19 );
+
+  let _19_MOD_A1_19=( 19 * ${MOD_A1_19} );
+  let _19_MOD_A1_19_16=(  ${_19_MOD_A1_19} + 16 );
+  let _19_MOD_A1_19_16_MOD_30=( ${_19_MOD_A1_19_16} % 30 );
+
+  if [ $verbose -gt 1 ] ; then
+   echo _19_MOD_A1_19_16_MOD_30=$_19_MOD_A1_19_16_MOD_30 ;
+  fi
+
+  let a_term=${_19_MOD_A1_19_16_MOD_30};
+
+
+  let tmp=( 2 * ${MOD_A1_04} + 4 * ${MOD_A1_07} + 6 * ${a_term} );
+  let b_term=( $tmp % 7 ) ;
+  let c_term=3 ;
+  let terms=( $a_term + $b_term + $c_term ) ;
+  if [ $verbose -gt 1 ] ; then
+
+    echo a_term=$a_term;
+    echo b_term=$b_term; 
+    echo c_term=$c_term;
+    echo terms=$terms;
+
+  fi
+
+  if [ $terms -gt 30 ] ; then
+
+    let eastern_cnt=( -30 + $terms ) ;
+    map_mm="05";
+    if [ $eastern_cnt -lt 10 ] ; then
+      map_dd="0$eastern_cnt";
+    else
+      map_dd="$eastern_cnt";
+    fi
+
+  else
+
+    map_mm="04";
+    if [ $terms -lt 10 ] ; then
+      map_dd="0$terms";
+    else
+      map_dd="$terms";
+    fi
+
+  fi
+
+  map_to_day_of_year ${l_year}  ${map_mm} ${map_dd}
+
+  if [ $day_of_year -lt 10 ] ; then
+    map_day="00$day_of_year";
+  elif [ $day_of_year -lt 100 ] ; then
+    map_day="0$day_of_year";
+  else
+    map_day="$day_of_year";
+  fi
+
+  eastern="${l_year}-${map_mm}-${map_dd}:00-00-${map_day}";
+
+
+}
+
+map_to_day_of_year() {
+
+  if [ $verbose -ge 1 ] ; then
+    echo "calls: map_to_day_of_year( $1 , $2 , $3 ) " ;
+  fi
+
+  let day_of_year=(0);
+  year=$1;
+  map_mm=$2;
+  map_dd=$3;
+
+  get_number $map_mm ;
+  let  month=$number ;
+
+  get_number $map_dd ;
+  let    day=$number ;
+
+  let   M4=( $year % 4   )
+  let M400=( $year % 400 )
+  let M100=( $year % 100 )
+
+  let lc_leap=(0);
+  if [ $M100 -eq 0 ] && [ $M400 -ne 0 ]; then
+     let lc_leap=(0);
+  elif [ $M400 -eq 0 ]; then
+     let lc_leap=(1);
+  elif [ $M4   -eq 0 ] ; then
+    let lc_leap=(1);
+  fi
+
+  lc_m[1]=0;
+  let  lc_m[2]=(31) ;
+  let  lc_m[3]=( 59 + $lc_leap ) ;
+  let  lc_m[4]=(31 + ${lc_m[3]}) ;
+  let  lc_m[5]=(30 + ${lc_m[4]}) ;
+  let  lc_m[6]=(31 + ${lc_m[5]}) ;
+
+# After is defintely an error
+  let day_of_year=( ${lc_m[month]} + ${day} );
+
+}
+
+#
+# Main Program
+#
+
+arguments $@ ;
+
+get_eastern $lc_date_time ;
+echo ${eastern}
+
