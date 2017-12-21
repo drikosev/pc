@@ -83,7 +83,7 @@ help() {
 usage ; 
 
 echo $E ""  ;
-echo "The script calculates the Greek Orthodox Eastern Day,"  ;
+echo "The script calculates the Greek Orthodox easter Day,"  ;
 echo "if no date-time is given, it uses the system date-time."  ;
 
 echo $E ""  ;
@@ -386,12 +386,12 @@ map_day_of_year() {
 
 #--------------------------------------------------------
 
-get_eastern() {
+get_easter() {
 #
 # we use the gaus algorithm found at www.eortologio.gr
 #
   if [ $verbose -ge 1 ] ; then
-    echo "calls: get_eastern( $1 ) " ;
+    echo "calls: get_easter( $1 ) " ;
   fi
 
   l_date_time=$1;
@@ -433,12 +433,12 @@ get_eastern() {
 
   if [ $terms -gt 30 ] ; then
 
-    let eastern_cnt=( -30 + $terms ) ;
+    let easter_cnt=( -30 + $terms ) ;
     map_mm="05";
-    if [ $eastern_cnt -lt 10 ] ; then
-      map_dd="0$eastern_cnt";
+    if [ $easter_cnt -lt 10 ] ; then
+      map_dd="0$easter_cnt";
     else
-      map_dd="$eastern_cnt";
+      map_dd="$easter_cnt";
     fi
 
   else
@@ -462,7 +462,7 @@ get_eastern() {
     map_day="$day_of_year";
   fi
 
-  eastern="${l_year}-${map_mm}-${map_dd}:00-00-${map_day}";
+  easter="${l_year}-${map_mm}-${map_dd}:00-00-${map_day}";
 
 
 }
@@ -515,6 +515,6 @@ map_to_day_of_year() {
 
 arguments $@ ;
 
-get_eastern $lc_date_time ;
-echo ${eastern}
+get_easter $lc_date_time ;
+echo ${easter}
 
