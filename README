@@ -28,14 +28,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2017-11-26.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2018-01-10.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2017-11-26.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2018-01-10.tar.bz2 
 ln -sf rules/port port
 
-*SHA1   1a278d41690adac1444c15453dae51d2310b8924 
+*SHA1    6f7d2e0fc39423fcaba58b50a6d047faaaff1dcc 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -116,7 +116,7 @@ Obviously, one can copy paste and execute the above commands in a Mac, as long a
 
 Known Issues
 ------------
-[2017-11-24]
+[2018-01-10]
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
@@ -156,7 +156,10 @@ Known Issues
   As of 2017-11-20, gcc (4.8.5) has experimental support for Fortran SubModules. An implementation
   internal issue is that the submodule separator '@' has been replaced by '$' as three test cases
   (7, 8, and 29) were failing due to assembly errors in both Linux and with the PlugIn. The test 
-  case "submodule_6.f08" was failing due to allocation errors and isn't included in the patch. 
+  case "submodule_6.f08" fails due to allocation errors and isn't included in the patch. 
+
+  The backport of PRs 63230 and 70397 is dubious. Whereas, the test case "unlimited_polymorphic_26"
+  has random failures (perhaps due to the unknown solution of PR/61261).
 
 - Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
   Whereas the ratio of the failures is worse when one runs all the tests: 
