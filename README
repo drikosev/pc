@@ -159,7 +159,8 @@ Known Issues
   case "submodule_6.f08" fails due to allocation errors and isn't included in the patch. 
 
   The backport of PRs 63230 and 70397 is dubious. Whereas, the test case "unlimited_polymorphic_26"
-  has random failures (perhaps due to the unknown solution of PR/61261).
+  has random failures (perhaps due to the unknown solution of PR/61261). See also a severe bug at:
+  https://groups.google.com/forum/#!topic/comp.lang.fortran/LnpsRZR4AAQ 
 
 - Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
   Whereas the ratio of the failures is worse when one runs all the tests: 
