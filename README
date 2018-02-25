@@ -1,49 +1,189 @@
 
--The bash script "easter" calculates the Greek Orthodox Easter Day (since 1924).
+Port Center
+-----------
 
--The bash script "julian" converts a given Gregorian Calendar date (since 1582) 
- to the corresponding date of the Julian Calendar. These two calendars diverge 3
- days every 400 years (on the average almost one day every seven metonic cycles).
+The port center (pc) is an OS directory that contains a few Bash Scripts and Make Files, which can help one install open source developer tools on a Mac; formerly OS X, now macOS.
 
- If no date is specified, the script converts the date returned by the bash shell
- command "date" with the following format:
- $ date +"%Y:%m:%d:%H-%M:%j"
- 2018-01-29:11-40-029
- $ ./julian
- 2018:01:16:11-40:16
+The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on macOS Sierra (10.12). In the past I'd tested it also in OS X Yosemite (10.10). 
 
- Below are listed a few typical examples:
+Also, one can run this script in a RHEL 7.4 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and a second for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed in older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade. 
 
- $ ./julian --use 2101:01:15:00-01:15
- 2101:01:01:00-01:1
- $ ./julian --use 1901:01:15:00-01:15
- 1901:01:02:00-01:2
- $ ./julian --use 1801:01:15:00-01:15
- 1801:01:03:00-01:3
- $ ./julian --use 1701:01:15:00-01:15
- 1701:01:04:00-01:4
- $ ./julian --use 1601:01:15:00-01:15
- 1601:01:05:00-01:5
+
+Installation Script
+-------------------
+
+To install a package, one has to run the "port" command to create an archive that will be processed by the system installer. This "port" command cannot uninstall packages and shouldn't be on the path.
+
+The installation process is logically divided in three phases. At first, one can run the command "./port details <package>" to examine in advance the installation details of a package, without download it; this command will print the relevant url's, configuration options, and installation paths for that package.
+
+After, one can archive a package with a single command or on a step-by-step basis. Specifically, one can download, extract, patch, configure, make, place, pack, and archive a package. These steps are also options of the port command. Running the "port" command with the option "place" will install files to a temporary directory located at "/tmp/<package>.dst"; which is the destination root that will be packed and archived.
+
+Finally, one can invoke the system installer to process the archive; possibly, by double clicking it. If you build and install a package on the same machine you can simply run: "./port install <package>". 
+
+Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
+
+The file pc2gfortran.spec provides instructions to help you transfer the Fortran patches to a Source RPM for a Linux installation.
+
+
+Download & Setup
+----------------
+
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2018-02-25.tar.bz2), the following four commands will setup the port center:
+
+install -d ~/pc 
+cd ~/pc 
+tar -xjSf ~/Downloads/pc-rules-2018-02-25.tar.bz2 
+ln -sf rules/port port
+
+*SHA1    06b778e120b1e69c83ea7d2e1d1f23874a226290 
+To see ie the build instructions for gcc-4.8, type:
+
+./port details gcc4
+
+Likely, this is the first package to be installed in macOS (10.12 or 10.13). In a Linux system try the package gcc48 instead. 
+
+
+RPM (4.11.3)
+------------
+
+[2017-11-13]
+The RPM Package Manager (RPM) is a command line driven package management system used in various Linux distributions, such as Red Hat Enterprise Linux, and SUSE Linux Enterprise. According to wikipedia, it has also been ported to other systems such as IBM's AIX .
+
+This package builds the fork distributed by rpm.org and now uses gnupg-2.0. This porting is still work in progress and hasn't passed yet adequate quality tests. In example, we haven't tested at all the RPM Plug-In functionality. If you face any problems with the Berkeley DataBase, configure it with the minimum options possible.
+
+To install this package and initialize the RPM DataBase, run:
+
+./port install rpm
+
+If everything works as supposed to, a "postinstall" script will also initialize the RPM DataBase and populate it with all the packages installed by the Port Center along with any other JRE and JDK installed in your system. If not restricted by the SandBox it will attempt to process XQuartz also, otherwise one can run it manually on a later phase. These packages will go under the full control of RPM, you can uninstall them.
+
+The "postinstall" script will also run the "vpkg-provides.sh" script that creates a virtual package for all the libraries installed at /usr/lib. Further, all Frameworks in System Library are added as capabilities that the system provides.
+
+If everything has indeed worked as supposed to, you should be able to install easily at least a small RPM package, ie gnu sed.
+
+Below there are step by step instructions to help you download this small RPM package (sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.12).
+
+
+Download a source RPM Package
+-----------------------------
+cd ~/Downloads 
+curl -O http://public-yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackageSource/sed-4.2.2-5.el7.src.rpm 
+rpm -i sed-4.2.2-5.el7.src.rpm 
  
- To get the easter date in Julian calendar, one can use the bash command "xargs"; ie: 
- $ ./easter --use 2129 | xargs ./julian --use
- 2129:03:27:00-00:86
- ------------------------------------------------------------------------------------
 
+The above command is not supposed to complain at all about signature problems, but you will likely see and it is safe to ignore the following two recurring warnings.
 
- - The MS Excel (mac 11) file "error".xlsx" is an unproved analysis of the Metonic cycle
-   value when applied to the Julian calendar. My estimation is that in the long term it
-   can approach the value (6939.75) if the second year of the first cycle is a leap year.
-
- Known Issues
- ------------
- [2018-02-19]
-
-
- -
-
-                              E R R O R  A N A L Y S I S
-
+warning: user mockbuild does not exist - using root 
+warning: group mockbuild does not exist - using root 
  
-   The most interesting    
 
+In case you see a warning about the signature, run:
+sudo rpm --import /usr/local/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle-ol7
+
+
+Porting a source RPM package to Mac OS Sierra (10.12)
+-----------------------------------------------------
+cd $HOME/rpmbuild 
+sed -i.sav "s/, [ ]*libselinux-devel//g" SPECS/sed.spec 
+sed -i.sav "s,/sbin/install-info,/usr/local/bin/install-info,g" SPECS/sed.spec 
+sed -i.sav "s/configure[ ]*--without-included-regex/configure --disable-nls --disable-i18n --with-included-regex/g" SPECS/sed.spec 
+sed -i.sav "s/sed.info.gz/sed.info/g" SPECS/sed.spec
+sed -i.sav "s/%find_lang/#%find_lang/g" SPECS/sed.spec
+sed -i.sav "s/\-f[ ]*%{name}.lang//g" SPECS/sed.spec  
+rm -f SPECS/sed.spec.sav
+
+
+Build & Install an RPM Package
+------------------------------
+cd $HOME/rpmbuild 
+rpmbuild -ba SPECS/sed.spec --target x86_64 
+sudo rpm -i RPMS/X86_64/sed-4.2.2-5.x86_64.rpm
+
+
+Uninstall an RPM Package
+------------------------
+Thereafter, one should be able to uninstall this package, which hasn't any active dependents, with the following command:
+
+sudo rpm --erase sed-4.2.2-5
+
+Since various RPM Scripts depend on gnu sed, one will definitely reinstall it. If "autogen" is also installed one can make a complete check on gcc (make check), because the gcc sub-package "fixincludes" depends on both of them.
+
+
+Epilogue
+--------
+Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.3 uses this version of sed. Without any doubt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac. Once "gnu sed" is installed, one should be able to install without any modifications "byacc", a prerequisite of "gnu awk", which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
+
+
+Known Issues
+------------
+[2018-01-10]
+
+- The installation script should run immediately after you clean install macOS Sierra along
+  with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
+  might have undesirable side effects; a similar restriction applies to Linux as well. This 
+  is the only scenario I've successfully tested so far. 
+
+- If you rebuild & install a package in Linux, check that the following two lines show up:
+  "packing     ... <pkg>.rpm" 
+  "installing  ... <pkg>.rpm"
+  If you don't see both lines, then an older RPM is installed (requires manual deletion). 
+  
+- To install gcc48 or gcc4 in Linux, you have to manually install its dependencies. The 
+  required dependencies in a RHEL 7.4 system can be satisfied by the official distribution
+  packages. So, the PC won't attempt to install ie gettext or pkg-config.
+
+  Although the PlugIn facilitates debugging for Fortran programs with LLDB, one should expect
+  that it has bugs (PR/82995 uncovers a F2008 tricky bug). Yet, it can overcome few problems
+  mainly on a Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac
+  linkers). In Linux, the PlugIn can compile ie the Fortran program found in PR/82065.
+  
+  GNU gcc-4.8.5 can't parse some system headers in macOS Sierra (PR/69960). One test case
+  (include.c) has been adjusted as in gcc-7.1 but another indicative failure is the following:
+  FAIL: gcc.dg/framework-1.c (test for excess errors)
+
+  There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
+  Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
+  the warnings ie didn't comply with a system security policy that loads processes at 
+  randomly chosen memory addresses; I could avoid it only in the Xcode environment.
+
+  The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
+  has been deactivated; haven't figured out why, perhaps when java version > 1.7 ?
+
+  An SSD/APFS related bug that spoils the gcc (7.1) build process on macOS (10.13) has been 
+  reported to https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81797 but the error isn't reproduced
+  in a HFS+ system.
+
+  As of 2017-11-20, gcc (4.8.5) has experimental support for Fortran SubModules. An implementation
+  internal issue is that the submodule separator '@' has been replaced by '$' as three test cases
+  (7, 8, and 29) were failing due to assembly errors in both Linux and with the PlugIn. The test 
+  case "submodule_6.f08" fails due to allocation errors and isn't included in the patch. 
+
+  The backport of PRs 63230 and 70397 is dubious. Whereas, the test case "unlimited_polymorphic_26"
+  has random failures (perhaps due to the unknown solution of PR/61261). See also a severe bug at:
+  https://groups.google.com/forum/#!topic/comp.lang.fortran/LnpsRZR4AAQ 
+
+- Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
+  Whereas the ratio of the failures is worse when one runs all the tests: 
+  https://bugs.kde.org/show_bug.cgi?id=365327#c23
+
+- If bash is asked to run a non existing command, you might face an unimportant Segmentation 
+  Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
+  on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. 
+
+  In macOS High Sierra (10.13), the read builtin command fails to process some strings and 
+  the "port" script depends on that functionality. The pre-installed bash-3.2.57 is perhaps 
+  a better choice but this package won't be removed from the configuration until proved to be
+  too buggy. 
+
+  To set this bash shell as the user default, one has to manually run the following command: 
+  sudo dscl . create /Users/${LOGNAME} UserShell /usr/local/bin/bash
+
+- The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
+  "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those messages.
+
+- The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
+  tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS; with 
+  just few additional open issues (ie bash & libunistring) which isn't unusual in Mac upgrades.
+
+
+[ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
