@@ -1,4 +1,5 @@
 
+
 Port Center
 -----------
 
@@ -28,14 +29,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2018-03-11.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2018-04-10.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2018-03-11.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2018-04-10.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    cb08a7d8da6ccf7809d544b0557c13e84a82b5a6 
+*SHA1    3a0c63c614a84305cc456a6197702913e04d75bd 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -116,7 +117,7 @@ Obviously, one can copy paste and execute the above commands in a Mac, as long a
 
 Known Issues
 ------------
-[2018-01-10]
+[2018-04-10]
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
@@ -162,6 +163,8 @@ Known Issues
   has random failures (perhaps due to the unknown solution of PR/61261). See also a severe bug at:
   https://groups.google.com/forum/#!topic/comp.lang.fortran/LnpsRZR4AAQ 
 
+  Note: deferred length strings aren't officially implemented in 4.8.
+
 - Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
   Whereas the ratio of the failures is worse when one runs all the tests: 
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
@@ -170,11 +173,6 @@ Known Issues
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
   on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. 
 
-  In macOS High Sierra (10.13), the read builtin command fails to process some strings and 
-  the "port" script depends on that functionality. The pre-installed bash-3.2.57 is perhaps 
-  a better choice but this package won't be removed from the configuration until proved to be
-  too buggy. 
-
   To set this bash shell as the user default, one has to manually run the following command: 
   sudo dscl . create /Users/${LOGNAME} UserShell /usr/local/bin/bash
 
@@ -182,8 +180,8 @@ Known Issues
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those messages.
 
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
-  tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS; with 
-  just few additional open issues (ie bash & libunistring) which isn't unusual in Mac upgrades.
+  tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS. The
+  newer version 10.13.4 is recommended, along with CLT's for Xcode 9.3.
 
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
