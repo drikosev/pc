@@ -36,7 +36,7 @@ cd ~/pc
 tar -xjSf ~/Downloads/pc-rules-2018-04-14.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    bed2a2c6faa88361c8a8f5d2086038ee81a88926 
+*SHA1    0576a5216febed64ec74a943da800357741f4b79 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -128,7 +128,7 @@ Known Issues
   "packing     ... <pkg>.rpm" 
   "installing  ... <pkg>.rpm"
   If you don't see both lines, then an older RPM is installed (requires manual deletion). 
-  
+
 - To install gcc48 or gcc4 in Linux, you have to manually install its dependencies. The 
   required dependencies in a RHEL 7.4 system can be satisfied by the official distribution
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
