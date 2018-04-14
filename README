@@ -180,8 +180,9 @@ Known Issues
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those messages.
 
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
-  tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS. The
-  newer version 10.13.4 is recommended, along with CLT's for Xcode 9.3.
+  tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS. Once
+  I've installed 10.13.4 along with CLT's for Xcode 9.3, I no longer see a bash problem but gcc4 
+  installation fails.
 
 - If you try to build NSS with clang the installation fails.
 
