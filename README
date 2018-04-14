@@ -36,7 +36,7 @@ cd ~/pc
 tar -xjSf ~/Downloads/pc-rules-2018-04-14.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    3df3fe37bdb24d36e8b4b8abb90a673d96a03194 
+*SHA1    8a868a27900f5d4a01f6e9d6d21902d9433fe228 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -183,5 +183,6 @@ Known Issues
   tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS. The
   newer version 10.13.4 is recommended, along with CLT's for Xcode 9.3.
 
+- If you try to build NSS with clang the installation fails.
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
