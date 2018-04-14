@@ -184,6 +184,5 @@ Known Issues
   I've installed 10.13.4 along with CLT's for Xcode 9.3, I no longer see a bash problem but gcc4 
   installation fails.
 
-- If you try to build NSS with clang the installation fails.
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
