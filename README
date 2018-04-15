@@ -180,5 +180,15 @@ Known Issues
   I've installed 10.13.4 along with CLT's for Xcode 9.3, I no longer see a bash problem but the
   gcc4 tests have 2 more failures.
 
+  One of these two new failures is likely related to the file "include-fixed/stdio.h", which is
+  also found in gcc 7.3 as well.  
+  
+  - /usr/local/lib/gcc/x86_64-apple-darwin17/4.8.5/include-fixed/stdio.h
+  - /opt/local/lib/gcc/x86_64-apple-darwin17/7.3.0/include-fixed/stdio.h
+
+  One can run the following command in the build directory to reproduce the failure:
+
+  make check-gcc-c RUNTESTFLAGS="cpp.exp=isysroot-1.c -v"
+
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
