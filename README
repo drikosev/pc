@@ -29,14 +29,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2018-04-14.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2018-04-18.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2018-04-14.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2018-04-18.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    0576a5216febed64ec74a943da800357741f4b79 
+*SHA1    26164e5a3702dd5a412bf6eb55eb0fad57de101a 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -186,9 +186,18 @@ Known Issues
   - /usr/local/lib/gcc/x86_64-apple-darwin17/4.8.5/include-fixed/stdio.h
   - /opt/local/lib/gcc/x86_64-apple-darwin17/7.3.0/include-fixed/stdio.h
 
-  One can run the following command in the build directory to reproduce the failure:
+  One can run the following command in the build directory to reproduce the first new failure:
 
   make check-gcc-c RUNTESTFLAGS="cpp.exp=isysroot-1.c -v"
+
+  As an interim solution, the patch "gcc48-fixinc2" makes sure the problematic include file is 
+  deleted. Note that this patch makes the cleaning only when you run "make check-fixincludes",
+  not if you run "make stmp-fixinc". Once we have the official solution, this patch will be 
+  discarded.
+
+  The second new failure can be reproduced with the following command:
+
+  make check-gcc-c++ RUNTESTFLAGS="dg.exp=darwin-cfstring1.C"
 
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
