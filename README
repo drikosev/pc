@@ -117,7 +117,7 @@ Obviously, one can copy paste and execute the above commands in a Mac, as long a
 
 Known Issues
 ------------
-[2018-04-10]
+[2018-04-24]
 
 - The installation script should run immediately after you clean install macOS Sierra along
   with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
@@ -167,7 +167,8 @@ Known Issues
 
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
-  on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. 
+  on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. I haven't
+  seen this error on High Sierra (10.13.4).
 
   To set this bash shell as the user default, one has to manually run the following command: 
   sudo dscl . create /Users/${LOGNAME} UserShell /usr/local/bin/bash
@@ -207,7 +208,7 @@ Known Issues
   #define    tvos(d) d
   #define API_AVAILABLE(a, b, c, d)
 
-  As explained above, once we have the official solution, the patch "gcc48-fixinc2" will be discarded.
+  As explained above, once we have the official solution, the patch "gcc7-fixinc2" will be discarded.
 
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
