@@ -29,14 +29,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2018-04-29.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2018-05-03.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2018-04-29.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2018-05-03.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    6c41b54fa5d6087960eb472e3cab8a270cf62dd7 
+*SHA1    77a57faa03e4a486edadc9f85a2c93ea831f7305 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -161,9 +161,11 @@ Known Issues
 
   Note: deferred length strings aren't officially implemented in 4.8.
 
-- Too many test cases of "valgrind" fail on a mac, ie 73 of the 215 "memcheck" tests fail.
+- Too many test cases of "valgrind" fail on a mac 10.12, ie 73 of the 215 "memcheck" tests fail.
   Whereas the ratio of the failures is worse when one runs all the tests: 
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
+
+  The PC script cannot install Valgrind on macOS High Sierra (10.13).
 
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
@@ -208,7 +210,18 @@ Known Issues
   #define    tvos(d) d
   #define API_AVAILABLE(a, b, c, d)
 
-  As explained above, once we have the official solution, the patch "gcc7-fixinc2" will be discarded.
+  Again, once we have the official solution, the patch "gcc7-fixinc2" will be discarded. Meanwhile,
+  it's applied also to gcc8 as well (since May 2, 2018).
 
+- The newer version of gcc (8.1.0) is installed at /opt/local and replaces gcc7. Similarly, if you 
+  install gcc7 after gcc8 you will replace the latter, a downgrade that might need adjustments by hand. 
+ 
+  The gcc8 build process fails on macOS 10.12 & 10.13. 
+
+  From a technical perspective, there is a problem in libgfortran and here is my informal analysis.
+  The problem is that a symbol "HAVE_WORKING_STAT" remains undefined in file libgfortran/config.h
+  for X86_64 but is found defined for the i386 version of libgfortran. In gcc7 is always defined.
+ 
+  So, gcc8 compiles smoothly on RHEL 7.4 but isn't ready for macOS.
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
