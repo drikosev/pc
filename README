@@ -216,12 +216,11 @@ Known Issues
 - The newer version of gcc (8.1.0) is installed at /opt/local and replaces gcc7. Similarly, if you 
   install gcc7 after gcc8 you will replace the latter, a downgrade that might need adjustments by hand. 
  
-  The gcc8 build process fails on macOS 10.12 & 10.13. 
+  gcc8 compiles smoothly in RHEL 7.4 but the PC script cannot install it on macOS (10.12 & 10.13). 
+  In specific, I faced a problem with libgfortran which is described below.
 
-  From a technical perspective, there is a problem in libgfortran and here is my informal analysis.
   The problem is that a symbol "HAVE_WORKING_STAT" remains undefined in file libgfortran/config.h
   for X86_64 but is found defined for the i386 version of libgfortran. In gcc7 is always defined.
- 
-  So, gcc8 compiles smoothly on RHEL 7.4 but the PC script cannot install it in macOS.
+
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
