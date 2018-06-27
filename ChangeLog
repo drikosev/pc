@@ -65,8 +65,9 @@ Legacy parser Issues
                     terminate called after throwing an instance of 'std::bad_alloc' 
                     what(): std::bad_alloc
 
-                    In macOS (10.13) with clang and in Windows (8.1) with the MS Native Tools (cl.exe) the program rdsfcobs.f90
-                    is parsed successfully. Also, GNU gcc compiles this file in Linux without any problems.
+                    When the legacy parser is compiled in macOS (10.13) by clang or in Windows (8.1) by the MS Native 
+                    Tools (cl.exe) the program rdsfcobs.f90 is parsed successfully. Also, GNU gcc compiles this file in Linux
+                    without any problems.
 
 
      Some legacy code examples have been found at: 
