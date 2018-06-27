@@ -61,11 +61,12 @@ Legacy parser Issues
 [ 2018-06-27 ] Bug: Added the keyword GOTO as an alternative to "Go To" in  <goto-stmt> & <computed-goto-stmt>. (done)
 [ 2018-06-27 ] Bug: It fails to parse an empty CASE DEFAULT, due to a wrong <case-block>. (done)
 [ 2018-06-27 ] Bug: In a format statement, '(/' and '/)' are valid sequences of '(', '/', ')'; (see src/adas/rdsfcobs.f90)
-[ 2018-06-27 ] Bug: The parser hangs in Linux due to a '”', and '–' vs '-' in the 1st comments of "src/adas/rdsfcobs.f90". I see:
+[ 2018-06-27 ] Bug: The parser hangs in Linux due to a '”', and '–' vs '-' in the first comments of "src/adas/rdsfcobs.f90".
+                    Sometimes the following two lines show up:
                     terminate called after throwing an instance of 'std::bad_alloc' 
                     what(): std::bad_alloc
 
-                    When the legacy parser is compiled in macOS (10.13) by clang or in Windows (8.1) by the MS Native 
+                    When the legacy parser has been compiled in macOS (10.13) by clang or in Windows (8.1) by the MS Native 
                     Tools (cl.exe) the program rdsfcobs.f90 is parsed successfully. Also, GNU gcc compiles this file in Linux
                     without any problems.
 
