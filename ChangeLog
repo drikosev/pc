@@ -1,0 +1,76 @@
+
+Fortran parser Issues
+---------------------
+
+[ 2015-01-05 ] The derived-type-def didn't accept labels in type-bound-proc-bindings and a few semicolons were missing (todo: test).
+[ 2015-01-28 ] The "ONLY" keyword was undefined and the comma was omitted in "only-list".
+[ 2015-03-03 ] Added the end-critical-stmt.
+[ 2015-04-22 ] The parser rejected functions as lvalues, which are likely valid.
+[ 2017-04-10 ] Removed the rule "ac-implied-do-object ::= keyword = expr". Added an accurate "ac-implied-do-cntrl" .
+[ 2017-05-01 ] The ERSP Extension was found to be buggy. So far cannot reproduce the bug in a small grammar (todo: handle this open issue).
+[ 2017-05-03 ] touched name-f & removed name-r from lprocedure names and run all the tests in generated parser ( todo: test also in simulator my test cases)
+[ 2017-05-06 ] Extended the grammar with the newer assumed-rank-spec as an option to array-spec (seems an overkill to run again the tests).
+[ 2017-07-07 ] The rule part-name-p-section-subscript-list-l didn't allow a follow "%" after an p-actual-arg-spec-list-l. 
+               In addition the part-name-p-section-subscript-list didn't allow a follow "=" that could be proved too restrictive
+               for future requirements.
+[ 2017-07-07 ] A awkward name rule "actual-arg-low-priority" has been replaced by "actual-arg".
+[ 2017-07-08 ] The "do-block" should be optional in a "block-do-construct".
+[ 2018-04-16 ] Segmentation fault on an extra comma in a type declaration stmt (ie: "real, x").
+[ 2018-04-19 ] Found an undefined <-name> instead of a <name> in <suffix> (after a <language-bindic-spec>).
+[ 2018-04-21 ] Extension: Allow old style initialisation without double colon (ie: "real pi / 3.14159 /")
+[ 2018-04-21 ] Extension: Allow Dec style length specification "real x*8 (2)" (in addition to "real x(2) * 8").
+               It doesn't allow such a length specification in a function name, ie "INTEGER FUNCTION FCN*2 ( A, B, C )", see [*2].
+[ 2018-04-23 ] Extension: <cray-pointer-stmt>. 
+[ 2018-04-25 ] Extension: Allow GNU Fortran specific extra comma in a <write-stmt> (ie: write (*,*), "handler";)
+[ 2018-06-26 ] Bug: The following erroneous 2 line program sends the generated parser (not the simulator) to an infinitive loop:
+                    READ(nunit(k),'(6e17.6)')((xtrajc0(i,k),ytrajc0(i,k),ztrajc0(i,k)),i=1,ntrajcs)
+                    END
+[ 2018-06-27 ] Bug: Added the keyword GOTO as an alternative to "Go To" in  <goto-stmt> & <computed-goto-stmt>. (done)
+[ 2018-06-27 ] Bug: It fails to parse an empty CASE DEFAULT, due to a wrong <case-block>. (done)
+[ 2018-06-27 ] Bug: In a format statement, '(/' and '/)' are valid sequences of '(', '/', ')'.
+
+
+Fortran scanner Issues
+----------------------
+[ 2017-05-03 ] I'd predicted only array context after "call*" and the scanner was returning a name-l on "call r('s')" (todo: confirm not_cons_keys ).
+[ 2018-04-19 ] A scalar-int-constant-name may have underscores (ie: c_char_"kernel32.dll").
+[ 2018-04-28 ] Extension: GNU/VMS/Oracle <hex-constant> with X in addition to Z (see [*2] ie: X'1f').
+[ 2018-04-28 ] An invalid <,> token has been removed.
+[ 2018-05-04 ] Undefined Lexical Rule "ID::=I D" (ie: write (iu, rec=n, asynchronous="YES", id=id) buffer;)
+[ 2018-06-26 ] Extension: Keywords STATIC/AUTOMATIC (done)
+[ 2018-06-27 ] Bug: Added the keyword GOTO (done)
+
+
+Legacy parser Issues
+--------------------
+[ 2018-04-22 ] Support for VAX/DEC structures, unions, maps, and records. 
+[ 2018-04-23 ] The keyword "RECORD" wasn't acceptable in the interface of a PROCEDURE declaration stmt (Fortran 2003).  (done).
+[ 2018-04-23 ] The Dec specific <parameter-stmt> isn't supported in fixed form (ie PARAMETER y = 1 is interpreted as PARAMETERy= 1).
+[ 2018-04-23 ] Extension: <cray-pointer-stmt>. 
+[ 2018-04-25 ] Extension: Allow GNU Fortran specific extra comma in a <write-stmt> (ie: write (*,*), "hello";)
+[ 2018-04-26 ] Extension: Allow an originally IBM specific DEFINE FILE Statement, <define-file-unit-stmt>. See also [*1].
+[ 2018-04-28 ] Extension: GNU/VMS/Oracle '$' as a <data-edit-desc> (see [*3] ie:  "100  FORMAT (' ENTER RADIUS VALUE ',$)").               
+[ 2018-06-26 ] Extension: Allow DEC/GNU STATIC/AUTOMATIC attributes in <type-declaration-stmt> and <save-stmt>. See:
+               http://gcc.gnu.org/onlinedocs/gfortran/AUTOMATIC-and-STATIC-attributes.html
+[ 2018-06-26 ] Extension: Allow a parenthesised object list (see more about the ARPS Model System in the 4 lines below)
+                          !https://groups.google.com/d/msg/comp.lang.fortran/PUk1-_p09zQ/HYpA9KgWBAAJ
+                          !source: http://www.caps.ou.edu/ARPS/arpsdown.html
+                          READ(nunit(k),'(6e17.6)')((xtrajc0(i,k),ytrajc0(i,k),ztrajc0(i,k)),i=1,ntrajcs)
+                          END
+[ 2018-06-26 ] Bug: The hand coded file reader was returning Hollerith constants within names (ie real x1h ;). (done)
+[ 2018-06-27 ] Bug: Added the keyword GOTO as an alternative to "Go To" in  <goto-stmt> & <computed-goto-stmt>. (done)
+[ 2018-06-27 ] Bug: It fails to parse an empty CASE DEFAULT, due to a wrong <case-block>. (done)
+[ 2018-06-27 ] Bug: In a format statement, '(/' and '/)' are valid sequences of '(', '/', ')'; (see src/adas/rdsfcobs.f90)
+[ 2018-06-27 ] Bug: The parser hangs in Linux due to a '”', and '–' vs '-' in the 1st comments of "src/adas/rdsfcobs.f90". I see:
+                    terminate called after throwing an instance of 'std::bad_alloc' 
+                    what(): std::bad_alloc
+
+                    In macOS (10.13) with clang and in Windows (8.1) with the MS Native Tools (cl.exe) the program rdsfcobs.f90
+                    is parsed successfully. Also, GNU gcc compiles this file in Linux without any problems.
+
+
+     Some legacy code examples have been found at: 
+[*1] http://fortranwiki.org/fortran/show/Modernizing+Old+Fortran
+[*2] https://docs.oracle.com/cd/E19957-01/805-4939/6j4m0vncp/index.html
+[*3] http://h41379.www4.hpe.com/doc/82final/6324/6324pro_048.html
+
