@@ -222,5 +222,7 @@ Known Issues
   The problem is that a symbol "HAVE_WORKING_STAT" remains undefined in file libgfortran/config.h
   for X86_64 but is found defined for the i386 version of libgfortran. In gcc7 is always defined.
 
+  Since July 26, a newer realease (8.2) is available in the GNU repositories.
+
 
 [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
