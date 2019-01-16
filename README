@@ -165,8 +165,6 @@ Known Issues
   Whereas the ratio of the failures is worse when one runs all the tests: 
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
 
-  The PC script cannot install Valgrind on macOS High Sierra (10.13).
-
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
   on 2017-10-02. Perhaps, some Linux specific patches should be skipped on Darwin. I haven't
