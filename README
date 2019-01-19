@@ -29,14 +29,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-01-16.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-01-19.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-01-16.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-01-19.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    e11fa78e99070bef7cd28249e5c0719e043a9697 
+*SHA1    2b670261419b793c0d076eef5fd2a66550217357 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -161,8 +161,8 @@ Known Issues
 
   Note: deferred length strings aren't officially implemented in 4.8.
 
-- Too many test cases of "valgrind" fail on a mac 10.12, ie 73 of the 215 "memcheck" tests fail.
-  Whereas the ratio of the failures is worse when one runs all the tests: 
+- Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck" tests
+  fail. Whereas the ratio of the failures is worse when one runs all the tests: 
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
 
   The PC script can install valgrind-3.14 on macOS Sierra (10.12) & High Sierra (10.13).
@@ -219,10 +219,21 @@ Known Issues
   gcc8 compiles smoothly in RHEL 7.4 but the PC script cannot install it on macOS (10.12 & 10.13). 
   In specific, I faced a problem with libgfortran which is described below.
 
-  The problem is that a symbol "HAVE_WORKING_STAT" remains undefined in file libgfortran/config.h
+  The problem is that the symbol "HAVE_WORKING_STAT" remains undefined in file libgfortran/config.h
   for X86_64 but is found defined for the i386 version of libgfortran. In gcc7 is always defined.
 
-  Since July 26, a newer realease (8.2) is available in the GNU repositories.
+  Since July 26, a newer release (8.2) is available in the GNU repositories.
 
+- To build GCC 7.3 on macOS 10.12 and 10.13 my choice is to set up a distinct, clean working area; ie:
 
-[ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
+  install -d ~/pc7 
+  cd ~/pc7 
+  tar -xjSf ~/Downloads/pc-rules-2019-01-19.tar.bz2 
+  ln -sf rules/port port
+  rm -rf gmp mpc mpfr gcc7 /tmp/gcc7.dst
+  ./port --force install gcc7 
+
+  If the RPM has been installed, the last line above can also be:  ./port --force rpminstall gcc7
+  
+
+  [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
