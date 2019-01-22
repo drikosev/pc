@@ -36,7 +36,7 @@ cd ~/pc
 tar -xjSf ~/Downloads/pc-rules-2019-01-22.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    f145c24f81437845d2916d608f8764f272aa8de9
+*SHA1    f2a30c98f8997d04a3ac0ddbe66d77d5ce06111c
  
 To see ie the build instructions for gcc-4.8, type:
 
@@ -214,27 +214,35 @@ Known Issues
   Again, once we have the official solution, the patch "gcc7-fixinc2" will be discarded. Meanwhile,
   it's applied also to gcc8 as well (since May 2, 2018).
 
-- The newer version of gcc (8.1.0) is installed at /opt/local and replaces gcc7. Similarly, if you 
-  install gcc7 after gcc8 you will replace the latter, a downgrade that might need adjustments by hand. 
- 
-  gcc8 compiles smoothly in RHEL 7.4 but the PC script cannot install it on macOS (10.12 & 10.13). 
-  In specific, I faced a problem with libgfortran which is described below.
+- GNU GCC (8.2) is installed smoothly at /opt/local in RHEL 7.4 but the PC script cannot install it  
+  in macOS (10.12 & 10.13). In specific, I faced a problem with libgfortran which is described below.
 
   The problem is that the symbol "HAVE_WORKING_STAT" remains undefined in file libgfortran/config.h
   for X86_64 but is found defined for the i386 version of libgfortran. In gcc7 is always defined.
 
-  Since July 26, a newer release (8.2) is available in the GNU repositories.
-
-- To build GCC 7.3 on macOS 10.12 and 10.13 my choice is to set up a distinct, clean working area; ie:
+- To build GCC (7.3) in macOS (10.12 & 10.13) my choice is to set up a distinct, clean working area, 
+  ie:
 
   install -d ~/pc7 
   cd ~/pc7 
   tar -xjSf ~/Downloads/pc-rules-2019-01-22.tar.bz2 
   ln -sf rules/port port
   rm -rf gmp mpc mpfr gcc7 /tmp/gcc7.dst
-  ./port --force install gcc7 
+  ./port --force install gcc7  
 
   If the RPM has been installed, the last line above can also be:  ./port --force rpminstall gcc7
   
+  The installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc7).
+
+- Similarly, to build GCC (8.2) in RHEL (7.4) my choice is to set up also a clean working area, ie:
+
+  install -d ~/pc8 
+  cd ~/pc8 
+  tar -xjSf ~/Downloads/pc-rules-2019-01-22.tar.bz2 
+  ln -sf rules/port port
+  rm -rf gmp mpc mpfr gcc8 /tmp/gcc8.dst
+  ./port --force install gcc8 
+
+  The installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8).
 
   [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
