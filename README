@@ -29,14 +29,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-01-22.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-01-23.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-01-22.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-01-23.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    f2a30c98f8997d04a3ac0ddbe66d77d5ce06111c
+*SHA1    2996d81d9e3f9275224c1d6e3150c67daa260730
  
 To see ie the build instructions for gcc-4.8, type:
 
@@ -214,35 +214,12 @@ Known Issues
   Again, once we have the official solution, the patch "gcc7-fixinc2" will be discarded. Meanwhile,
   it's applied also to gcc8 as well (since May 2, 2018).
 
-- GNU GCC (8.2) is installed smoothly at /opt/local in RHEL 7.4 but the PC script cannot install it  
-  in macOS (10.12 & 10.13). In specific, I faced a problem with libgfortran which is described below.
+  This problem is discussed also at: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83531
 
-  The problem is that the symbol "HAVE_WORKING_STAT" remains undefined in file libgfortran/config.h
-  for X86_64 but is found defined for the i386 version of libgfortran. In gcc7 is always defined.
+- The latest versions of GNU GCC (7.3 & 8.2) are installed at /opt/local instead of /usr/local. The  
+  installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8) without
+  examining if an existing link points to a newer version. Regarding GCC 8.2, I've installed it only
+  in RHEL (7.4) and macOS (10.13). 
 
-- To build GCC (7.3) in macOS (10.12 & 10.13) my choice is to set up a distinct, clean working area, 
-  ie:
-
-  install -d ~/pc7 
-  cd ~/pc7 
-  tar -xjSf ~/Downloads/pc-rules-2019-01-22.tar.bz2 
-  ln -sf rules/port port
-  rm -rf gmp mpc mpfr gcc7 /tmp/gcc7.dst
-  ./port --force install gcc7  
-
-  If the RPM has been installed, the last line above can also be:  ./port --force rpminstall gcc7
-  
-  The installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc7).
-
-- Similarly, to build GCC (8.2) in RHEL (7.4) my choice is to set up also a clean working area, ie:
-
-  install -d ~/pc8 
-  cd ~/pc8 
-  tar -xjSf ~/Downloads/pc-rules-2019-01-22.tar.bz2 
-  ln -sf rules/port port
-  rm -rf gmp mpc mpfr gcc8 /tmp/gcc8.dst
-  ./port --force install gcc8 
-
-  The installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8).
 
   [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
