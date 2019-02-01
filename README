@@ -29,14 +29,14 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-01-23.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-02-02.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-01-23.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-02-02.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    2996d81d9e3f9275224c1d6e3150c67daa260730
+*SHA1    c310df848ae3690112075534cdf43a3006ac5199
  
 To see ie the build instructions for gcc-4.8, type:
 
@@ -182,7 +182,7 @@ Known Issues
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
   tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS. Once
   I've installed 10.13.4 along with CLT's for Xcode 9.3, I no longer see a bash problem but the
-  gcc4 tests have 2 more failures.
+  gcc4 tests have 2 more failures [solved by Feb 1, 2019]
 
   One of these two new failures is likely related to the file "include-fixed/stdio.h", which is
   also found in gcc 7.3 as well.  
@@ -203,18 +203,8 @@ Known Issues
 
   make check-gcc-c++ RUNTESTFLAGS="dg.exp=darwin-cfstring1.C"
 
-  A quick & dirty hack would add the following 5 lines (before #include <CoreFoundation/CFString.h>)
+  The applied patch has been proposed at: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83531
 
-  #define   macos(a) a
-  #define     ios(b) b
-  #define watchos(c) c
-  #define    tvos(d) d
-  #define API_AVAILABLE(a, b, c, d)
-
-  Again, once we have the official solution, the patch "gcc7-fixinc2" will be discarded. Meanwhile,
-  it's applied also to gcc8 as well (since May 2, 2018).
-
-  This problem is discussed also at: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83531
 
 - The latest versions of GNU GCC (7.3 & 8.2) are installed at /opt/local instead of /usr/local. The  
   installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8) without
