@@ -69,11 +69,8 @@ Below there are step by step instructions to help you download this small RPM pa
 Download a source RPM Package
 -----------------------------
 
-You may try the following link at first, before you search for the package "sed-4.2.2-5.el7.src.rpm".
-
 cd ~/Downloads
 curl -O https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackageSource/sed-4.2.2-5.el7.src.rpm
-https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackageSource/sed-4.2.2-5.el7.src.rpm
 rpm -i sed-4.2.2-5.el7.src.rpm 
  
 
@@ -165,30 +162,6 @@ Known Issues
   https://groups.google.com/forum/#!topic/comp.lang.fortran/LnpsRZR4AAQ 
 
   Note: deferred length strings aren't officially implemented in 4.8.
-
-
-- A long standing problem of GNU GCC in macOS had been that the destructors of local thread
-  objects were running on deallocated memory (Emulated TLS). To my understanding, this issue
-  has been solved for the newer Darwin systems with the solution applied to PR/78968. I have
-  back-ported this patch to version 4.8. The patch "gcc48-pr58142.hacks" is explained below.
-
-  The routine that initialises the Emulated TLS creates two keys and then deletes the first,
-  which is immediately after is reassigned to the one used in function "__cxa_thread_atexit". 
-  In macOS (10.13) ie this key has then a lower number than the one used in the Emulated TLS.
-
-  As a result the functions registered by "__cxa_thread_atexit" to run any object destructors
-  run before, the thread specific, Emulated TLS is deallocated. The runtime overhead seems to
-  be minimal. Whereas the benefit is that we can avoid a segmentation fault. In macOS (10.12)
-  the C++ tests pass without additional regressions. The PR/78968 has priority, if effective.
-
-  At one hand, the PR/80816 has been reported also with similar symptoms to PR/58142; see at:
-  https://sourceforge.net/p/mingw-w64/bugs/727/
-
-  Maybe related, the PR/83562 is reported as a "call convention" issue of object destructors:
-  https://sourceforge.net/p/mingw-w64/bugs/527/
-
-  A similar solution to "gcc48-pr58142.hacks" is described at:
-  https://gist.github.com/rprichard/d0fad2161a3e2b7474b561d040ec5b40
 
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck" tests
