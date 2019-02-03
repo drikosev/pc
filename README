@@ -7,7 +7,7 @@ The port center (pc) is an OS directory that contains a few Bash Scripts and Mak
 
 The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on macOS Sierra (10.12 & 10.13). In the past I'd tested it also in OS X Yosemite (10.10). 
 
-Also, one can run this script in a RHEL 7.5 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and a second for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed in older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade.
+Also, one can run this script in a RHEL 7.5 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and another for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed in older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade.
 
 
 Installation Script
@@ -162,6 +162,32 @@ Known Issues
   https://groups.google.com/forum/#!topic/comp.lang.fortran/LnpsRZR4AAQ 
 
   Note: deferred length strings aren't officially implemented in 4.8.
+
+
+- A long standing problem of GNU GCC in macOS had been that the destructors of local thread
+  objects were running on deallocated memory (Emulated TLS). To my understanding, this issue
+  has been solved for the newer Darwin systems with the solution applied to PR/78968. I have
+  back-ported this patch to version 4.8. The patch "gcc48-pr58142.hacks" is explained below.
+
+  The routine that initialises the Emulated TLS creates two keys and then deletes the first,
+  which is immediately after is reassigned to the one used in function "__cxa_thread_atexit". 
+  In macOS (10.13) ie this key has then a lower number than the one used in the Emulated TLS.
+
+  As a result the functions registered by "__cxa_thread_atexit" to run any object destructors
+  run before, the thread specific, Emulated TLS is deallocated. The runtime overhead seems to
+  be minimal. Whereas the benefit is that we can avoid a segmentation fault. In macOS (10.12)
+  the C++ tests pass without additional regressions. The PR/78968 has priority, if effective.
+
+  Maybe this problem wasn't OS X specific only but was perhaps affecting MinGW users as well.
+
+  At one hand, the PR/80816 has been reported also with similar symptoms to PR/58142; see at:
+  https://sourceforge.net/p/mingw-w64/bugs/727/
+
+  At the other hand, the PR/83562 is reported as a "call convention" problem of destructors:
+  https://sourceforge.net/p/mingw-w64/bugs/527/
+
+  A similar solution to "gcc48-pr58142.hacks" that demonstrates the problem is described at:
+  https://gist.github.com/rprichard/d0fad2161a3e2b7474b561d040ec5b40
 
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck" tests
