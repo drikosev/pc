@@ -186,7 +186,7 @@ Known Issues
   At the other hand, the PR/83562 is reported as a "call convention" problem of destructors:
   https://sourceforge.net/p/mingw-w64/bugs/527/
 
-  A similar solution to "gcc48-pr58142.hacks" that demonstrates the problem is described at:
+  A relevant program that demonstrates the problem discussed here can be found at:
   https://gist.github.com/rprichard/d0fad2161a3e2b7474b561d040ec5b40
 
 
