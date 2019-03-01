@@ -23,8 +23,6 @@ Finally, one can invoke the system installer to process the archive; possibly, b
 
 Once the RPM has been installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
 
-The file pc2gfortran.spec provides instructions to help you transfer the Fortran patches to a Source RPM for a Linux installation.
-
 
 Download & Setup
 ----------------
