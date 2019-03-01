@@ -48,6 +48,7 @@
 
      #fail: gcc48 in 10.12 (an error msg only? unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
      ./port test gcc48 gcc48-test-options=check-target-libitm
+     ./port test gcc4   gcc4-test-options=check-target-libitm
 
      #fail: in Linux
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr43051-1.c"
@@ -94,7 +95,7 @@
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="cpp.exp=isysroot-1.c"
      ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="cpp.exp=isysroot-1.c"
 
-     #fail: in MacOS 10.13 with CLT's for Xcode 9.3 (unofficial PR/83531 )
+     #fail: in MacOS 10.13 with CLT's for Xcode 9.3 (not finialised PR/83531 )
      ./port test gcc48 gcc48-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=Darwin-cfstring1.C"
      ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=Darwin-cfstring1.C"
 
@@ -118,7 +119,7 @@
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
      ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
 
-     #fail: in MacOS (PR/84530; Does the PluggIn really call ret_thunk?)
+     #fail: in MacOS (PR/84530; Does the PluggIn really call __ret_thunk?)
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=ret-thunk-26.c"
      ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=ret-thunk-26.c"
 
