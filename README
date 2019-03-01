@@ -5,7 +5,7 @@ Port Center
 
 The port center (pc) is an OS directory that contains a few Bash Scripts and Make Files, which can help one install open source developer tools on a Mac; formerly OS X, now macOS.
 
-The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on macOS Sierra (10.12 & 10.13). In the past I'd tested it also in OS X Yosemite (10.10). 
+The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on MacOS High Sierra (10.13). In the past I'd tested the PC script also in MacOS Sierra (10.12). 
 
 Also, one can run this script in a RHEL 7.5 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and another for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed in older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade.
 
@@ -21,7 +21,7 @@ After, one can archive a package with a single command or on a step-by-step basi
 
 Finally, one can invoke the system installer to process the archive; possibly, by double clicking it. If you build and install a package on the same machine you can simply run: "./port install <package>". 
 
-Once the RPM is installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
+Once the RPM has been installed, one can use in the port script the command line arguments "rpmbuild" and "rpminstall" instead of "archive" and "install" respectively for any open source package. To see more type: "~/pc/port --help"
 
 The file pc2gfortran.spec provides instructions to help you transfer the Fortran patches to a Source RPM for a Linux installation.
 
@@ -29,20 +29,21 @@ The file pc2gfortran.spec provides instructions to help you transfer the Fortran
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-02-03.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-01.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-02-03.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-01.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    0674cb2ca7c84fd3933252d2f1e15411d55f3d90
+*SHA1    c662e17df0eed614fa81f85f6d805689ebb09a3a
  
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
 
-Likely, this is the first package to be installed in macOS (10.12 or 10.13). In a Linux system try the package gcc48 instead. 
+Likely, this is the first package to be installed on MacOS (10.13) and a night build is recommended. The file "selective-gcc-tests.txt" explains some build options about this package.
+
 
 
 RPM (4.11.3)
@@ -63,7 +64,7 @@ The "postinstall" script will also run the "vpkg-provides.sh" script that create
 
 If everything has indeed worked as supposed to, you should be able to install easily at least a small RPM package, ie gnu sed.
 
-Below there are step by step instructions to help you download this small RPM package (sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.12).
+Below there are step by step instructions to help you download this small RPM package (sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.13).
 
 
 Download a source RPM Package
@@ -84,8 +85,8 @@ In case you see a warning about the signature, run:
 sudo rpm --import /usr/local/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle-ol7
 
 
-Porting a source RPM package to Mac OS Sierra (10.12)
------------------------------------------------------
+Porting a source RPM package to Mac OS High Sierra (10.13)
+----------------------------------------------------------
 cd $HOME/rpmbuild 
 sed -i.sav "s/, [ ]*libselinux-devel//g" SPECS/sed.spec 
 sed -i.sav "s,/sbin/install-info,/usr/local/bin/install-info,g" SPECS/sed.spec 
@@ -121,10 +122,10 @@ Known Issues
 ------------
 [2018-04-24]
 
-- The installation script should run immediately after you clean install macOS Sierra along
-  with the Command Line Tools and optionally Xcode. Any other packages on path (ie at /opt/local)
-  might have undesirable side effects; a similar restriction applies to Linux as well. This 
-  is the only scenario I've successfully tested so far. 
+- The installation script should run immediately after you clean install macOS High Sierra
+  along with the Command Line Tools and optionally Xcode. Any other packages on path, ie at 
+  "/opt/local", might have undesirable side effects; a similar restriction applies to Linux 
+  as well. This is the only scenario I've successfully tested so far. 
 
 - If you rebuild & install a package in Linux, check that the following two lines show up:
   "packing     ... <pkg>.rpm" 
@@ -140,10 +141,6 @@ Known Issues
   mainly on a Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac
   linkers). In Linux, the PlugIn can compile ie the Fortran program found in PR/82065.
   
-  GNU gcc-4.8.5 can't parse some system headers in macOS Sierra (PR/69960). One test case
-  (include.c) has been adjusted as in gcc-7.1 but another indicative failure is the following:
-  FAIL: gcc.dg/framework-1.c (test for excess errors). It has been fixed in gcc-8.1
-
   There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
   the warnings ie didn't comply with a system security policy that loads processes at 
@@ -151,6 +148,9 @@ Known Issues
 
   The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
   has been deactivated; haven't figured out why, perhaps when java version > 1.7 ?
+
+  One test failure in "libjava" is Darwin specific (ie from 10.9 to 10.13); see the PR/48097.
+  In this case, one can still create java classes (byte-codes) that run as supposed to.
 
   As of 2017-11-20, gcc (4.8.5) has experimental support for Fortran SubModules. An implementation
   internal issue is that the submodule separator '@' has been replaced by '$' as three test cases
@@ -167,28 +167,7 @@ Known Issues
 - A long standing problem of GNU GCC in macOS had been that the destructors of local thread
   objects were running on deallocated memory (Emulated TLS). To my understanding, this issue
   has been solved for the newer Darwin systems with the solution applied to PR/78968. I have
-  back-ported this patch to version 4.8. The patch "gcc48-pr58142.hacks" is explained below.
-
-  The routine that initialises the Emulated TLS creates two keys and then deletes the first,
-  which is immediately after is reassigned to the one used in function "__cxa_thread_atexit". 
-  In macOS (10.13) ie this key has then a lower number than the one used in the Emulated TLS.
-
-  As a result the functions registered by "__cxa_thread_atexit" to run any object destructors
-  run before, the thread specific, Emulated TLS is deallocated. The runtime overhead seems to
-  be minimal. Whereas the benefit is that we can avoid a segmentation fault. In macOS (10.12)
-  the C++ tests pass without additional regressions. The PR/78968 has priority, if effective.
-
-  Maybe this problem wasn't OS X specific only but was perhaps affecting MinGW users as well.
-
-  At one hand, the PR/80816 has been reported also with similar symptoms to PR/58142; see at:
-  https://sourceforge.net/p/mingw-w64/bugs/727/
-
-  At the other hand, the PR/83562 is reported as a "call convention" problem of destructors:
-  https://sourceforge.net/p/mingw-w64/bugs/527/
-
-  A relevant program that demonstrates the problem discussed here can be found at:
-  https://gist.github.com/rprichard/d0fad2161a3e2b7474b561d040ec5b40
-
+  back-ported this patch to version 4.8 (a patch is applied for the PR/58142 if OS X < 10.9).
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck" tests
   fail. Whereas the ratio of the failures is worse when one runs all the tests: 

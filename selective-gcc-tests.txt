@@ -1,0 +1,168 @@
+
+ 2019-02-28
+
+				Selective Tests 
+				  (GCC 4.8.5)
+                                ---------------
+
+
+ This document lists a few cases that one shall pay attention when minimal testing 
+ of the compiler is desired. To avoid running the C/C++ & Fortran tests during the
+ build, which is the default testing procedure, type the following command: 
+ 
+ ./port install gcc4 gcc4-test="" gcc4-test-options=""
+
+
+ The basic difference between the package gcc4 and gcc48 is that the latter builds  
+ a bootstrapped compiler, a process some times broken in MacOS. Back to our topic,
+ one shall pay attention to:
+
+
+ 1. Recurring Issues
+    These tests fail steadily on a specific system/version only. There aren't any
+    failures that can always be reproduced in both MacOS & Linux.
+
+ 2. Solved Issues
+    These tests had failed at least one time, they are now solved but errors have
+    the tendency to reappear from time to time, ie random failures that were not
+    actually solved by the applied patch. This list attempts to catch such errors.
+
+ 3. Post Install Tests
+    These tests should better run manually once a package is built. They are not
+    part of the installation procedure because the installation script might exit
+    abnormally without creating the package if any test fail.
+
+ -------------------------------------------------------------------------------------------
+
+
+ 1.  Recurring Issues
+ --------------------
+
+     #fail: always in MacOS (zombie PR/48097)
+     ./port test gcc48 gcc48-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
+     ./port test gcc4   gcc4-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
+
+     #fail: gcc48 in Yosemite 10.10 (passes with gcc4)
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="pch.exp=largefile.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="pch.exp=largefile.c"
+
+     #fail: gcc48 in 10.12 (an error msg only? unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
+     ./port test gcc48 gcc48-test-options=check-target-libitm
+
+     #fail: in Linux
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr43051-1.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr43051-1.c"
+
+     #fail: in Linux
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr54200.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr54200.c"
+
+     #fail: in Linux
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr54519-1.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr54519-1.c"
+
+     #fail: in Linux
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr54693-2.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr54693-2.c"
+
+     #fail: gcc48 in Linux (passes with gcc4)
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="abi.exp=abi_check"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="abi.exp=abi_check"
+
+     #fail: gcc48 in Linux (passes with gcc4)
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=explicit-hle.cc"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=explicit-hle.cc"
+
+     #fail: gcc48 in Linux (passes with gcc4)
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=whatis.cc"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=whatis.cc"
+
+     #fail: in Linux
+     ./port test gcc48 gcc48-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
+     ./port test gcc4   gcc4-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
+
+     #fail: in Linux  (buggy, unofficial backport for Deferred Length Strings, accidentally never fails in MacOS)
+     ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26.f90"
+     ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26.f90"
+
+
+
+ 2. Solved Issues
+ --------------
+
+     #fail: in MacOS 10.13 with CLT's for Xcode 9.3 (I delete the file include-fixed/stdio.h)
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="cpp.exp=isysroot-1.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="cpp.exp=isysroot-1.c"
+
+     #fail: in MacOS 10.13 with CLT's for Xcode 9.3 (unofficial PR/83531 )
+     ./port test gcc48 gcc48-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=Darwin-cfstring1.C"
+     ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=Darwin-cfstring1.C"
+
+     #fail: in MacOS 10.12 & 10.13 (backport PR/69960 +hacked C/C++ parsers)
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="dg.exp=framework-1.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="dg.exp=framework-1.c"
+
+     #fail: in MacOS 10.12 & 10.13 (added test to 10.12 & 10.13)
+     ./port test gcc48 gcc48-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=framework-1.C"
+     ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=framework-1.C"
+
+     #fail: in MacOS (ie 10.12 & 10.13)
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="tree-prof.exp=pr52027.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="tree-prof.exp=pr52027.c"
+
+     #fail: in MacOS (adjusted as in GCC 7.1)
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="trad.exp=include.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="trad.exp=include.c"
+
+     #fail: in MacOS (ie 10.13 without the dragonegg pluggin)
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
+
+     #fail: in MacOS (PR/84530; Does the PluggIn really call ret_thunk?)
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=ret-thunk-26.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=ret-thunk-26.c"
+
+     #fail: in MacOS (ie 10.13)
+     ./port test gcc48 gcc48-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=pr59255.C"
+     ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=pr59255.C"
+
+     #fail: gcc4 on Mavericks 10.9 (without the PR/78968)
+     ./port test gcc48 gcc48-test-options=check-gcc-c++ RUNTESTFLAGS="tls.exp=thread_local-order*"
+     ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="tls.exp=thread_local-order*"
+
+     #fail: in MacOS (with a Linux specific patch) 
+     ./port test gcc48 gcc48-test-options=check-target-libgomp RUNTESTFLAGS="c.exp=lock*"
+     ./port test gcc4   gcc4-test-options=check-target-libgomp RUNTESTFLAGS="c.exp=lock*"
+
+     #fail: (it couldn't properly load the ASAN library due to a separate object file)
+     ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=elemental_allocate_1.f90"
+     ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=elemental_allocate_1.f90"
+
+     #fail: gcc4 on Mavericks 10.9 (We wanted a small change to avoid PR/...)
+     ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=key2.C"
+
+     #fail: gcc48 in Linux (was passing with gcc4; added "-latomic")
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
+
+
+ 3. Post Install Tests
+ ----------------------
+
+    3.1 Post Install Tests ( gcc48 )
+    -------------------------------
+
+    ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3
+    ./port test gcc48 gcc48-test-options=check-target-libitm          
+    ./port test gcc48 gcc48-test-options=check-target-libgomp
+    ./port test gcc48 gcc48-test-options=check-target-libjava
+
+
+    3.2 Post Install Tests ( gcc4 )
+    ------------------------------
+
+    ./port test gcc4 gcc4-test-options=check-target-libstdc++-v3
+    ./port test gcc4 gcc4-test-options=check-target-libitm
+    ./port test gcc4 gcc4-test-options=check-target-libgomp
+    ./port test gcc4 gcc4-test-options=check-target-libjava
+
