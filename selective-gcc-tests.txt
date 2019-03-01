@@ -38,7 +38,7 @@
  1.  Recurring Issues
  --------------------
 
-     #fail: always in MacOS (zombie PR/48097)
+     #fail: always in MacOS (PR/48097)
      ./port test gcc48 gcc48-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
      ./port test gcc4   gcc4-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
 
