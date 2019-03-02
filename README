@@ -7,7 +7,7 @@ The port center (pc) is an OS directory that contains a few Bash Scripts and Mak
 
 The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on MacOS High Sierra (10.13). In the past I'd tested the PC script also in MacOS Sierra (10.12). 
 
-Also, one can run this script in a RHEL 7.5 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and another for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed in older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade.
+Also, one can run this script in a RHEL 7.4-7.6 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and another for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed in older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade.
 
 
 Installation Script
@@ -27,14 +27,16 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-01.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-02.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-03-01.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-02.tar.bz2 
 ln -sf rules/port port
 
-*SHA1    c662e17df0eed614fa81f85f6d805689ebb09a3a
+
+*SHA1 pc-rules-2019-03-01.tar.bz2: c662e17df0eed614fa81f85f6d805689ebb09a3a
+*SHA1 pc-rules-2019-03-02.tar.bz2: 293156d3e03802ddc88b1a408d5e64dd451edfd6
  
 To see ie the build instructions for gcc-4.8, type:
 
@@ -113,7 +115,7 @@ Since various RPM Scripts depend on gnu sed, one will definitely reinstall it. I
 
 Epilogue
 --------
-Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.3 uses this version of sed. Without any doubt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac. Once "gnu sed" is installed, one should be able to install without any modifications "byacc", a prerequisite of "gnu awk", which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
+Obviously, one can copy paste and execute the above commands in a Mac, as long as Oracle Linux version 7.6 uses this version of sed. Without any doubt, the RPM installation still needs fine tuning (no mock, rpmlint, and so on) and probably this package isn't representative of the effort needed to port a package to OS X. Many RPM Source Packages require actual patch files to build on a Mac. Once "gnu sed" is installed, one should be able to install without any modifications "byacc", a prerequisite of "gnu awk", which in turn requires some path adjustments, ie /sbin and /usr/bin to /usr/local/bin.
 
 
 Known Issues
@@ -131,7 +133,7 @@ Known Issues
   If you don't see both lines, then an older RPM is installed (requires manual deletion). 
 
 - To install gcc48 or gcc4 in Linux, you have to manually install its dependencies. The 
-  required dependencies in a RHEL 7.4 system can be satisfied by the official distribution
+  required dependencies in a RHEL 7.6 system can be satisfied by the official distribution
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
 
   Although the PlugIn facilitates debugging for Fortran programs with LLDB, one should expect
@@ -214,7 +216,7 @@ Known Issues
 - The latest versions of GNU GCC (7.3 & 8.2) are installed at /opt/local instead of /usr/local. The  
   installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8) without
   examining if an existing link points to a newer version. Regarding GCC 8.2, I've installed it only
-  in RHEL (7.4) and macOS (10.13). 
+  in RHEL (7.6) and macOS (10.13). 
 
 
   [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
