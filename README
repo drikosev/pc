@@ -27,17 +27,18 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-02.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-04.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-03-02.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-04.tar.bz2 
 ln -sf rules/port port
 
 
 *SHA1 pc-rules-2019-03-01.tar.bz2: c662e17df0eed614fa81f85f6d805689ebb09a3a
 *SHA1 pc-rules-2019-03-02.tar.bz2: 293156d3e03802ddc88b1a408d5e64dd451edfd6
- 
+*SHA1 pc-rules-2019-03-04.tar.bz2: 3de3b12611a148a3a19a6c7dfde96e92dfae5ce6
+
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -220,4 +221,3 @@ Known Issues
 
 
   [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
-
