@@ -42,9 +42,12 @@
      ./port test gcc48 gcc48-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
      ./port test gcc4   gcc4-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
 
-     #fail: gcc48 in Yosemite 10.10 (passes with gcc4)
+     #fail: gcc48 in Yosemite 10.10 (passes with gcc4; not reproduced in Terminal or Xcode)
+     #[ output is largefile.c:1:0: fatal error: had to relocate PCH                       ]
+     #[ if fail, try:  sed  -i.sav  "s,10000, 9700,g" gcc/gcc-4.8.5/gcc/testsuite/gcc.dg/pch//pch.exp ]
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="pch.exp=largefile.c"
      ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="pch.exp=largefile.c"
+
 
      #fail: gcc48 in 10.12 (an error msg only? unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
      ./port test gcc48 gcc48-test-options=check-target-libitm
