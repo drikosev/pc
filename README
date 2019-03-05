@@ -27,17 +27,18 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-04.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-05.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-03-04.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-05.tar.bz2 
 ln -sf rules/port port
 
 
 *SHA1 pc-rules-2019-03-01.tar.bz2: c662e17df0eed614fa81f85f6d805689ebb09a3a
 *SHA1 pc-rules-2019-03-02.tar.bz2: 293156d3e03802ddc88b1a408d5e64dd451edfd6
 *SHA1 pc-rules-2019-03-04.tar.bz2: 3de3b12611a148a3a19a6c7dfde96e92dfae5ce6
+*SHA1 pc-rules-2019-03-05.tar.bz2: da83344dab64f89f256af383459f839be01eea6e
 
 To see ie the build instructions for gcc-4.8, type:
 
@@ -148,10 +149,10 @@ Known Issues
   randomly chosen memory addresses; I could avoid it only in the Xcode environment.
 
   Another PCH test ("largefile.c") fails in OS X Yosemite when I test gcc48; but it doesn't 
-  fail with gcc4 or when I run the tests in 10.9, 10.12 & 10.13. The error isn't reproduced  
-  also in the terminal or in Xcode. It might be the case of a well hidden bug uncovered when  
-  certain conditions are met. The test passes with a smaller file (see also PR/14940).
-
+  fail with gcc4 or when I run the tests in 10.9, 10.12, and 10.13. Also, I cannot reproduce
+  the error in Xcode/Terminal. An extra patch for the PR/14940 has repeatedly bypassed those
+  random failures several times, without guaranteed success though.
+    
   The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
   has been deactivated; haven't figured out why, perhaps when java version > 1.7 ?
 
