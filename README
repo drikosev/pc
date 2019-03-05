@@ -147,6 +147,11 @@ Known Issues
   the warnings ie didn't comply with a system security policy that loads processes at 
   randomly chosen memory addresses; I could avoid it only in the Xcode environment.
 
+  Another PCH test ("largefile.c") fails in OS X Yosemite when I test gcc48; but it doesn't 
+  fail with gcc4 or when I run the tests in 10.9, 10.12 & 10.13. The error isn't reproduced  
+  also in the terminal or in Xcode. It might be the case of a well hidden bug uncovered when  
+  certain conditions are met. The test passes with a smaller file (see also PR/14940).
+
   The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
   has been deactivated; haven't figured out why, perhaps when java version > 1.7 ?
 
