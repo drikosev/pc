@@ -44,7 +44,7 @@
  1.  Recurring Issues
  --------------------
 
-     #fail: always on MacOS (PR/48097)
+     #fail: always on MacOS (suspended PR/48097)
      ./port test gcc48 gcc48-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
      ./port test gcc4   gcc4-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
 
@@ -125,7 +125,7 @@
      ./port test gcc48 gcc48-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=pr59255.C"
      ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=pr59255.C"
 
-     #fail: gcc4 in OS X Mavericks 10.9 (without the PR/78968)
+     #fail: on OS X Mavericks 10.9 (without the PR/78968)
      ./port test gcc48 gcc48-test-options=check-gcc-c++ RUNTESTFLAGS="tls.exp=thread_local-order*"
      ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="tls.exp=thread_local-order*"
 
@@ -137,7 +137,7 @@
      ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=elemental_allocate_1.f90"
      ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=elemental_allocate_1.f90"
 
-     #fail: gcc4 on Mavericks 10.9 (We wanted a small change to avoid PR/...)
+     #fail: on Mavericks 10.9 (We wanted a small change to avoid PR/...)
      ./port test gcc4   gcc4-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=key2.C"
 
      #fail: gcc48 on Yosemite 10.10 (passes with gcc4; random failures not reproduced in Terminal/Xcode)
@@ -145,7 +145,7 @@
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="pch.exp=largefile.c"
      ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="pch.exp=largefile.c"
 
-     #fail: in OS X Mavericks 10.9 ( a modification to PR/71767 solved this problem on 10.9 ) 
+     #fail: on OS X Mavericks 10.9 ( a modification to PR/71767 solved this problem on 10.9 ) 
      # The example in PR/87199.  There isn't any patch file yet. One has to run manually this example.
 
      #fail: gcc48 on 10.12 (a rebuild cleared the error: unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
