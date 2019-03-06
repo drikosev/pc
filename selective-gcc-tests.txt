@@ -148,7 +148,7 @@
      #fail: in OS X Mavericks 10.9 ( a modification to PR/71767 solved this problem on 10.9 ) 
      # The example in PR/87199.  There isn't any patch file yet. One has to run manually this example.
 
-     #fail: gcc48 on 10.12 (a rebuild cleared error: unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
+     #fail: gcc48 on 10.12 (a rebuild cleared the error: unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
      ./port test gcc48 gcc48-test-options=check-target-libitm
      ./port test gcc4   gcc4-test-options=check-target-libitm
 
