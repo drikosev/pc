@@ -129,27 +129,27 @@ Known Issues
   "/opt/local", might have undesirable side effects; a similar restriction applies to Linux 
   as well. This is the only scenario I've successfully tested so far. 
 
-- If you rebuild & install a package in Linux, check that the following two lines show up:
+- If you rebuild & install a package on Linux, check that the following two lines show up:
   "packing     ... <pkg>.rpm" 
   "installing  ... <pkg>.rpm"
   If you don't see both lines, then an older RPM is installed (requires manual deletion). 
 
-- To install gcc48 or gcc4 in Linux, you have to manually install its dependencies. The 
+- To install gcc48 or gcc4 on Linux, you have to manually install its dependencies. The 
   required dependencies in a RHEL 7.6 system can be satisfied by the official distribution
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
 
   Although the PlugIn facilitates debugging for Fortran programs with LLDB, one should expect
   that it has bugs (PR/82995 uncovers a F2008 tricky bug). Yet, it can overcome few problems
   mainly on a Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable by newer mac
-  linkers). In Linux, the PlugIn can compile ie the Fortran program found in PR/82065.
+  linkers). On Linux, the PlugIn can compile ie the Fortran program found in PR/82065.
   
-  There are some failures with the "guality" tests in Linux (gcc.dg/quality/) whereas on a
+  There are some failures with the "guality" tests on Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
   the warnings ie didn't comply with a system security policy that loads processes at 
   randomly chosen memory addresses; I could avoid it only in the Xcode environment.
 
-  Another PCH test ("largefile.c") fails in OS X Yosemite when I test gcc48; but it doesn't 
-  fail with gcc4 or when I run the tests in 10.9, 10.12, and 10.13. Also, I cannot reproduce
+  Another PCH test ("largefile.c") fails on OS X Yosemite when I test gcc48; but it doesn't 
+  fail with gcc4 or when I run the tests on 10.9, 10.12, and 10.13. Also, I cannot reproduce
   the error in Xcode/Terminal. An extra patch for the PR/14940 has repeatedly bypassed those
   random failures several times, without guaranteed success though.
     
@@ -223,7 +223,7 @@ Known Issues
 - The latest versions of GNU GCC (7.3 & 8.2) are installed at /opt/local instead of /usr/local. The  
   installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8) without
   examining if an existing link points to a newer version. Regarding GCC 8.2, I've installed it only
-  in RHEL (7.6) and macOS (10.13). 
+  on RHEL (7.6) and macOS (10.13). 
 
 
   [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
