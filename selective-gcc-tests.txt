@@ -20,7 +20,7 @@
 
  1. Recurring Issues
     These tests fail steadily on a specific system/version only. I've not identified
-    failures that can always be reproduced in both MacOS & Linux.
+    ie C/C++ failures that can always be reproduced in both MacOS & Linux.
 
  2. Solved Issues
     These tests had failed at least one time, they are now solved but errors have
