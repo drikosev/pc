@@ -44,9 +44,13 @@
  1.  Recurring Issues
  --------------------
 
-     #fail: always on MacOS (suspended PR/48097)
+     #fail: always on MacOS (Suspended PR/48097)
      ./port test gcc48 gcc48-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
      ./port test gcc4   gcc4-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
+
+     #fail: on MacOS (The PlugIn isn't loaded if gcc4/gcc48 hasn't been installed)
+     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
+     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
 
      #fail: on MacOS (PR/84530; Does the PlugIn really call __ret_thunk?)
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=ret-thunk-26.c"
@@ -116,10 +120,6 @@
      #fail: on MacOS (adjusted as in GCC 7.1)
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="trad.exp=include.c"
      ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="trad.exp=include.c"
-
-     #fail: on MacOS (ie 10.13 without the dragonegg pluggin)
-     ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
-     ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
 
      #fail: on MacOS (ie 10.13)
      ./port test gcc48 gcc48-test-options=check-gcc-c++ RUNTESTFLAGS="dg.exp=pr59255.C"

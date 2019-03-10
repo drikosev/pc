@@ -27,11 +27,11 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-09.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-10.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-03-09.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-10.tar.bz2 
 ln -sf rules/port port
 
 
@@ -41,7 +41,8 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-03-05.tar.bz2: da83344dab64f89f256af383459f839be01eea6e
 *SHA1 pc-rules-2019-03-08.tar.bz2: 49eaf4c2cfff1d17e08ab695cfbe8ead7b2bca9a
 *SHA1 pc-rules-2019-03-09.tar.bz2: c3bbb22abcde98574ac495f5d907e6e9e5df8d4a
-
+*SHA1 pc-rules-2019-03-10.tar.bz2: 6cffb43603a4adf62e984f4de9190d331251e4aa
+ 
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -58,11 +59,17 @@ The RPM Package Manager (RPM) is a command line driven package management system
 
 This package builds the fork distributed by rpm.org and now uses gnupg-2.0. This porting is still work in progress and hasn't passed yet adequate quality tests. In example, we haven't tested at all the RPM Plug-In functionality. If you face any problems with the Berkeley DataBase, configure it with the minimum options possible.
 
-To install this package and initialize the RPM DataBase, run:
+To install this package and initialise the RPM DataBase, run:
 
 ./port install rpm
 
-If everything works as supposed to, a "postinstall" script will also initialize the RPM DataBase and populate it with all the packages installed by the Port Center along with any other JRE and JDK installed in your system. If not restricted by the SandBox it will attempt to process XQuartz also, otherwise one can run it manually on a later phase. These packages will go under the full control of RPM, you can uninstall them.
+If the above command fail, prefer a step by step approach. Post a clean command, configure again, and then install:
+
+./port clean rpm
+./port -v configure rpm
+./port install rpm
+
+If everything works as supposed to, a "postinstall" script will also initialize the RPM DataBase and populate it with all the packages installed by the Port Center along with any other JRE and JDK installed in your system. If not restricted by the SandBox it will attempt to process XQuartz also, if installed. These packages will go under the full control of RPM, you can uninstall them.
 
 The "postinstall" script will also run the "vpkg-provides.sh" script that creates a virtual package for all the libraries installed at /usr/lib. Further, all Frameworks in System Library are added as capabilities that the system provides.
 
