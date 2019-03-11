@@ -30,8 +30,8 @@
  3. Recent PRs in GNU GCC Bugzilla
     Some reported issues affect this version as well, which is no longer supported by
     FSF but it's still maintained by Red Hat and Oracle. The list here is indicative,
-    not complete. In contrast, several stale Fortran issues which have been solved in
-    newer GNU Fortran versions are listed in the package documentation.
+    not complete. In contrast, several stale Fortran issues which have been resolved 
+    in newer GNU Fortran versions are listed in the package documentation.
 
  4. Post Install Tests
     These tests should better run manually once a package is built. They are not
