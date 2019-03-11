@@ -5,7 +5,7 @@ Port Center
 
 The port center (pc) is an OS directory that contains a few Bash Scripts and Make Files, which can help one install open source developer tools on a Mac; formerly OS X, now macOS.
 
-The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on OS X (10.9-10.11) and macOS (10.12-10.13). The newer system macOS Mojave (10.14) isn't supported.
+The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed first. The PC script runs on OS X (10.9-10.11) and macOS (10.12-10.13). The newer system macOS Mojave (10.14) isn't supported.
 
 Also, one can run this script in a RHEL 7.4-7.6 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and another for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed on older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade.
 
