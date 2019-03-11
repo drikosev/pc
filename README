@@ -5,7 +5,7 @@ Port Center
 
 The port center (pc) is an OS directory that contains a few Bash Scripts and Make Files, which can help one install open source developer tools on a Mac; formerly OS X, now macOS.
 
-The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on MacOS High Sierra (10.13). In the past I'd tested the PC script also in MacOS Sierra (10.12). 
+The Port Center automates also the installation of RPM, a package management system which however requires a long list of dependencies to be installed on OS X (10.9-10.11) and macOS (10.12-10.13). The newer system macOS Mojave (10.14) isn't supported.
 
 Also, one can run this script in a RHEL 7.4-7.6 compatible system to install two Linux Drivers, one for the Apple USB Super Drive (ausden) and another for the Broadcom IEEE 802.11a/b/g/n WiFi card (bcm43xx) installed on older Mac Computers (ie a Mac Mini 2011). The WiFi Driver is kernel specific and has to be reinstalled after a kernel upgrade.
 
@@ -27,11 +27,11 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-10.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-11.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-03-10.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-11.tar.bz2 
 ln -sf rules/port port
 
 
@@ -42,6 +42,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-03-08.tar.bz2: 49eaf4c2cfff1d17e08ab695cfbe8ead7b2bca9a
 *SHA1 pc-rules-2019-03-09.tar.bz2: c3bbb22abcde98574ac495f5d907e6e9e5df8d4a
 *SHA1 pc-rules-2019-03-10.tar.bz2: 6cffb43603a4adf62e984f4de9190d331251e4aa
+*SHA1 pc-rules-2019-03-11.tar.bz2: 55b6adff6e5e0dc39c9025ba0c962fd9fb06faaf
  
 To see ie the build instructions for gcc-4.8, type:
 
@@ -157,11 +158,11 @@ Known Issues
   the warnings ie didn't comply with a system security policy that loads processes at 
   randomly chosen memory addresses; I could avoid it only in the Xcode environment.
 
-  Another PCH test ("largefile.c") fails on OS X Yosemite when I test gcc48; but it doesn't 
-  fail with gcc4 or when I run the tests on 10.9, 10.12, and 10.13. Also, I cannot reproduce
-  the error in Xcode/Terminal. An extra patch for the PR/14940 has repeatedly bypassed those
-  random failures several times, without guaranteed success though.
-    
+  The PCH test "largefile.c" might fail in the gcc48 tests on OS X Yosemite (10.10). An 
+  extra patch for the PR/14940 has repeatedly bypassed those random failures several times,
+  success isn't guaranteed though. One can apply manually the patch "gcc48-pr14940.newer"   
+  to reverse the two related patches (but use then an 1 GB array for the PCH area).
+
   The package gcc4 cannot fully recompile all the java classes of gcj and thus this option
   has been deactivated; haven't figured out why, perhaps when java version > 1.7 ?
 
@@ -189,7 +190,7 @@ Known Issues
   fail. Whereas the ratio of the failures is worse when one runs all the tests: 
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
 
-  The PC script can install valgrind-3.14 on macOS Sierra (10.12) & High Sierra (10.13).
+  The PC script can install Valgrind-3.14 on OS X 10.11 and macOS 10.12-10.13.
 
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
