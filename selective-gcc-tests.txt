@@ -156,8 +156,8 @@
      ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
      ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
 
-     #fail: on Linux/Darwin  (an unlimited polymorphic entity was not carring a string length with it)
-     # Test manually the example in PR/61261.  There isn't any patch file for this test case.
+     #fail: on Linux  (an unlimited polymorphic entity was not carrying a string length with it)
+     # Test manually the example in PR/61261.  There isn't any patch file for the test case.
 
 
  3. Recent PRs in GNU GCC Bugzilla
