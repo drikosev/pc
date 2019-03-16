@@ -27,11 +27,11 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-11.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-15.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-03-11.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-151.tar.bz2 
 ln -sf rules/port port
 
 
@@ -43,7 +43,8 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-03-09.tar.bz2: c3bbb22abcde98574ac495f5d907e6e9e5df8d4a
 *SHA1 pc-rules-2019-03-10.tar.bz2: 6cffb43603a4adf62e984f4de9190d331251e4aa
 *SHA1 pc-rules-2019-03-11.tar.bz2: 55b6adff6e5e0dc39c9025ba0c962fd9fb06faaf
- 
+*SHA1 pc-rules-2019-03-15.tar.bz2: 04d8ccef0a9867255ba86a08a8cd6379aa4cac52
+
 To see ie the build instructions for gcc-4.8, type:
 
 ./port details gcc4
@@ -64,7 +65,7 @@ To install this package and initialise the RPM DataBase, run:
 
 ./port install rpm
 
-If the above command fail, prefer a step by step approach. Post a clean command, configure again, and then install:
+If the above command fail, follow a step by step approach. Post a clean command, configure again, and then install:
 
 ./port clean rpm
 ./port -v configure rpm
@@ -175,7 +176,7 @@ Known Issues
   case "submodule_6.f08" fails due to allocation errors and isn't included in the patch. 
 
   The backport of PRs 63230 and 70397 is dubious. Whereas, the test case "unlimited_polymorphic_26"
-  has random failures (perhaps due to the unknown solution of PR/61261). See also a severe bug at:
+  has random failures on Linux, which means the backport isn't perfect. See also a severe bug at:
   https://groups.google.com/forum/#!topic/comp.lang.fortran/LnpsRZR4AAQ 
 
   Note: deferred length strings aren't officially implemented in 4.8.

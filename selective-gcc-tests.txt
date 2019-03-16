@@ -88,7 +88,7 @@
      ./port test gcc48 gcc48-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
      ./port test gcc4   gcc4-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
 
-     #fail: on Linux  (buggy, unofficial backport of Deferred Length Strings, accidentally never fails on Darwin)
+     #fail: on Linux  (buggy backport, never fails on Darwin)
      ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26.f90"
      ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26.f90"
 
@@ -146,7 +146,7 @@
      ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="pch.exp=largefile.c"
 
      #fail: on OS X Mavericks 10.9 ( a modification to PR/71767 solved this problem on 10.9 ) 
-     # The example in PR/87199.  There isn't any patch file yet. One has to run manually this example.
+     # Test manually the example in PR/87199.  There isn't any patch file yet.
 
      #fail: gcc48 on 10.12 (a rebuild fixed the error: unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
      ./port test gcc48 gcc48-test-options=check-target-libitm
@@ -155,6 +155,9 @@
      #fail: gcc48 on Linux (was passing with gcc4; added "-latomic")
      ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
      ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
+
+     #fail: on Linux/Darwin  (an unlimited polymorphic entity was not carring a string length with it)
+     # Test manually the example in PR/61261.  There isn't any patch file for this test case.
 
 
  3. Recent PRs in GNU GCC Bugzilla
