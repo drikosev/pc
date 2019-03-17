@@ -92,6 +92,8 @@
      ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26.f90"
      ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26.f90"
 
+     #fail: on Linux  (random error; an unlimited polymorphic entity isn't carrying a string length with it)
+     # Test manually the example in PR/61261.  There isn't any patch file for the test case.
 
 
  2. Solved Issues
@@ -155,9 +157,6 @@
      #fail: gcc48 on Linux (was passing with gcc4; added "-latomic")
      ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
      ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
-
-     #fail: on Linux  (an unlimited polymorphic entity was not carrying a string length with it)
-     # Test manually the example in PR/61261.  There isn't any patch file for the test case.
 
      #fail: on MacOS 10.13 ( Configuration of gcc4 with LTO )
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="asan.exp=strncpy-overflow-1.c"
