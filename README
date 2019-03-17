@@ -177,7 +177,7 @@ Known Issues
   case "submodule_6.f08" fails due to allocation errors (PR/44672) and isn't included in the patch. 
 
   The backport of PRs 63230 & 70397 is dubious. Whereas, the test case "unlimited_polymorphic_26"
-  has random failures on Linux, which means the backport isn't perfect. See also another bug at:
+  has random failures on Linux, which means the backport isn't perfect. See also a severe bug at:
   https://groups.google.com/forum/#!topic/comp.lang.fortran/LnpsRZR4AAQ
 
   Note: deferred length strings aren't officially implemented in 4.8. 
