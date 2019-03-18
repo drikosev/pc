@@ -45,8 +45,8 @@
  --------------------
 
      #fail: always on MacOS (Suspended PR/48097)
-     ./port test gcc48 gcc48-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
-     ./port test gcc4   gcc4-test-options=check-target-libjava  RUNTESTFLAGS="lang.exp=Throw_2*"
+     ./port test gcc48 gcc48-test-options=check-target-libjava RUNTESTFLAGS="lang.exp=Throw_2*"
+     ./port test gcc4   gcc4-test-options=check-target-libjava RUNTESTFLAGS="lang.exp=Throw_2*"
 
      #fail: on MacOS (The PlugIn isn't loaded if gcc4/gcc48 hasn't been installed)
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="i386.exp=pr49866.c"
@@ -77,8 +77,8 @@
      ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="abi.exp=abi_check"
 
      #fail: gcc48 on Linux (passes with gcc4)
-     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=explicit-hle.cc"
-     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=explicit-hle.cc"
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=ex*hle.cc"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=ex*hle.cc"
 
      #fail: gcc48 on Linux (passes with gcc4)
      ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=whatis.cc"
@@ -89,8 +89,8 @@
      ./port test gcc4   gcc4-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
 
      #fail: on Linux  (buggy backport, never fails on macOS)
-     ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26.f90"
-     ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26.f90"
+     ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26*"
+     ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26*"
 
 
  2. Solved Issues
@@ -147,13 +147,13 @@
      #fail: on OS X Mavericks 10.9 ( a modification to PR/71767 solved this problem on 10.9 ) 
      # Test manually the example in PR/87199.  There isn't any patch file yet.
 
-     #fail: gcc48 on 10.12 (a rebuild fixed the error: unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
+     #fail: gcc48 on 10.12 (a rebuild fixed this: unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
      ./port test gcc48 gcc48-test-options=check-target-libitm
      ./port test gcc4   gcc4-test-options=check-target-libitm
 
      #fail: gcc48 on Linux (was passing with gcc4; added "-latomic")
-     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
-     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod.cc"
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod*"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod*"
 
      #fail: on MacOS 10.13 ( Configuration of gcc4 with LTO )
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="asan.exp=strncpy-overflow-1.c"

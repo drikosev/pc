@@ -27,11 +27,11 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-18.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-19.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-03-18.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-19.tar.bz2 
 ln -sf rules/port port
 
 
@@ -45,6 +45,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-03-11.tar.bz2: 55b6adff6e5e0dc39c9025ba0c962fd9fb06faaf
 *SHA1 pc-rules-2019-03-17.tar.bz2: 81dd65f57648ecac6ca4566f325c7daabfdd3db1
 *SHA1 pc-rules-2019-03-18.tar.bz2: 0b9913752b07c5753a91b111c05bc5f803d0cada 
+*SHA1 pc-rules-2019-03-19.tar.bz2: 85b58544f46da40e933d5d887d5af4aa6bbbe5df
 
 To see ie the build instructions for gcc-4.8, type:
 
@@ -177,10 +178,10 @@ Known Issues
   case "submodule_6.f08" fails due to allocation errors (PR/44672) and isn't included in the patch. 
 
   The backport of PRs 63230 & 70397 is dubious. Whereas, the test case "unlimited_polymorphic_26"
-  has random failures on Linux, which means the backport isn't perfect. See also a severe bug at: 
-  https://groups.google.com/forum/#!topic/comp.lang.fortran/LnpsRZR4AAQ
+  has random failures on Linux, which simply means that the backport isn't perfect.
 
-  Note: Deferred Length Characters aren't officially implemented in 4.8.
+  Note: Deferred Length Characters aren't officially implemented in 4.8. I've backported just few
+  relevant patches that provide, in best case, elementary support only for very simple examples.
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local thread
   objects were running on deallocated memory (Emulated TLS). To my understanding, this issue
