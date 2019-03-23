@@ -27,11 +27,11 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-20.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-03-23.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-03-20.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-03-23.tar.bz2 
 ln -sf rules/port port
 
 
@@ -47,6 +47,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-03-18.tar.bz2: 0b9913752b07c5753a91b111c05bc5f803d0cada 
 *SHA1 pc-rules-2019-03-19.tar.bz2: 85b58544f46da40e933d5d887d5af4aa6bbbe5df
 *SHA1 pc-rules-2019-03-20.tar.bz2: 8fdb3bb3c691708d5d1fdaa1460b4e088500971d
+*SHA1 pc-rules-2019-03-23.tar.bz2: 4290498b9d5e3d8e98f9cdbfe074303effc7abca
 
 To see ie the build instructions for gcc-4.8, type:
 
@@ -175,14 +176,13 @@ Known Issues
 
   Since 2017-11-20, gcc-4.8.5 has experimental support for Fortran SubModules. An implementation
   internal issue is that the submodule separator '@' has been replaced by '$' as three test cases
-  (7, 8, and 29) were failing due to assembly errors in both Linux and with the PlugIn. The test 
-  case "submodule_6.f08" fails due to allocation errors (PR/44672) and isn't included in the patch. 
+  (7, 8, and 29) were failing due to assembly errors in both Linux and with the PlugIn.  
 
   The backport of PRs 63230 & 70397 is dubious. Whereas, the test case "unlimited_polymorphic_26"
   has random failures on Linux, which simply means that the backport isn't perfect.
 
-  Note: Deferred Length Characters aren't officially implemented in 4.8. I've backported just few
-  relevant patches that provide, in best case, elementary support only for very simple examples.
+  Note: SubModules, Unlimited Polymorphic Entities, and Deferred Length Characters are not
+  officially implemented in GNU Fortran version "4.8". 
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local thread
   objects were running on deallocated memory (Emulated TLS). To my understanding, this issue
