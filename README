@@ -186,7 +186,8 @@ Known Issues
   has random failures on Linux, which simply means that the backport isn't perfect.
 
   Note: SubModules, Unlimited Polymorphic Entities, and Deferred Length Characters are not
-  officially implemented in GNU Fortran version "4.8". 
+  officially implemented in GNU Fortran version "4.8" and there are too many newer PRs filed
+  in GCC Bugzilla around these features. 
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local thread
   objects were running on deallocated memory (Emulated TLS). To my understanding, this issue
