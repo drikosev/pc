@@ -165,8 +165,13 @@
 
  3. Recent PRs in GNU GCC Bugzilla
 
-    -The PR/84497 is still open. 
+    -The PR/84497 is still open.
     -The PR/52268 seems to be an enhancement request.
+    -The PR/80563 requires another backport. Try ie the following test:
+         FAIL: deferred_character_23.f90
+    -The PR/34640 (span field) requires another backport. Try ie the following two tests:       
+         FAIL: pointer_array_7.f90        (PR/34640)
+         FAIL: pointer_array_8.f90        (PR/34640)
     -(...)
 
 
