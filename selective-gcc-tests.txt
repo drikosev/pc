@@ -169,9 +169,9 @@
     -The PR/52268 seems to be an enhancement request.
     -The PR/80563 requires another backport. Try ie the following test:
          FAIL: deferred_character_23.f90
-    -The PR/34640 (span field) requires another backport. Try ie the following two tests:       
-         FAIL: pointer_array_7.f90        (PR/34640)
-         FAIL: pointer_array_8.f90        (PR/34640)
+    -Some test cases of PR/34640 require another backport. Try ie these two tests:       
+         FAIL: pointer_array_7.f90        (select type bug?)
+         FAIL: pointer_array_8.f90        (select type bug?)
     -(...)
 
 
