@@ -169,7 +169,7 @@
     -The PR/52268 seems to be an enhancement request.
     -The PR/85603 requires another backport. Try ie the following test:
          FAIL: deferred_character_23.f90
-    -Some test cases of PR/34640 require another backport. Try ie these two tests:       
+    -Some test cases of PR/34640 require another backport. Try ie this test:       
          FAIL: pointer_array_7.f90        (   transfer bug?)
     -The test case of PR/90498 requires another backport (many failures depend on PR/44672).
          FAIL: associate_48.f90           (allocation error as usual?)
