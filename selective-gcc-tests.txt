@@ -169,8 +169,6 @@
     -The PR/52268 seems to be an enhancement request.
     -The PR/85603 requires another backport. Try ie the following test:
          FAIL: deferred_character_23.f90
-    -Some test cases of PR/34640 require another backport. Try ie this test:       
-         FAIL: pointer_array_7.f90                        (   transfer bug?)
     -The memory leaks reported in PRs 61830 and 86481 are allocation errors:
          FAIL: allocate_with_source_14.f03 
          FAIL: allocate_with_source_25.f90
