@@ -167,14 +167,6 @@
 
     -The PR/84497 is still open.
     -The PR/52268 seems to be an enhancement request.
-    -The PR/85603 likely tests some other bug fix as well, in addition to the reported problem.
-         FAIL: deferred_character_23.f90                        (original)
-         PASS: deferred_character_23-construct-Z.f90            (applied)
-
-         The second test case is slightly modified as another bug was uncovered. In specific,
-         the variable declaration of a (module) derived type in a subroutine was corrupted, which
-         is bypassed ie with the attribute ALLOCATABLE or with constructor initialization.
-
     -The memory leaks reported in PRs 61830 and 86481 are allocation errors:
          FAIL: allocate_with_source_14.f03 
          FAIL: allocate_with_source_25.f90
