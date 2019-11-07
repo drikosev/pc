@@ -27,11 +27,11 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-10-27.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-11-07.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-10-27.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-11-07.tar.bz2 
 ln -sf rules/port port
 
 
@@ -57,16 +57,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-10-25.tar.bz2: 98aa4430ac3e20b5c3b3364a7906887432ba7ace
 *SHA1 pc-rules-2019-10-26.tar.bz2: de7e287fbfad6604f30661f1e92828f654035011
 *SHA1 pc-rules-2019-10-27.tar.bz2: edc0aea9a18ccaaf3a3e6645473a099590064b05
-
-Note: the PR/62044 has introduced a regression and these 7 tarballs have broken Fortran OMP functionality.
-
-*SHA1 pc-rules-2019-10-28.tar.bz2: 29eb16713c9568ca5abf43b01310e38b4f1234cc [broken libgomp in gcc-4.8.5]
-*SHA1 pc-rules-2019-10-29.tar.bz2: aa9d9abe482d2d6e739ec98e7dab6076575095cf [broken libgomp in gcc-4.8.5]
-*SHA1 pc-rules-2019-10-30.tar.bz2: 9a9d7a7ba19d502d1c44ee53872d0d3efd076630 [broken libgomp in gcc-4.8.5]
-*SHA1 pc-rules-2019-10-31.tar.bz2: 329bbf014e91b0e4d28688b112f5996f6be35411 [broken libgomp in gcc-4.8.5]
-*SHA1 pc-rules-2019-11-01.tar.bz2: c85f812608c39119e3b7033cd4e7a5d6a65e661c [broken libgomp in gcc-4.8.5]
-*SHA1 pc-rules-2019-11-02.tar.bz2: c6a7db35ff970447c7ac1278f408f17e28ab9fdd [broken libgomp in gcc-4.8.5]
-*SHA1 pc-rules-2019-11-04.tar.bz2: 9b1a9d2466244da7e115de0c2839d49bb12f9638 [broken libgomp in gcc-4.8.5]
+*SHA1 pc-rules-2019-11-07.tar.bz2: 9486c41672dd27678cd6ab9100c757320f65b98d
 
 To see ie the build instructions for gcc-4.8, type:
 
