@@ -147,10 +147,10 @@
      #fail: on OS X Mavericks 10.9 ( a modification to PR/71767 solved this problem on 10.9 ) 
      # Test manually the example in PR/87199.  There isn't any patch file yet.
 
-     #fail: gcc48 on 10.12 (rebuild? unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
+     #fail: gcc48 on macOS (unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
      ./port test gcc48 gcc48-test-options=check-target-libitm
      ./port test gcc4   gcc4-test-options=check-target-libitm
-     Note: I've faced once again this error message on 10.11 as well.
+     Note: seems to be a randomly recurring issue.
 
      #fail: gcc48 on Linux (was passing with gcc4; added "-latomic")
      ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod*"
