@@ -150,7 +150,7 @@
      #fail: gcc48 on macOS (unrecognized option -B/usr/local/x86_64-apple-darwin16/bin)
      ./port test gcc48 gcc48-test-options=check-target-libitm
      ./port test gcc4   gcc4-test-options=check-target-libitm
-     Note: seems to be a randomly recurring issue.
+     Note: seems to be a recurring issue, not always reproduced though.
 
      #fail: gcc48 on Linux (was passing with gcc4; added "-latomic")
      ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=user_pod*"
@@ -168,8 +168,7 @@
 
     -The PR/84497 is still open.
     -The PR/52268 seems to be an enhancement request.
-    -The memory leaks reported in PRs 61830 and 86481 are allocation errors:
-         FAIL: allocate_with_source_14.f03 
+    -The memory leaks reported in PR 86481 are allocation errors:
          FAIL: allocate_with_source_25.f90
     -The sizeof function returns incorrect results on assume-sized allocated arrays 
      and scalars, as reported in PR/85742.
