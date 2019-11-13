@@ -248,5 +248,12 @@ Known Issues
   examining if an existing link points to a newer version. Regarding GCC 8.2, I've installed it only
   on RHEL (7.6) and macOS (10.13). 
 
+- The Caml tests, which don't run during installation, have one failure on macOS 10.13:
+  
+  List of failed tests:
+      tests/output-complete-obj/'test.ml' with 1.2.1.1 (script)   [testing 'test.ml' with 1.2.1.1]
+  Summary: 2473 passed, 33 skipped, 1 failed, 94 not started, 0 unexpected errors, 2601 considered.
 
+
+  --------------------------------------------------------------------------------------------------
   [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
