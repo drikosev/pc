@@ -168,13 +168,17 @@
 
     -The PR/84497 is still open.
     -The PR/52268 seems to be an enhancement request.
-    -The memory leaks reported in PR 86481 are allocation errors:
+    -The memory leaks reported in PRs 61819 and 86481 are allocation errors:
+         FAIL: allocate_with_source_13.f03 
          FAIL: allocate_with_source_25.f90
     -The sizeof function returns incorrect results on assume-sized allocated arrays 
      and scalars, as reported in PR/85742.
          FAIL: assumed_type_9.f90
     -The PR/84109 reports another allocation error (finally can seg. fault as well) 
          FAIL: elemental_function_3.f90
+    -The PR/82036 reports also an allocation error, may appear either as ICE or as
+         inititialization error.
+         FAIL: pr82036-00.f90 
     -(...)
 
 
