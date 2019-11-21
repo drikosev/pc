@@ -27,11 +27,11 @@ Once the RPM has been installed, one can use in the port script the command line
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-11-13.tar.bz2), the following four commands will setup the port center:
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-11-21.tar.bz2), the following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-11-13.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-11-21.tar.bz2 
 ln -sf rules/port port
 
 
@@ -59,6 +59,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-10-27.tar.bz2: edc0aea9a18ccaaf3a3e6645473a099590064b05
 *SHA1 pc-rules-2019-11-07.tar.bz2: 9486c41672dd27678cd6ab9100c757320f65b98d
 *SHA1 pc-rules-2019-11-13.tar.bz2: 7d05037304677ccf65e6a58b794416f088800881
+*SHA1 pc-rules-2019-11-21.tar.bz2: eb9444e45874b139ba106659cddbb6b6a08342bd
 
 To see ie the build instructions for gcc-4.8, type:
 
@@ -206,7 +207,6 @@ Known Issues
 
   The PC script can install Valgrind-3.14 on OS X 10.11 and macOS 10.12-10.13.
 
-  todo: on OS X 10.11 Valgrind expects the suppressions file at /tmp/valgrind.dst/... 
 
 - If bash is asked to run a non existing command, you might face an unimportant Segmentation 
   Fault. This problem, which appeared in Sierra, remains even with the newer patches applied
@@ -219,8 +219,7 @@ Known Issues
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc 
   "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those messages.
 
-  todo: whereas the GNU tar-1.29, which is installed by PC script and allows you to avoid such
-        messages, requires XZ but the download link is broken. I'll upgrade it (to xz-5.2.4). 
+  As an alternative solution, the PC script can install on macOS (10.11-10.13) GNU tar-1.29.
 
 - The installation script seems to be ready for macOS High Sierra (10.13) but it has not been 
   tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and CVS. Once
@@ -249,12 +248,11 @@ Known Issues
   The applied patch has been proposed at: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83531
 
 
-- The latest versions of GNU GCC (7.3 & 8.2) are installed at /opt/local instead of /usr/local. The  
+- The latest versions of GNU GCC (7.5 & 8.2) are installed at /opt/local instead of /usr/local. The  
   installation script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8) without
   examining if an existing link points to a newer version. Regarding GCC 8.2, I've installed it only
   on RHEL (7.6) and macOS (10.13). Newer GCC versions (ie GCC-9) aren't supported.
 
-  todo: the latest release of GCC7 is 7.5.0. I'll upgrade it (I use it for debugging on 10.10-10.11).
 
 - The Caml tests, which don't run during installation, have one failure on macOS 10.13:
   
