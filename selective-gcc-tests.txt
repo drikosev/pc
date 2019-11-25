@@ -88,10 +88,6 @@
      ./port test gcc48 gcc48-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
      ./port test gcc4   gcc4-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
 
-     #fail: on Linux  (buggy backport, never fails on macOS)
-     ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26*"
-     ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26*"
-
 
  2. Solved Issues
  --------------
@@ -162,6 +158,10 @@
 
      #fail: on Linux  (an unlimited polymorphic entity was not carrying a string length with it)
      # Test manually the example in PR/61261.  There isn't any patch file for the test case.
+
+     #fail: on Linux  (never fails on macOS, on 2019-11-15 not reproduced after 15 repeated trials)
+     ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26*"
+     ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26*"
 
 
  3. Recent PRs in GNU GCC Bugzilla

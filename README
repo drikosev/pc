@@ -195,8 +195,11 @@ Known Issues
   The backport of PRs 63230 & 70397 is dubious. Whereas, the test case "unlimited_polymorphic_26"
   has random failures on Linux, which simply means that the backport isn't perfect.
 
-  Note: SubModules and Deferred Length Characters aren't officially implemented in GNU Fortran
-  version "4.8" and there are various newer PRs filed in GCC Bugzilla around these features. 
+  Note: SubModules, Deferred Length Characters, and Finalization aren't officially implemented
+  in GNU Fortran version "4.8" and there are various newer PRs filed in GCC Bugzilla around  
+  these features. More detailed info about the supported features per version can be found at
+  https://gcc.gnu.org/wiki/Fortran2003Status 
+
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local thread
   objects were running on deallocated memory (Emulated TLS). To my understanding, this issue
