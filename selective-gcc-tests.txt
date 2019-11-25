@@ -171,8 +171,8 @@
     -The memory leaks reported in PRs 61819, 86481, and 80477 are allocation errors:
          FAIL: allocate_with_source_13.f03 
          FAIL: allocate_with_source_25.f90
-         FAIL: class_result_9.f90            (uninitialised value)
          FAIL: pr80477-00.f90
+         FAIL: pr87359-37.f90
     -The sizeof function returns incorrect results on assume-sized allocated arrays 
      and scalars, as reported in PR/85742.
          FAIL: assumed_type_9.f90
@@ -181,8 +181,6 @@
     -The PR/82036 reports also an allocation error, may appear either as ICE or as
          inititialization error.
          FAIL: pr82036-00.f90
-    -The following test case, normally added in 2014 to GCC Bugzilla, fails
-         FAIL: gcc/testsuite/gfortran.dg/class_nameclash.f90   
     -(...)
 
 
