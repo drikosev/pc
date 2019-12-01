@@ -133,7 +133,7 @@ If everything has indeed worked as supposed to, you should be able to install ea
 least a small RPM package, ie gnu sed.
 
 Below there are step by step instructions to help you download this small RPM package
-(sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Sierra (10.13).
+(sed-4.2.2-5) from public-yum.oracle.com and install it on an Mac OS Mojave (10.14).
 
 
 Download a source RPM Package
