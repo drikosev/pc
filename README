@@ -284,16 +284,14 @@ Known Issues
 
   As an alternative, the PC script can install on macOS (10.11-10.14) GNU tar-1.29.
 
-- The installation script seems to be ready for macOS High Sierra (10.13) but it has not
-  been tested very well. On 2017-11-13 I've installed gcc (4.8.5 & 7.1), autogen, RPM, and 
-  CVS. Once I've installed 10.13.4 along with CLT's for Xcode 9.3, I no longer see a bash
-  problem but the gcc4 tests have 2 more failures.
-
-  One of these two new failures is likely related to the file "include-fixed/stdio.h", 
-  which is also found in gcc 7.3 as well.  
+- The installation script seems to be ready for macOS Mojave (10.14) but it has not
+  been tested very well. On 2019-11-30 I've installed gcc (4.8.5 & 7.5), autogen, and RPM.
+  
+  Below are mentioned two failures I'd faced on 10.13.4. The first of these two failures
+  is likely related to the file "include-fixed/stdio.h", which is also found in gcc 7.5:
   
   - /usr/local/lib/gcc/x86_64-apple-darwin18/4.8.5/include-fixed/stdio.h
-  - /opt/local/lib/gcc/x86_64-apple-darwin17/7.3.0/include-fixed/stdio.h
+  - /opt/local/lib/gcc/x86_64-apple-darwin18/7.5.0/include-fixed/stdio.h
 
   One can run the following command in the build directory to reproduce the first failure:
 
@@ -306,7 +304,7 @@ Known Issues
   If you can't place gcc4 to /tmp/gcc.dst, delete this header file from the PC directory: 
   rm -rf gcc4/gcc-4.8.5-build/gcc/include-fixed/stdio.h
 
-  The second new failure can be reproduced with the following command:
+  The second failure can be reproduced with the following command:
 
   make check-gcc-c++ RUNTESTFLAGS="dg.exp=darwin-cfstring1.C"
 
