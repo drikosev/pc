@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-11-30.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-12-03.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-11-30.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-12-03.tar.bz2 
 ln -sf rules/port port
 
 
@@ -83,6 +83,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-11-23.tar.bz2: 5e51e95c7f1487e2ea5386e87e5472bfab3de663
 *SHA1 pc-rules-2019-11-25.tar.bz2: f9ee9d7d920793f049bd94aa5888a2765f3ec5c5
 *SHA1 pc-rules-2019-11-30.tar.bz2: 6165859aa47839b95514420acf1eef360a656137
+*SHA1 pc-rules-2019-12-03.tar.bz2: 380d32ed9609b5e54b36170445bdf43bb6050f40
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -90,7 +91,7 @@ To see ie the build instructions for gcc-4.8.5, type:
 
 Likely, this is the first package to be installed on MacOS (10.14) and a night build is
 recommended. The file "selective-gcc-tests.txt" explains some build options about this
-package. In macOS Mojave (10.14) the SDK Headers are required.
+package. On macOS Mojave (10.14) the SDK Headers are required, see the known issues below.
 
 
 
@@ -182,9 +183,9 @@ dependents, with the following command:
 
 sudo rpm --erase sed-4.2.2-5
 
-Since various RPM Scripts depend on gnu sed, one will definitely reinstall it. If
-"autogen" is also installed one can make a complete check on gcc (make check), because the
-gcc sub-package "fixincludes" depends on both of them. 
+Since various RPM Scripts depend on gnu sed, you should better reinstall it. If "autogen"
+is also installed one can make a complete check on gcc (make check), because the GCC
+sub-package "fixincludes" depends on both of them. 
 
 
 Epilogue
@@ -266,8 +267,8 @@ Known Issues
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
   https://bugs.kde.org/show_bug.cgi?id=365327#c23
 
-  The PC script can install Valgrind-3.14 on OS X 10.11 and macOS 10.12-10.14. Support on
-  Mojave though is experimental.
+  The PC script can install Valgrind-3.15 on OS X 10.11 and macOS 10.12-10.14. Support on
+  Mojave though is experimental and the installed program needs additional fine tuning.
 
 
 - If bash is asked to run a non existing command, you may face an unimportant Segmentation
@@ -279,13 +280,12 @@ Known Issues
   sudo dscl . create /Users/${LOGNAME} UserShell /usr/local/bin/bash
 
 - The GNU tar-1.26 command (tar) might complain for unknown "header keywords" if the pc
-  "tarball" has been compressed by the BSD tar command (bsdtar). I always ignore those
-  messages.
+  "tarball" has been compressed by the BSD tar command (bsdtar). I ignore these messages.
 
-  As an alternative, the PC script can install on macOS (10.11-10.14) GNU tar-1.29.
+  As an interim solution, the PC script can install GNU tar-1.29 on macOS (10.11-10.14).
 
 - The installation script seems to be ready for macOS Mojave (10.14) but it has not
-  been tested very well. On 2019-11-30 I've installed gcc (4.8.5 & 7.5), autogen, and RPM.
+  been tested very well. On 2019-11-30 I've installed gcc (4.8.5 & 7.5), RPM and autogen.
   
   Below are mentioned two failures I'd faced on 10.13.4. The first of these two failures
   is likely related to the file "include-fixed/stdio.h", which is also found in gcc 7.5:
@@ -314,7 +314,10 @@ Known Issues
 - Newer versions of GNU GCC (7.5 & 8.2) are installed at /opt/local instead of /usr/local.
   The PC script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8)
   without examining if an existing link points to a newer version. Regarding GCC 8.2, I've 
-  installed it only on RHEL (7.6) and macOS (10.13), not on Mojave (10.14).
+  installed it only on RHEL (7.6) and macOS (10.13-10.14).
+
+  To install GCC-8.2 on Mojave, you likely have to be stand by for about half an hour as a
+  popup may inform you that "conftest" isn't optimized for your system.
 
 - The Caml tests, which don't run during installation, have one failure on macOS 10.13:
   
