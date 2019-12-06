@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-12-03.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2019-12-06.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2019-12-03.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2019-12-06.tar.bz2 
 ln -sf rules/port port
 
 
@@ -84,6 +84,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-11-25.tar.bz2: f9ee9d7d920793f049bd94aa5888a2765f3ec5c5
 *SHA1 pc-rules-2019-11-30.tar.bz2: 6165859aa47839b95514420acf1eef360a656137
 *SHA1 pc-rules-2019-12-03.tar.bz2: 380d32ed9609b5e54b36170445bdf43bb6050f40
+*SHA1 pc-rules-2019-12-06.tar.bz2: 29f65de5e10cf0dbb8152a8f9812482d3d2b5199
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -316,7 +317,7 @@ Known Issues
   without examining if an existing link points to a newer version. Regarding GCC 8.2, I've 
   installed it only on RHEL (7.6) and macOS (10.13-10.14).
 
-  To install GCC-8.2 on Mojave, you likely have to be stand by for about half an hour as a
+  To install GCC-8.2 on Mojave, you likely have to be stand-by for about half an hour as a
   popup may inform you that "conftest" isn't optimized for your system.
 
 - The Caml tests, which don't run during installation, have one failure on macOS 10.13:
