@@ -168,9 +168,10 @@
 
     -The PR/84497 is still open.
     -The PR/52268 seems to be an enhancement request.
-    -The memory leaks reported in PRs 61819, 86481, and 80477 are allocation errors:
+    -The mem. leaks reported in PRs 60913, 61819, 86481, and 80477 are allocation errors:
          FAIL: allocate_with_source_13.f03 
          FAIL: allocate_with_source_25.f90
+         FAIL: pr60913-08.f90
          FAIL: pr80477-00.f90
          FAIL: pr87359-37.f90
     -The sizeof function returns incorrect results on assume-sized allocated arrays 
