@@ -55,35 +55,6 @@ tar -xjSf ~/Downloads/pc-rules-2019-12-08.tar.bz2
 ln -sf rules/port port
 
 
-*SHA1 pc-rules-2019-03-01.tar.bz2: c662e17df0eed614fa81f85f6d805689ebb09a3a
-*SHA1 pc-rules-2019-03-02.tar.bz2: 293156d3e03802ddc88b1a408d5e64dd451edfd6
-*SHA1 pc-rules-2019-03-04.tar.bz2: 3de3b12611a148a3a19a6c7dfde96e92dfae5ce6
-*SHA1 pc-rules-2019-03-05.tar.bz2: da83344dab64f89f256af383459f839be01eea6e
-*SHA1 pc-rules-2019-03-08.tar.bz2: 49eaf4c2cfff1d17e08ab695cfbe8ead7b2bca9a
-*SHA1 pc-rules-2019-03-09.tar.bz2: c3bbb22abcde98574ac495f5d907e6e9e5df8d4a
-*SHA1 pc-rules-2019-03-10.tar.bz2: 6cffb43603a4adf62e984f4de9190d331251e4aa
-*SHA1 pc-rules-2019-03-11.tar.bz2: 55b6adff6e5e0dc39c9025ba0c962fd9fb06faaf
-*SHA1 pc-rules-2019-03-17.tar.bz2: 81dd65f57648ecac6ca4566f325c7daabfdd3db1
-*SHA1 pc-rules-2019-03-18.tar.bz2: 0b9913752b07c5753a91b111c05bc5f803d0cada 
-*SHA1 pc-rules-2019-03-19.tar.bz2: 85b58544f46da40e933d5d887d5af4aa6bbbe5df
-*SHA1 pc-rules-2019-03-20.tar.bz2: 8fdb3bb3c691708d5d1fdaa1460b4e088500971d
-*SHA1 pc-rules-2019-03-23.tar.bz2: 4290498b9d5e3d8e98f9cdbfe074303effc7abca
-*SHA1 pc-rules-2019-03-25.tar.bz2: 79423fb76e46a99caf6b6abb525abffbf826c704
-*SHA1 pc-rules-2019-09-20.tar.bz2: 539cf8ec33460c8d2fa9b4881b6549f662d355f8 
-*SHA1 pc-rules-2019-09-29.tar.bz2: e6ff86a18d0e8c1beb61308f22f69820e8517f9c
-*SHA1 pc-rules-2019-10-04.tar.bz2: 471600892cee9c2ccb0823b68123c10d38857463
-*SHA1 pc-rules-2019-10-22.tar.bz2: b4c5a02efe500ceab1890fd65028addf3ca146e3
-*SHA1 pc-rules-2019-10-24.tar.bz2: fd746daadb4abf0803c3a036acc3817a19d78b9a
-*SHA1 pc-rules-2019-10-25.tar.bz2: 98aa4430ac3e20b5c3b3364a7906887432ba7ace
-*SHA1 pc-rules-2019-10-26.tar.bz2: de7e287fbfad6604f30661f1e92828f654035011
-*SHA1 pc-rules-2019-10-27.tar.bz2: edc0aea9a18ccaaf3a3e6645473a099590064b05
-*SHA1 pc-rules-2019-11-07.tar.bz2: 9486c41672dd27678cd6ab9100c757320f65b98d
-*SHA1 pc-rules-2019-11-13.tar.bz2: 7d05037304677ccf65e6a58b794416f088800881
-*SHA1 pc-rules-2019-11-21.tar.bz2: eb9444e45874b139ba106659cddbb6b6a08342bd
-*SHA1 pc-rules-2019-11-23.tar.bz2: 5e51e95c7f1487e2ea5386e87e5472bfab3de663
-*SHA1 pc-rules-2019-11-25.tar.bz2: f9ee9d7d920793f049bd94aa5888a2765f3ec5c5
-*SHA1 pc-rules-2019-11-30.tar.bz2: 6165859aa47839b95514420acf1eef360a656137
-*SHA1 pc-rules-2019-12-03.tar.bz2: 380d32ed9609b5e54b36170445bdf43bb6050f40
 *SHA1 pc-rules-2019-12-06.tar.bz2: 29f65de5e10cf0dbb8152a8f9812482d3d2b5199
 *SHA1 pc-rules-2019-12-08.tar.bz2: 53a2e20482a3b14809bc65d67c07434a41779711
 
@@ -320,7 +291,7 @@ Known Issues
   To install GCC-8.2 on Mojave, you likely have to be stand-by for about half an hour as a
   popup may inform you that "conftest" isn't optimized for your system.
 
-- The Caml tests, which don't run during installation, have one failure on macOS 10.13:
+- The OCaml tests, which don't run during installation, have one failure on macOS 10.13:
   
   List of failed tests:
     tests/output-complete-obj/'test.ml' with 1.2.1.1 [testing 'test.ml' with 1.2.1.1]
