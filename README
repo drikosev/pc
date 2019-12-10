@@ -229,7 +229,6 @@ Known Issues
   Bugzilla around these features. More detailed info about the supported features per
   version can be found at https://gcc.gnu.org/wiki/Fortran2003Status 
 
-  Note: the back-port of PR/88974, necessary on 10.14, caused a regression on 10.11
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
