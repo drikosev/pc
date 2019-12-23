@@ -188,7 +188,8 @@
          inititialization error.
          FAIL: pr82036-00.f90
     -Last but not least, the PR/67900, which isn't recent, exposes a symbol/name resolution
-     error, solved in newer versions. Yet, the implementation seems to be very fragile.  
+     error. It's solved in newer versions. Yet, such errors recur from time to time and the
+     implemented solution seems to be very fragile.  
          FAIL: pr67900.f90
     -(...)
 
