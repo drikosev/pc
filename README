@@ -304,7 +304,9 @@ Known Issues
     Summary: 2473 passed, 33 skipped, 1 failed, 94 not started, 0 unexpected errors, 2601
     considered.
 
-- Note that the Apple JRE may be deprecated as some GUI classes have issues after Sierra
+  This problem has been reported at https://github.com/ocaml/ocaml/issues/9240
+
+- Note that the Apple JRE may be deprecated and some GUI classes have issues after Sierra
   but runs well on Mojave one of my GUI apps (Syntaxis) that don't use ie a "JTextPane".
   If the HTML link is broken one can install it manually and use it with some caution.
 
