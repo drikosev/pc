@@ -63,7 +63,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-12-14.tar.bz2: 883acc25e81b603800bbf14fdd33fb59708ba2e1
 *SHA1 pc-rules-2019-12-21.tar.bz2: d3433b7b5e32157648198bf756a06de381caf303
 *SHA1 pc-rules-2019-12-26.tar.bz2: 195ab575298498de079382a9b0df154628f4b6f5
-*SHA1 pc-rules-2020-01-14.tar.bz2: 214795f58c3eb7e2ee0691a9749cb8288e3ceeb0
+*SHA1 pc-rules-2020-01-14.tar.bz2: 47b2ce70abaab84d0009f89bc5beb67c5fb3233b
 
 To see ie the build instructions for gcc-4.8.5, type:
 
