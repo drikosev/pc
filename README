@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-01-14.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-01-17.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2020-01-14.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2020-01-17.tar.bz2 
 ln -sf rules/port port
 
 
@@ -64,6 +64,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-12-21.tar.bz2: d3433b7b5e32157648198bf756a06de381caf303
 *SHA1 pc-rules-2019-12-26.tar.bz2: 195ab575298498de079382a9b0df154628f4b6f5
 *SHA1 pc-rules-2020-01-14.tar.bz2: 31a9421c2ed56c18331151bd5ff6c11d26964d55
+*SHA1 pc-rules-2020-01-17.tar.bz2: 6d0e63ff151228c668b3b3521499534a3824b23c
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -297,6 +298,11 @@ Known Issues
 
   To install GCC-8.2 on Mojave, you likely have to be stand-by for about half an hour as a
   popup may inform you that "conftest" isn't optimized for your system.
+
+- Ocaml-4.09 requires the system default GCC (https://github.com/ocaml/ocaml/issues/9240).
+
+  Whereas, Whizard requires the bootstrapped version of gcc-4.8.5 that I usually install
+  manually immediately after "autogen". 
 
 - Note that the Apple JRE may be deprecated and some GUI classes have issues after Sierra
   but runs well on Mojave one of my GUI apps (Syntaxis) that don't use ie a "JTextPane".
