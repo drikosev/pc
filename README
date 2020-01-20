@@ -308,8 +308,8 @@ Known Issues
 
   Also, make sure OCaml is not installed the first time you pack gcc4 or gcc48 because
   LLVM (3.4) will attempt to install some libraries directly at "/usr/local/lib/ocaml/".
-  Otherwise uninstall OCaml, fully clean llvm34, and then build an RPM of gcc4 or gcc48.
-  I've faced this problem on a relatively clean CentOS-7.6 system.
+  When faced this problem on CentOS, I uninstalled OCaml, cleaned LLVM and installed gcc4.
+
 
 - Note that the Apple JRE may be deprecated and some GUI classes have issues after Sierra
   but runs well on Mojave one of my GUI apps (Syntaxis) that don't use ie a "JTextPane".
