@@ -306,6 +306,11 @@ Known Issues
   In newer versions (macOS 10.12-10.13) I could pass the tests with the non bootstrapped
   gcc-4.8.5 (gcc4) as well.
 
+  Also, make sure OCaml is not installed the first time you pack gcc4 or gcc48 because
+  LLVM (3.4) will attempt to install some libraries directly at "/usr/local/lib/ocaml/".
+  Otherwise uninstall OCaml, fully clean llvm34, and then build an RPM of gcc4 or gcc48.
+  I've faced this problem on a relatively clean CentOS-7.6 system.
+
 - Note that the Apple JRE may be deprecated and some GUI classes have issues after Sierra
   but runs well on Mojave one of my GUI apps (Syntaxis) that don't use ie a "JTextPane".
   If the HTML link is broken one can install it manually and use it with some caution.
