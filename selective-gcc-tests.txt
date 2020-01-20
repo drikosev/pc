@@ -72,18 +72,6 @@
      ./port test gcc48 gcc48-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr54693-2.c"
      ./port test gcc4   gcc4-test-options=check-gcc-c RUNTESTFLAGS="guality.exp=pr54693-2.c"
 
-     #fail: gcc48 on Linux (Passes with gcc4. Also passed with gcc48 release 39 on CentOS-7.6)
-     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="abi.exp=abi_check"
-     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="abi.exp=abi_check"
-
-     #fail: gcc48 on Linux (Passes with gcc4. Also passed with gcc48 release 39 on CentOS-7.6)
-     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=ex*hle.cc"
-     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=ex*hle.cc"
-
-     #fail: gcc48 on Linux (Passes with gcc4. Also passed with gcc48 release 39 on CentOS-7.6)
-     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=whatis.cc"
-     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=whatis.cc"
-
      #fail: on Linux
      ./port test gcc48 gcc48-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
      ./port test gcc4   gcc4-test-options=check-target-libmudflap RUNTESTFLAGS="c++frags.exp=pass41-frag.cxx"
@@ -167,6 +155,17 @@
      ./port test gcc48 gcc48-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26*"
      ./port test gcc4   gcc4-test-options=check-gcc-fortran RUNTESTFLAGS="dg.exp=unlimited_polymorphic_26*"
 
+     #fail: gcc48 on Linux (Passes with gcc4. Also passed with gcc48 release 39 on CentOS-7.6)
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="abi.exp=abi_check"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="abi.exp=abi_check"
+
+     #fail: gcc48 on Linux (Passes with gcc4. Also passed with gcc48 release 39 on CentOS-7.6)
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=ex*hle.cc"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=ex*hle.cc"
+
+     #fail: gcc48 on Linux (Passes with gcc4. Also passed with gcc48 release 39 on CentOS-7.6)
+     ./port test gcc48 gcc48-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=whatis.cc"
+     ./port test gcc4   gcc4-test-options=check-target-libstdc++-v3 RUNTESTFLAGS="conformance.exp=whatis.cc"
 
  3. Recent PRs in GNU GCC Bugzilla
 
