@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-01-17.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-01-22.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2020-01-17.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2020-01-22.tar.bz2 
 ln -sf rules/port port
 
 
@@ -65,6 +65,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2019-12-26.tar.bz2: 195ab575298498de079382a9b0df154628f4b6f5
 *SHA1 pc-rules-2020-01-14.tar.bz2: 31a9421c2ed56c18331151bd5ff6c11d26964d55
 *SHA1 pc-rules-2020-01-17.tar.bz2: 6d0e63ff151228c668b3b3521499534a3824b23c
+*SHA1 pc-rules-2020-01-22.tar.bz2: 7ba756ace30c3c71677378a907ec9c83bf5afbaa
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -302,14 +303,8 @@ Known Issues
 - Ocaml-4.09 requires the system default GCC (https://github.com/ocaml/ocaml/issues/9240).
 
   Whereas, installation of Whizard on OS X El Capitan (10.11) required the bootstrapped
-  version of gcc-4.8.5 (gcc48) that I usually install manually immediately after autogen.
-  In newer versions (macOS 10.12-10.13) I could pass the tests with the non bootstrapped
-  gcc-4.8.5 (gcc4) as well.
-
-  Also, make sure OCaml is not installed the first time you pack gcc4 or gcc48 because
-  LLVM (3.4) will attempt to install some libraries directly at "/usr/local/lib/ocaml/".
-  When faced this problem on CentOS, I uninstalled OCaml, cleaned LLVM and installed gcc4.
-
+  version of gcc-4.8.5 (gcc48) that I usually install manually after "autogen". In newer
+  versions (macOS 10.12-10.13) I could pass the tests with the non bootstrapped gcc4 also.
 
 - Note that the Apple JRE may be deprecated and some GUI classes have issues after Sierra
   but runs well on Mojave one of my GUI apps (Syntaxis) that don't use ie a "JTextPane".
