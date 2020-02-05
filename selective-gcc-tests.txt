@@ -171,8 +171,8 @@
 
     -The PR/84497 is still open.
     -The PR/52268 seems to be an enhancement request.
-    -The PR/54613 describes the unsupported Fortran 2008, BACK option in MINLOC/MAXLOC: 
-         FAIL: minmaxloc_13.f90
+    -The backport of the PR/54613 implements the "BACK=" argument for the MAXLOC, MINLOC,
+     and FINDLOC intrinsics. Running "autoreconf" and the like is an untested step though. 
     -The mem. leaks reported in PRs 60913, 61819, 86481, and 80477 are allocation errors:
          FAIL: allocate_with_source_13.f03 
          FAIL: allocate_with_source_25.f90
@@ -185,12 +185,11 @@
     -The PR/84109 reports another allocation error (finally can seg. fault as well) 
          FAIL: elemental_function_3.f90
     -The PR/92785 reports once more, wrong array bounds of dummy polymorphic arguments. 
-    -The PR/82036 reports also an allocation error, may appear either as ICE or as
-         inititialization error.
+    -The PR/82036 reports an allocation error that appears as ICE or initialization error.
          FAIL: pr82036-00.f90 
-    -Last but not least, the PR/67900, which isn't recent, exposes a symbol/name resolution
-     error. It's solved in newer versions. Yet, symbol/name resolution errors recur from 
-     time to time and the implementation seems to be very fragile.  
+    -Last but not least, the PR/67900 exposes a symbol/name resolution error that has been
+     solved in newer versions. Yet, symbol/name resolution errors recur from time to time
+     and the implementation seems to be very fragile.  
          FAIL: pr67900.f90
     -(...)
 
