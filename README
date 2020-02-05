@@ -306,6 +306,8 @@ Known Issues
   version of gcc-4.8.5 (gcc48) that I usually install manually after "autogen". In newer
   versions (macOS 10.12-10.13) I could pass the tests with the non bootstrapped gcc4 also.
 
+  I can't install gcc4 on OS X Mavericks (10.9) due to redundant Ocaml bindings in llvm33.
+
 - Note that the Apple JRE may be deprecated and some GUI classes have issues after Sierra
   but runs well on Mojave one of my GUI apps (Syntaxis) that don't use ie a "JTextPane".
   If the HTML link is broken one can install it manually and use it with some caution.
