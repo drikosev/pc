@@ -241,7 +241,8 @@ Known Issues
 
   On Feb 6, 2020 installation of gcc48 on CentOS-7.6 was found to be broken. Last build
   was on Jan 17 when gcc48 was built by gcc4. Yet, the ability of gcc48 to rebuild itself 
-  had been tested several times on RHEL-7. 
+  on Linux as well had been tested several times on RHEL-7. Possibly, the library versions
+  in "gfortran.map" are important on Linux and the old release must be an existing number.
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
