@@ -239,6 +239,8 @@ Known Issues
   Bugzilla around these features. More detailed info about the supported features per
   version can be found at https://gcc.gnu.org/wiki/Fortran2003Status 
 
+  On Feb 6, 2020 installation of gcc48 on CentOS-7.6 was found to be broken. Last build
+  was on Jan 17.
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
