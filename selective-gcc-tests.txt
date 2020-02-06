@@ -172,7 +172,8 @@
     -The PR/84497 is still open.
     -The PR/52268 seems to be an enhancement request.
     -The backport of the PR/54613 implements the "BACK=" argument for the MAXLOC, MINLOC,
-     and FINDLOC intrinsics. Running "autoreconf" and the like is an untested step though. 
+     and FINDLOC intrinsics. Running "autoreconf" and the like is an untested step though.
+     Also there is a problem with the symbols versioning in Fortran Library (Linux only). 
     -The mem. leaks reported in PRs 60913, 61819, 86481, and 80477 are allocation errors:
          FAIL: allocate_with_source_13.f03 
          FAIL: allocate_with_source_25.f90
