@@ -307,6 +307,7 @@ Known Issues
   Whereas, installation of Whizard on OS X El Capitan (10.11) required the bootstrapped
   version of gcc-4.8.5 (gcc48) that I usually install manually after "autogen". In newer
   versions (macOS 10.12-10.13) I could pass the tests with the non bootstrapped gcc4 also.
+  Possibly I faced a random error with powheg_1.run (also fails with gcc48 on CentOS-7.6).
 
 - Note that the Apple JRE may be deprecated and some GUI classes have issues after Sierra
   but runs well on Mojave one of my GUI apps (Syntaxis) that don't use ie a "JTextPane".
