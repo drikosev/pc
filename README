@@ -303,8 +303,6 @@ Known Issues
   To install GCC-8.2 on Mojave, you likely have to be stand-by for about half an hour as a
   popup may inform you that "conftest" isn't optimized for your system.
 
-- Ocaml-4.09 requires the system default GCC (https://github.com/ocaml/ocaml/issues/9240).
-
 - Note that the Apple JRE is deprecated and some GUI classes have issues after Sierra.
 
 
