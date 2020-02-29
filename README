@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-02-11.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-02-29.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2020-02-11.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2020-02-29.tar.bz2 
 ln -sf rules/port port
 
 
@@ -69,7 +69,8 @@ ln -sf rules/port port
 *SHA1 pc-rules-2020-02-05.tar.bz2: c28cc759d0ca405dadbe1ef3de7e2f6e3406d2f9
 *SHA1 pc-rules-2020-02-06.tar.bz2: cd3314c43dc86dee11ce9c955ea715364421449f
 *SHA1 pc-rules-2020-02-07.tar.bz2: 2b92460efe73b78462766da874bbfe7976174ac2
-*SHA1(pc-rules-2020-02-11.tar.bz2: 0594fd981611afd79da2813f1f0d6f4f19ee4163
+*SHA1 pc-rules-2020-02-11.tar.bz2: 0594fd981611afd79da2813f1f0d6f4f19ee4163
+*SHA1 pc-rules-2020-02-29.tar.bz2: e38da6ca6bdb79f22df62ecdd9f9fc36658b904d
 
 To see ie the build instructions for gcc-4.8.5, type:
 
