@@ -304,9 +304,24 @@ Known Issues
   To install GCC-8.2 on Mojave, you likely have to be stand-by for about half an hour as a
   popup may inform you that "conftest" isn't optimized for your system.
 
-- Note that the Apple JRE is deprecated and some GUI classes have issues after Sierra.
+- Note that the Apple JRE is deprecated and some GUI classes have issues after Sierra. In
+  specific several text components aren't functional but possibly there are more problems.
+  In example, I can't edit BNF Grammars in Syntaxis with the Apple JRE on 10.13 & 10.14.
+  Yet, I could fully rebuild parsers/scanners on a fresh installed Mojave and the JAR file
+  was also functional as well on both Windows-8.1 and RedHat-9 (kernel 2.4).
 
+- You may fail to install Whizard-2.8.2 on Mojave (10.14) due to the following error msg:
 
+   dyld: Symbol not found: __ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE  
+
+  The above seems to be some recurring problem, it's reported ie as a 2015 problem at:
+
+    https://groups.google.com/forum/#!topic/fastsimcoal/09fmDduSEEg
+
+  So far, I haven't figured out what exactly caused this problem or when introduced. The
+  last time I could successfully build the project was likely in December 2019 on a fresh
+  installed system (Mojave Installer 10.14.6 - Summer 2019). On a MacMini (2011), isolated
+  from the Internet, the installation today run smoothly on 10.11-10.12 and CentOS-7.6.
 
  ----------------------------------------------------------------------------------------
  [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
