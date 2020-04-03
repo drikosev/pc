@@ -308,7 +308,7 @@ Known Issues
   specific several text components aren't functional but possibly there are more problems.
   In example, I can't edit BNF Grammars in Syntaxis with the Apple JRE on 10.13 & 10.14.
   Yet, I could fully rebuild parsers/scanners on a fresh installed Mojave and the JAR file
-  was also functional as well on both Windows-8.1 and RedHat-9 (kernel 2.4).
+  built by the Apple JDK was also functional on both Windows-8.1 & RedHat-9 (kernel 2.4).
 
 - You may fail to install Whizard-2.8.2 on Mojave (10.14) due to the following error msg:
 
@@ -320,7 +320,7 @@ Known Issues
 
   So far, I haven't figured out what exactly caused this problem or when introduced. The
   last time I could successfully build the project was likely in December 2019 on a fresh
-  installed system (Mojave Installer 10.14.6 - Summer 2019). On a MacMini (2011), isolated
+  installed system (Mojave Installer 10.14.6 - summer 2019). On a MacMini (2011), isolated
   from the Internet, the installation today run smoothly on 10.11-10.12 and CentOS-7.6.
 
  ----------------------------------------------------------------------------------------
