@@ -71,7 +71,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2020-02-07.tar.bz2: 2b92460efe73b78462766da874bbfe7976174ac2
 *SHA1 pc-rules-2020-02-11.tar.bz2: 0594fd981611afd79da2813f1f0d6f4f19ee4163
 *SHA1 pc-rules-2020-02-29.tar.bz2: e38da6ca6bdb79f22df62ecdd9f9fc36658b904d
-*SHA1 pc-rules-2020-04-04.tar.bz2: bad192387191d10377a353809f0e86854aa90190
+*SHA1 pc-rules-2020-04-04.tar.bz2: 7bf09f61eb34834e7d8d9b826961eb9b03dea798
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -298,15 +298,12 @@ Known Issues
   The applied patch is proposed at: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83531
 
 
-- Newer versions of GNU GCC (7.5 & 8.2) are installed at /opt/local instead of /usr/local.
+- Newer versions of GNU GCC (7.5 & 8.4) are installed at /opt/local instead of /usr/local.
   The PC script creates some soft links (ie /opt/local/bin/gcc -> /opt/local/bin/gcc8)
   without examining if an existing link points to a newer version.
 
-  To install GCC-8.2 on Mojave, you likely have to be stand-by for about half an hour as a
-  popup may inform you that "conftest" isn't optimized for your system.
-
 - Note that the Apple JRE is deprecated and some GUI classes have issues after Sierra. In
-  specific several text components aren't functional but possibly there are more problems.
+  specific several text components aren't functional and possibly there are more problems.
   In example, I can't edit BNF Grammars in Syntaxis with the Apple JRE on 10.13 & 10.14.
   Yet, I could fully rebuild parsers/scanners on a fresh installed Mojave and the JAR file
   built by the Apple JDK was also functional on both Windows-8.1 & RedHat-9 (kernel 2.4).
