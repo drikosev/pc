@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-02-29.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-04-04.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2020-02-29.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2020-04-04.tar.bz2 
 ln -sf rules/port port
 
 
@@ -71,6 +71,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2020-02-07.tar.bz2: 2b92460efe73b78462766da874bbfe7976174ac2
 *SHA1 pc-rules-2020-02-11.tar.bz2: 0594fd981611afd79da2813f1f0d6f4f19ee4163
 *SHA1 pc-rules-2020-02-29.tar.bz2: e38da6ca6bdb79f22df62ecdd9f9fc36658b904d
+*SHA1 pc-rules-2020-04-04.tar.bz2: bad192387191d10377a353809f0e86854aa90190
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -314,14 +315,20 @@ Known Issues
 
    dyld: Symbol not found: __ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE  
 
-  The above seems to be some recurring problem, it's reported ie as a 2015 problem at:
+  The above seems to be some recurring problem, it's reported ie as a 2015/2017 problem:
 
     https://groups.google.com/forum/#!topic/fastsimcoal/09fmDduSEEg
+    http://mailman.ucar.edu/pipermail/ncl-install/2017-January/002194.html
 
   So far, I haven't figured out what exactly caused this problem or when introduced. The
   last time I could successfully build the project was likely in December 2019 on a fresh
   installed system (Mojave Installer 10.14.6 - summer 2019). On a MacMini (2011), isolated
-  from the Internet, the installation today run smoothly on 10.11-10.12 and CentOS-7.6.
+  from the Internet, the installation yesterday run smoothly on 10.11-10.13 & CentOS-7.6.
+
+  If you face the above error, then as an interim solution you could try these 2 commands:
+    ./port clean    whizard
+    ./port install  whizard  whizard-compiler=gcc4 
+
 
  ----------------------------------------------------------------------------------------
  [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
