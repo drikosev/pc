@@ -306,7 +306,7 @@ Known Issues
   specific several text components aren't functional and possibly there are more problems.
   In example, I can't edit BNF Grammars in Syntaxis with the Apple JRE on 10.13 & 10.14.
   Yet, I could fully rebuild parsers/scanners on a fresh installed Mojave and the JAR file
-  built by the Apple JDK was also functional on both Windows-8.1 & RedHat-9 (kernel 2.4).
+  built by the Apple JDK was fully functional on both Windows-8.1 & RedHat-9 (kernel 2.4).
 
 - You may fail to install Whizard-2.8.2 on Mojave (10.14) due to the following error msg:
 
@@ -326,7 +326,8 @@ Known Issues
     ./port clean    whizard
     ./port install  whizard  whizard-compiler=gcc4 
 
-
+ 
+ Although, this problem is fixed since Apr 4, 2020 the proper solution is a clean system.
 
  ----------------------------------------------------------------------------------------
  [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
