@@ -174,8 +174,9 @@
     -The backport of the PR/54613 implements the "BACK=" argument for the MAXLOC, MINLOC,
      and FINDLOC intrinsics. Running "autoreconf" and the like is an untested step though. 
     -The mem. leaks reported in PRs 60913, 61819, 86481, and 80477 are allocation errors:
-         FAIL: allocate_with_source_13.f03 
-         FAIL: allocate_with_source_25.f90
+         FAIL: allocate_with_source_13.f03
+         FAIL: allocate_with_source_25.f90 
+         FAIL: pr86481-00.f90
          FAIL: pr60913-08.f90
          FAIL: pr80477-00.f90
          FAIL: pr87359-37.f90
