@@ -38,8 +38,8 @@ Apr 29, 2020
 
    In specific, the above mentioned zip file (pc-rules-2020-04-29.tar.bz2) contains 
    122 unofficial GNU Fortran patches, mainly backports, which have been tested on
-   both macOS and Linux. In addition,  In addition, I've applied them to the source
-   RPM and could build and test it without any Fortran regressions. 
+   both macOS and Linux.  In addition, I've applied them to the source RPM and could
+   build and test it without any Fortran regressions. 
 
    Note however that the Fortran library won't be fully compatible with older ones,
    which means that you may have to rebuild existing Fortran projects. 
@@ -184,8 +184,6 @@ Apr 29, 2020
    export RPM_BUILD_NCPUS=2
    export LD_LIBRARY_PATH=""
    export PATH=/usr/bin:/usr/sbin:/bin:/sbin:$PATH
-   rpmbuild --noclean -bc --short-circuit SPECS/gcc.spec --target x86_64
-
    rpmbuild --noclean -ba SPECS/gcc.spec --target x86_64  
 
 
