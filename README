@@ -73,6 +73,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2020-02-29.tar.bz2: e38da6ca6bdb79f22df62ecdd9f9fc36658b904d
 *SHA1 pc-rules-2020-04-04.tar.bz2: 7bf09f61eb34834e7d8d9b826961eb9b03dea798
 *SHA1 pc-rules-2020-04-11.tar.bz2: 274868d35b8077a183b7eb4c9e9910b77acf2488
+*SHA1 pc-rules-2020-04-29.tar.bz2: 6e74dc33bddf5f8ec061a247ef2fc58b6a760dc1
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -239,17 +240,30 @@ Known Issues
   test cases (7, 8, and 29) were failing due to assembly errors in both Linux and with the
   PlugIn.  
 
+  Since 2020-04-29, gcc-4.8.5 has experimental support for Allocation of Arrays without
+  space specification.
 
-  Note: SubModules, Deferred Length Characters, and Finalization aren't officially
-  implemented in GNU Fortran version "4.8" and there are various newer PRs filed in GCC
-  Bugzilla around these features. More detailed info about the supported features per
-  version can be found at https://gcc.gnu.org/wiki/Fortran2003Status 
+  Note: SubModules, Deferred Length Characters, Finalization, and Allocation of Arrays
+  without space specification aren't officially implemented in GNU Fortran version "4.8"
+  and there are various newer PRs filed in GCC Bugzilla around these features. More
+  detailed information about the supported features per version can be found at
+  https://gcc.gnu.org/wiki/Fortran2003Status 
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
   this issue has been solved for the newer Darwin systems with the solution applied to 
   PR/78968. I've back-ported this patch to version 4.8 (another patch is applied for the
   PR/58142 if OS X < 10.9).
+
+- The PR/78534 changes the type of character length fields from int (4 bytes) to size_t.
+  The latter can be either 4 bytes on 32bit systems or 8 bytes in 64bit systems. Which can
+  possibly affect Fortran/C interoperability projects that don't use BIND(C) attributes. 
+
+  This patch has been backported in a manner that let's you optionally change the type. By
+  default the older GNU Fortran API is preserved (LONG_CHARLEN=0). To change this value in
+  an already configured compiler apply the patch "gcc48-pr78534.longer". To configure a
+  a fresh compiler with size_t, simply run: "./port configure gcc4  LONG_CHARLEN=1".
+    
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
