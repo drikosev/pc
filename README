@@ -213,8 +213,10 @@ Known Issues
   expect that it has bugs (PR/82995 uncovers a F2008 tricky bug). Yet, it can overcome few 
   problems mainly on a Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable 
   by newer mac linkers). On Linux, the PlugIn can compile ie the Fortran program found in
-  PR/82065.
+  PR/82065. On May 3, 2020 I couldn't use the PlugIn with LAPACK. 
   
+  Both gcc4/gcc48 have a broken "libitm" library on CentOS-7.6 (2020-05-03).
+
   There are some failures with the "guality" tests on Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
   the warnings ie didn't comply with a system security policy that loads processes at 
@@ -234,6 +236,7 @@ Known Issues
 
   One test failure in "libjava" is Darwin specific (ie from 10.9 to 10.14); see PR/48097.
   In this case, one can still create java classes (byte-codes) that run as supposed to.
+
 
   Since 2017-11-20, gcc-4.8.5 has experimental support for Fortran SubModules. An 
   internal issue is that the submodule separator '@' has been replaced by '$' as three
@@ -264,6 +267,7 @@ Known Issues
   an already configured compiler apply the patch "gcc48-pr78534.longer". To configure a
   a fresh compiler with size_t, simply run: "./port configure gcc4  LONG_CHARLEN=1".
     
+  Note that this back-port can change the API but not the actual limit of a string length.
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
