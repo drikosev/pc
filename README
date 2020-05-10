@@ -348,7 +348,13 @@ Known Issues
  
   Although, this problem is fixed since Apr 4, 2020 the proper solution is a clean system.
 
+- If we build & run the following LAPACK test with gfortran we'll likely find differences:
+  https://github.com/numericalalgorithmsgroup/LAPACK_Examples
 
+  In two cases (zggev_example.x & zggev3_example.x) we find 1-2 differences with negative
+  zeros. Whereas, in another case (zggevx_example.x) there are some numeric differences 
+  with very small values (exponent < -15).
+ 
 - You should better upgrade libiconv to 1.16 (./port install libiconv). Since Apr 11, 2020
   this library is patched to provide few dual APIs, useful on Mojave if DYLD_LIBRAY_PATH
   has some values. Otherwise, you may face the error "dyld: Symbol not found: _iconv".
