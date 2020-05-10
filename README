@@ -56,25 +56,8 @@ ln -sf rules/port port
 
 
 *SHA1 pc-rules-2019-12-06.tar.bz2: 29f65de5e10cf0dbb8152a8f9812482d3d2b5199
-*SHA1 pc-rules-2019-12-08.tar.bz2: 53a2e20482a3b14809bc65d67c07434a41779711
-*SHA1 pc-rules-2019-12-10.tar.bz2: 08d3b0b8e564afd40f636fc93af2843bc2feb613
-*SHA1 pc-rules-2019-12-11.tar.bz2: aa73914afb92c49a485eed29be8d0a8ba22b9885
-*SHA1 pc-rules-2019-12-12.tar.bz2: 8e6a0a0808617d4292414f42bb52f95c9da38c8e
-*SHA1 pc-rules-2019-12-14.tar.bz2: 883acc25e81b603800bbf14fdd33fb59708ba2e1
-*SHA1 pc-rules-2019-12-21.tar.bz2: d3433b7b5e32157648198bf756a06de381caf303
-*SHA1 pc-rules-2019-12-26.tar.bz2: 195ab575298498de079382a9b0df154628f4b6f5
-*SHA1 pc-rules-2020-01-14.tar.bz2: 31a9421c2ed56c18331151bd5ff6c11d26964d55
-*SHA1 pc-rules-2020-01-17.tar.bz2: 6d0e63ff151228c668b3b3521499534a3824b23c
-*SHA1 pc-rules-2020-01-22.tar.bz2: 7ba756ace30c3c71677378a907ec9c83bf5afbaa
-*SHA1 pc-rules-2020-02-05.tar.bz2: c28cc759d0ca405dadbe1ef3de7e2f6e3406d2f9
-*SHA1 pc-rules-2020-02-06.tar.bz2: cd3314c43dc86dee11ce9c955ea715364421449f
-*SHA1 pc-rules-2020-02-07.tar.bz2: 2b92460efe73b78462766da874bbfe7976174ac2
-*SHA1 pc-rules-2020-02-11.tar.bz2: 0594fd981611afd79da2813f1f0d6f4f19ee4163
-*SHA1 pc-rules-2020-02-29.tar.bz2: e38da6ca6bdb79f22df62ecdd9f9fc36658b904d
 *SHA1 pc-rules-2020-04-04.tar.bz2: 7bf09f61eb34834e7d8d9b826961eb9b03dea798
-*SHA1 pc-rules-2020-04-11.tar.bz2: 274868d35b8077a183b7eb4c9e9910b77acf2488
 *SHA1 pc-rules-2020-04-29.tar.bz2: 6e74dc33bddf5f8ec061a247ef2fc58b6a760dc1
-*SHA1 pc-rules-2020-05-05.tar.bz2: c38b8ca636432d495eb7fdc2b3c813c2d6172081
 *SHA1 pc-rules-2020-05-10.tar.bz2: 388afc89fd5ff3547a67ae2e96aecaf43ad25a1a
 
 To see ie the build instructions for gcc-4.8.5, type:
