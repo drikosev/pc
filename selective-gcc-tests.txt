@@ -187,10 +187,6 @@
          FAIL: elemental_function_3.f90
     -The PR/82036 reports an allocation error that appears as ICE or initialization error.
          FAIL: pr82036-00.f90 
-    -Last but not least, the PR/67900 exposes a symbol/name resolution error that has been
-     solved in newer versions. Yet, symbol/name resolution errors recur from time to time
-     and the implementation seems to be very fragile.  
-         FAIL: pr67900.f90
     -(...)
 
 
