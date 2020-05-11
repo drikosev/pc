@@ -1,5 +1,5 @@
 
-Apr 29, 2020 
+May 11, 2020 
 
 
                  FORTRAN PATCHES FOR GCC 4.8.5 in CentOS 7.6
@@ -33,12 +33,12 @@ Apr 29, 2020
       ------------
 
    This document describes how you can manually extract some GNU Fortran patches
-   from the zip file "pc-rules-2020-04-29.tar.bz2" and apply them to the source 
+   from the zip file "pc-rules-2020-05-11.tar.bz2" and apply them to the source 
    RPM "gcc-4.8.5-39.0.3.el7.src.rpm" in a RHEL/CentOS/Oracle-Linux 7.6 system. 
 
-   In specific, the above mentioned zip file (pc-rules-2020-04-29.tar.bz2) contains 
-   122 unofficial GNU Fortran patches, mainly backports, which have been tested on
-   both macOS and Linux.  In addition, I've applied them to the source RPM and could
+   In specific, the above mentioned zip file (pc-rules-2020-05-11.tar.bz2) contains 
+   131 unofficial GNU Fortran patches, mainly backports, which have been tested on
+   both macOS and Linux. In addition, I've applied them to the source RPM and could
    build and test it without any Fortran regressions. 
 
    Note however that the Fortran library won't be fully compatible with older ones,
@@ -52,8 +52,8 @@ Apr 29, 2020
    To run the instructions of this document you must be familiar with both the RPM
    Building System and Bash scripts. If this isn't the case contact a professional.
 
-   Occasionally, more Fortran relevant patches are applied to the compiler. See
-   Appendix E (this doesn't mean that I test each new patch in the source RPM).
+   Occasionally, more Fortran patches are applied to the compiler. See Appendix E
+   (this doesn't mean that I test each new patch in the source RPM).
 
 
    1.1) Environment
@@ -96,8 +96,9 @@ Apr 29, 2020
         ------------
 
    Some test failures during the RPM Build are listed in Appendix G. None of 
-   them is Fortran relevant though. The ASAN test failures are likely caused
-   by outdated test cases that don't match properly the sanitiser messages. 
+   them is Fortran relevant though. The ASAN test failures are perhaps caused
+   by outdated test cases that don't match precisely the sanitiser messages. Yet,
+   I faced them only while testing/running for target unix//-fstack-protector.
 
 
    2) Step by Step Instructions to Apply the Fortran Patches
@@ -108,16 +109,16 @@ Apr 29, 2020
    You should download a tested tarball. Cross check with the date reported in Appendix G.
 
    curl -L -k \
-   https://github.com/drikosev/pc/raw/master/pc-rules-2020-04-29.tar.bz2 \
-   -o ${HOME}/Downloads/pc-rules-2020-04-29.tar.bz2
+   https://github.com/drikosev/pc/raw/master/pc-rules-2020-05-11.tar.bz2 \
+   -o ${HOME}/Downloads/pc-rules-2020-05-11.tar.bz2
 
-   Confirm that the tarball has the sha1 stamp "077958a5cb31e123b9b286772e163a7bb8198bdc": 
-   openssl sha1 ${HOME}/Downloads/pc-rules-2020-04-29.tar.bz2 | awk '{print $2}'
+   Confirm that the tarball has the sha1 stamp "63e81b8e393276dcf569ec0ff35a7dfb87f018e3": 
+   openssl sha1 ${HOME}/Downloads/pc-rules-2020-05-11.tar.bz2 | awk '{print $2}'
 
    Setup a working area for the pc:
    install -d ~/pc 
    cd ~/pc 
-   tar xf ~/Downloads/pc-rules-2020-04-29.tar.bz2 
+   tar xf ~/Downloads/pc-rules-2020-05-11.tar.bz2 
    ln -sf rules/port port
    ./port details gcc48 | grep patches
 
@@ -125,7 +126,7 @@ Apr 29, 2020
    2.2) Copy the Fortran Patches to the ~/rpmbuild/SOURCES Directory
         ------------------------------------------------------------
 
-   Once the "pc-rules-2020-04-29.tar.bz2" tarball has been extracted to $HOME/pc, 
+   Once the "pc-rules-2020-05-11.tar.bz2" tarball has been extracted to $HOME/pc, 
    run all the commands listed in Appendix A.
 
 
@@ -318,8 +319,6 @@ cp gcc48-pr82886.patch  ~/rpmbuild/SOURCES
 
 cp gcc48-pr87352.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr44672.patch  ~/rpmbuild/SOURCES
-sed -i "s/assumed_size_1.f90/assumed_size_1.f03/g" ~/rpmbuild/SOURCES/gcc48-pr44672.patch
-
 cp gcc48-pr85780.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr88326.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr81701.patch  ~/rpmbuild/SOURCES
@@ -335,12 +334,22 @@ cp gcc48-pr78534.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr44265.extra  ~/rpmbuild/SOURCES
 cp gcc48-pr69834.extra  ~/rpmbuild/SOURCES
 
+cp gcc48-pr92976.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr90329.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr80118.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr70260.patch  ~/rpmbuild/SOURCES
+cp gcc48-2calloc.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr52846.extra  ~/rpmbuild/SOURCES
+cp gcc48-pr67900.patch  ~/rpmbuild/SOURCES
 
+
+Note:
 If you want to convert the characters length field from int to size_t, then run:
 
 sed -i "s/define  LONG_CHARLEN 0/define  LONG_CHARLEN 1/g" \
         ~/rpmbuild/SOURCES/gcc48-pr78534.patch
 
+Yet, this option will change only the API, not the actual limit!
 
 
 Appendix B
@@ -472,6 +481,13 @@ Patch9160: gcc48-std2018.patch
 Patch9161: gcc48-pr78534.patch
 Patch9162: gcc48-pr44265.extra
 Patch9163: gcc48-pr69834.extra
+Patch9164: gcc48-pr92976.patch
+Patch9165: gcc48-pr90329.patch
+Patch9166: gcc48-pr80118.patch
+Patch9167: gcc48-pr70260.patch
+Patch9168: gcc48-2calloc.patch
+Patch9169: gcc48-pr52846.extra
+Patch9170: gcc48-pr67900.patch
 
 
 Appendix C
@@ -603,6 +619,13 @@ Appendix C
 %patch9161 -p0 -b .pr78534~
 %patch9162 -p0 -b .pr44265.extra
 %patch9163 -p0 -b .pr69834.extra
+%patch9164 -p0 -b .pr92976~
+%patch9165 -p0 
+%patch9166 -p0 -b .pr80118~
+%patch9167 -p0 -b .pr70260~
+%patch9168 -p0 -b .2calloc~
+%patch9169 -p0 -b .pr52846.extra
+%patch9170 -p0 -b .pr67900~
 
 
 Appendix D
@@ -823,7 +846,7 @@ Appendix G - Test Failures During the RPM Build
 Some test failures I faced during the RPM Build on 2017-09-30 include, but not limited to: 
 
 ...
-Running target unix/
+Running target unix//-fstack-protector
 ...
 Running /home/suser/rpmbuild/BUILD/gcc-4.8.5-20150702/gcc/testsuite/g++.dg/asan/asan.exp ...
 FAIL: g++.dg/asan/asan_test.C  -O2  AddressSanitizer_SimpleStackTest A[kSize + 31] = 0 execution test
@@ -952,7 +975,15 @@ FAIL: gcc.dg/guality/pr54519-5.c  -O2 -flto -fuse-linker-plugin -fno-fat-lto-obj
 
 [2020-04-29]
 
-I've seen at least two new failures:
+I've seen/noticed at least two failures for the first time:
+
+FAIL: gcc.dg/guality/pr36728-1.c  -O1  line 16 arg3 == 3
+FAIL: gcc.dg/guality/pr36728-3.c  -O1  line 16 arg3 == 3
+
+
+[2020-05-11]
+
+The above two failures were reproduced again [Running target unix//-fstack-protector]
 
 FAIL: gcc.dg/guality/pr36728-1.c  -O1  line 16 arg3 == 3
 FAIL: gcc.dg/guality/pr36728-3.c  -O1  line 16 arg3 == 3
