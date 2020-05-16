@@ -46,18 +46,19 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-05-11.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-05-17.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2020-05-11.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2020-05-17.tar.bz2 
 ln -sf rules/port port
 
 
 *SHA1 pc-rules-2019-12-06.tar.bz2: 29f65de5e10cf0dbb8152a8f9812482d3d2b5199
 *SHA1 pc-rules-2020-04-04.tar.bz2: 7bf09f61eb34834e7d8d9b826961eb9b03dea798
 *SHA1 pc-rules-2020-05-11.tar.bz2: 63e81b8e393276dcf569ec0ff35a7dfb87f018e3
+*SHA1 pc-rules-2020-05-17.tar.bz2: 9a6970b52c767fec19242324c3f5a825592dfa5a
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -194,12 +195,12 @@ Known Issues
   packages. So, the PC won't attempt to install ie gettext or pkg-config.
 
   Although the PlugIn facilitates debugging for Fortran programs with LLDB, one should
-  expect that it has bugs (PR/82995 uncovers a F2008 tricky bug). Yet, it can overcome few 
-  problems mainly on a Mac, like ie the test failure of pr49866.c (PLTOFF isn't acceptable 
-  by newer mac linkers). On Linux, the PlugIn can compile ie the Fortran program found in
-  PR/82065. On May 3, 2020 I couldn't use the PlugIn to build the (static) LAPACK library. 
+  expect that it has bugs. Yet, it can overcome few problems, mainly on a Mac, like ie the
+  test failure of pr49866.c (PLTOFF isn't acceptable by mac linkers). On Linux, the PlugIn
+  can compile ie the Fortran program found in PR/82065. On May 3, 2020 I couldn't use the
+  PlugIn to build the (static) LAPACK library. 
   
-  Both gcc4/gcc48 have a broken "libitm" library on CentOS-7.6 (2020-05-03).
+  Both gcc4/gcc48 have now a broken "libitm" library on CentOS-7.6 (2020-05-03).
 
   There are some failures with the "guality" tests on Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
