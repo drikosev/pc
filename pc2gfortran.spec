@@ -1,5 +1,5 @@
 
-May 11, 2020 
+May 17, 2020 
 
 
                  FORTRAN PATCHES FOR GCC 4.8.5 in CentOS 7.6
@@ -33,11 +33,11 @@ May 11, 2020
       ------------
 
    This document describes how you can manually extract some GNU Fortran patches
-   from the zip file "pc-rules-2020-05-11.tar.bz2" and apply them to the source 
+   from the zip file "pc-rules-2020-05-17.tar.bz2" and apply them to the source 
    RPM "gcc-4.8.5-39.0.3.el7.src.rpm" in a RHEL/CentOS/Oracle-Linux 7.6 system. 
 
-   In specific, the above mentioned zip file (pc-rules-2020-05-11.tar.bz2) contains 
-   131 unofficial GNU Fortran patches, mainly backports, which have been tested on
+   In specific, the above mentioned zip file (pc-rules-2020-05-17.tar.bz2) contains 
+   136 unofficial GNU Fortran patches, mainly backports, which have been tested on
    both macOS and Linux. In addition, I've applied them to the source RPM and could
    build and test it without any Fortran regressions. 
 
@@ -109,16 +109,16 @@ May 11, 2020
    You should download a tested tarball. Cross check with the date reported in Appendix G.
 
    curl -L -k \
-   https://github.com/drikosev/pc/raw/master/pc-rules-2020-05-11.tar.bz2 \
-   -o ${HOME}/Downloads/pc-rules-2020-05-11.tar.bz2
+   https://github.com/drikosev/pc/raw/master/pc-rules-2020-05-17.tar.bz2 \
+   -o ${HOME}/Downloads/pc-rules-2020-05-17.tar.bz2
 
-   Confirm that the tarball has the sha1 stamp "63e81b8e393276dcf569ec0ff35a7dfb87f018e3": 
-   openssl sha1 ${HOME}/Downloads/pc-rules-2020-05-11.tar.bz2 | awk '{print $2}'
+   Confirm that the tarball has the sha1 stamp "9a6970b52c767fec19242324c3f5a825592dfa5a": 
+   openssl sha1 ${HOME}/Downloads/pc-rules-2020-05-17.tar.bz2 | awk '{print $2}'
 
    Setup a working area for the pc:
    install -d ~/pc 
    cd ~/pc 
-   tar xf ~/Downloads/pc-rules-2020-05-11.tar.bz2 
+   tar xf ~/Downloads/pc-rules-2020-05-17.tar.bz2 
    ln -sf rules/port port
    ./port details gcc48 | grep patches
 
@@ -126,7 +126,7 @@ May 11, 2020
    2.2) Copy the Fortran Patches to the ~/rpmbuild/SOURCES Directory
         ------------------------------------------------------------
 
-   Once the "pc-rules-2020-05-11.tar.bz2" tarball has been extracted to $HOME/pc, 
+   Once the "pc-rules-2020-05-17.tar.bz2" tarball has been extracted to $HOME/pc, 
    run all the commands listed in Appendix A.
 
 
@@ -341,7 +341,11 @@ cp gcc48-pr70260.patch  ~/rpmbuild/SOURCES
 cp gcc48-2calloc.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr52846.extra  ~/rpmbuild/SOURCES
 cp gcc48-pr67900.patch  ~/rpmbuild/SOURCES
-
+cp gcc48-pr71203.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr52413.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr61632.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr35203.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr82995.patch  ~/rpmbuild/SOURCES
 
 Note:
 If you want to convert the characters length field from int to size_t, then run:
@@ -488,6 +492,11 @@ Patch9167: gcc48-pr70260.patch
 Patch9168: gcc48-2calloc.patch
 Patch9169: gcc48-pr52846.extra
 Patch9170: gcc48-pr67900.patch
+Patch9171: gcc48-pr71203.patch
+Patch9172: gcc48-pr52413.patch
+Patch9173: gcc48-pr61632.patch
+Patch9174: gcc48-pr35203.patch
+Patch9175: gcc48-pr82995.patch
 
 
 Appendix C
@@ -626,6 +635,11 @@ Appendix C
 %patch9168 -p0 -b .2calloc~
 %patch9169 -p0 -b .pr52846.extra
 %patch9170 -p0 -b .pr67900~
+%patch9171 -p0 -b .pr71203~
+%patch9172 -p0 -b .pr52413~
+%patch9173 -p0 -b .pr61632~
+%patch9174 -p0 -b .pr35203~
+%patch9175 -p0 -b .pr82995~
 
 
 Appendix D
@@ -987,6 +1001,10 @@ The above two failures were reproduced again [Running target unix//-fstack-prote
 
 FAIL: gcc.dg/guality/pr36728-1.c  -O1  line 16 arg3 == 3
 FAIL: gcc.dg/guality/pr36728-3.c  -O1  line 16 arg3 == 3
+
+[2020-05-17]
+
+Same results as above.
 
 [suser@miniserver rpmbuild]$
 
