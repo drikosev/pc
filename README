@@ -200,8 +200,6 @@ Known Issues
   can compile ie the Fortran program found in PR/82065. On May 3, 2020 I couldn't use the
   PlugIn to build the (static) LAPACK library. 
   
-  Both gcc4/gcc48 have now a broken "libitm" library on CentOS-7.6 (2020-05-03).
-
   There are some failures with the "guality" tests on Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
   the warnings ie didn't comply with a system security policy that loads processes at 
