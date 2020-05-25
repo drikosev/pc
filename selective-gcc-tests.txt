@@ -187,7 +187,11 @@
     -The PR/84109 reports another allocation error (finally can seg. fault as well) 
          FAIL: elemental_function_3.f90
     -The PR/82036 reports an allocation error that appears as ICE or initialization error.
-         FAIL: pr82036-00.f90 
+         FAIL: pr82036-00.f90
+    -Possibly related to PR/82995 because I see some "maxval" undefined symbols:
+         FAIL: maxval_char_4.F90
+         Note: Unlikely, since the macro processor is involved in the relevant
+               function definitions, I can't easily figure out what's wrong here! 
     -(...)
 
 
