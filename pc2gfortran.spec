@@ -1,5 +1,5 @@
 
-May 17, 2020 
+Jun 10, 2020 
 
 
                  FORTRAN PATCHES FOR GCC 4.8.5 in CentOS 7.6
@@ -33,11 +33,11 @@ May 17, 2020
       ------------
 
    This document describes how you can manually extract some GNU Fortran patches
-   from the zip file "pc-rules-2020-05-17.tar.bz2" and apply them to the source 
+   from the zip file "pc-rules-2020-06-10.tar.bz2" and apply them to the source 
    RPM "gcc-4.8.5-39.0.3.el7.src.rpm" in a RHEL/CentOS/Oracle-Linux 7.6 system. 
 
-   In specific, the above mentioned zip file (pc-rules-2020-05-17.tar.bz2) contains 
-   136 unofficial GNU Fortran patches, mainly backports, which have been tested on
+   In specific, the above mentioned zip file (pc-rules-2020-06-10.tar.bz2) contains 
+   145 unofficial GNU Fortran patches, mainly backports, which have been tested on
    both macOS and Linux. In addition, I've applied them to the source RPM and could
    build and test it without any Fortran regressions. 
 
@@ -109,16 +109,16 @@ May 17, 2020
    You should download a tested tarball. Cross check with the date reported in Appendix G.
 
    curl -L -k \
-   https://github.com/drikosev/pc/raw/master/pc-rules-2020-05-17.tar.bz2 \
-   -o ${HOME}/Downloads/pc-rules-2020-05-17.tar.bz2
+   https://github.com/drikosev/pc/raw/master/pc-rules-2020-06-10.tar.bz2 \
+   -o ${HOME}/Downloads/pc-rules-2020-06-10.tar.bz2
 
-   Confirm that the tarball has the sha1 stamp "9a6970b52c767fec19242324c3f5a825592dfa5a": 
-   openssl sha1 ${HOME}/Downloads/pc-rules-2020-05-17.tar.bz2 | awk '{print $2}'
+   Confirm that the tarball has the sha1 stamp "cddf3c3b85bc0c72e4b1d6ffa2d54bf861011862": 
+   openssl sha1 ${HOME}/Downloads/pc-rules-2020-06-10.tar.bz2 | awk '{print $2}'
 
    Setup a working area for the pc:
    install -d ~/pc 
    cd ~/pc 
-   tar xf ~/Downloads/pc-rules-2020-05-17.tar.bz2 
+   tar xf ~/Downloads/pc-rules-2020-06-10.tar.bz2 
    ln -sf rules/port port
    ./port details gcc48 | grep patches
 
@@ -126,7 +126,7 @@ May 17, 2020
    2.2) Copy the Fortran Patches to the ~/rpmbuild/SOURCES Directory
         ------------------------------------------------------------
 
-   Once the "pc-rules-2020-05-17.tar.bz2" tarball has been extracted to $HOME/pc, 
+   Once the "pc-rules-2020-06-10.tar.bz2" tarball has been extracted to $HOME/pc, 
    run all the commands listed in Appendix A.
 
 
@@ -347,6 +347,20 @@ cp gcc48-pr61632.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr35203.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr82995.patch  ~/rpmbuild/SOURCES
 
+cp gcc48-pr55117.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr36313.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr60355.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr82143.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr92959.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr93498.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr93686.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr65428.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr93835.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr93601.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr93580.patch  ~/rpmbuild/SOURCES
+
+
+
 Note:
 If you want to convert the characters length field from int to size_t, then run:
 
@@ -498,6 +512,18 @@ Patch9173: gcc48-pr61632.patch
 Patch9174: gcc48-pr35203.patch
 Patch9175: gcc48-pr82995.patch
 
+Patch9176: gcc48-pr55117.patch
+Patch9177: gcc48-pr36313.patch
+Patch9178: gcc48-pr60355.patch
+Patch9179: gcc48-pr82143.patch
+Patch9180: gcc48-pr92959.patch
+Patch9181: gcc48-pr93498.patch
+Patch9182: gcc48-pr93686.patch
+Patch9183: gcc48-pr65428.patch
+Patch9184: gcc48-pr93835.patch
+Patch9185: gcc48-pr93601.patch
+Patch9186: gcc48-pr93580.patch
+
 
 Appendix C
 -------
@@ -640,6 +666,17 @@ Appendix C
 %patch9173 -p0 -b .pr61632~
 %patch9174 -p0 -b .pr35203~
 %patch9175 -p0 -b .pr82995~
+%patch9176 -p0 -b .pr55117~
+%patch9177 -p0 -b .pr36313~
+%patch9178 -p0 -b .pr60355~
+%patch9179 -p0 -b .pr82143~
+%patch9180 -p0 -b .pr92959~
+%patch9181 -p0 -b .pr93498~
+%patch9182 -p0 -b .pr93686~
+%patch9183 -p0 -b .pr65428~
+%patch9184 -p0 -b .pr93835~
+%patch9185 -p0 -b .pr93601~
+%patch9186 -p0 -b .pr93580~
 
 
 Appendix D
@@ -1003,6 +1040,10 @@ FAIL: gcc.dg/guality/pr36728-1.c  -O1  line 16 arg3 == 3
 FAIL: gcc.dg/guality/pr36728-3.c  -O1  line 16 arg3 == 3
 
 [2020-05-17]
+
+Same results as above.
+
+[2020-06-10]
 
 Same results as above.
 
