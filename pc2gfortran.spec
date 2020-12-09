@@ -1081,11 +1081,11 @@ advantage of the existing recipes.
    of the DragonEgg PlugIn expects it's compiler at /tmp/gcc.dst
 3. Use the PC script to rebuild the PlugIn, always from scratch,
    each time you rebuild or update the system compiler. 
-   If the LLVM project hasn't been build so far, this step will
+   If the LLVM project hasn't been built so far, this step will
    normally run now. Yet, I always build the PlugIn with gcc4.
 4. Manually copy the PlugIn shared library to the right place. In
    this case it also has to be uninstalled manually if you decide
-   that is no longer useful to you.
+   that it is no longer useful to you.
 
 
 To execute the above four steps, run all the following commands:
