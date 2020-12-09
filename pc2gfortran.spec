@@ -21,10 +21,10 @@ Dec 08, 2020
 
    3) Appendices
              A-D: text to copy/paste.
-      Appendix F: sample code
       Appendix E: a short list with the first added patches
+      Appendix F: sample code
       Appendix G: the last RPM test results 
-
+      Appendix H: How to use the LLVM Backend with the system compiler 
 
    --------------------------------------------------------------------------------
 
@@ -1063,3 +1063,34 @@ FAIL: gcc.dg/guality/pr54693-2.c  -Os  line 21 x == 10 - i
 
 [suser@miniserver rpmbuild]$
 
+
+
+      
+
+Appendix H: How to use the LLVM Backend with the system compiler 
+------------------------------------------------------------------
+[2020-12-09]
+
+To use the LLVM Backend (DragonEgg) with the system compiler, you
+have to build it with the system compiler. But the PC Script does
+not contain such a recipe. So, you can follow these steps to take
+advantage of the existing recipes.
+
+1. Clean the gcc4 & gcc48 destination area at /tmp/gcc.dst
+2. Create soft links to the system compiler. Because the recipe
+   of the DragonEgg PlugIn expects it's compiler at /tmp/gcc.dst
+3. If the LLVM project hasn't been build so far, this step will
+   normally run now. I always build the PlugIn with gcc4.
+
+5. So run the following commands:
+
+   rm -rf             /tmp/gcc.dst
+   install -d         /tmp/gcc.dst/usr/local/bin
+   ln -s /usr/bin/c++ /tmp/gcc.dst/usr/local/bin/c++
+   ln -s /usr/bin/cpp /tmp/gcc.dst/usr/local/bin/cpp
+   ln -s /usr/bin/gcc /tmp/gcc.dst/usr/local/bin/gcc
+   cd ~/pc
+   ./port clean dragonegg34
+   ./port make  dragonegg34
+   sudo cp dragonegg34/dragonegg-3.4/dragonegg.so \
+           /usr/lib/gcc/x86_64-redhat-linux/4.8.5/plugin/
