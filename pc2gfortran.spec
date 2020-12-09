@@ -1,5 +1,5 @@
 
-Jun 10, 2020 
+Dec 08, 2020 
 
 
                  FORTRAN PATCHES FOR GCC 4.8.5 in CentOS 7.6
@@ -33,11 +33,11 @@ Jun 10, 2020
       ------------
 
    This document describes how you can manually extract some GNU Fortran patches
-   from the zip file "pc-rules-2020-06-10.tar.bz2" and apply them to the source 
-   RPM "gcc-4.8.5-39.0.3.el7.src.rpm" in a RHEL/CentOS/Oracle-Linux 7.6 system. 
+   from the zip file "pc-rules-2020-10-14.tar.bz2" and apply them to the source 
+   RPM "gcc-4.8.5-44.0.3.el7.src.rpm" in a RHEL/CentOS/Oracle-Linux 7.6 system. 
 
-   In specific, the above mentioned zip file (pc-rules-2020-06-10.tar.bz2) contains 
-   145 unofficial GNU Fortran patches, mainly backports, which have been tested on
+   In specific, the above mentioned zip file (pc-rules-2020-12-06.tar.bz2) contains 
+   146 unofficial GNU Fortran patches, mainly backports, which have been tested on
    both macOS and Linux. In addition, I've applied them to the source RPM and could
    build and test it without any Fortran regressions. 
 
@@ -64,7 +64,7 @@ Jun 10, 2020
            Distro : CentOS 7.6
           Machine : x86_64-redhat-linux
    Kernel Version : 3.10.0-957.el7.x86_64
-   System Compiler: gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-36)
+   System Compiler: gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-39)
 
    The first time I built this package on Aug 15, 2017, I started the building
    process at 17:40 and finished at 22:20 (4 hours and 40 minutes).
@@ -109,16 +109,16 @@ Jun 10, 2020
    You should download a tested tarball. Cross check with the date reported in Appendix G.
 
    curl -L -k \
-   https://github.com/drikosev/pc/raw/master/pc-rules-2020-06-10.tar.bz2 \
-   -o ${HOME}/Downloads/pc-rules-2020-06-10.tar.bz2
+   https://github.com/drikosev/pc/raw/master/pc-rules-2020-10-14.tar.bz2 \
+   -o ${HOME}/Downloads/pc-rules-2020-10-14.tar.bz2
 
-   Confirm that the tarball has the sha1 stamp "cddf3c3b85bc0c72e4b1d6ffa2d54bf861011862": 
-   openssl sha1 ${HOME}/Downloads/pc-rules-2020-06-10.tar.bz2 | awk '{print $2}'
+   Confirm that the tarball has the sha1 stamp "47f1a22e7727349dc821b2198cec9cfa2185d4c6": 
+   openssl sha1 ${HOME}/Downloads/pc-rules-2020-12-06.tar.bz2 | awk '{print $2}'
 
    Setup a working area for the pc:
    install -d ~/pc 
    cd ~/pc 
-   tar xf ~/Downloads/pc-rules-2020-06-10.tar.bz2 
+   tar xf ~/Downloads/pc-rules-2020-12-06.tar.bz2 
    ln -sf rules/port port
    ./port details gcc48 | grep patches
 
@@ -126,7 +126,7 @@ Jun 10, 2020
    2.2) Copy the Fortran Patches to the ~/rpmbuild/SOURCES Directory
         ------------------------------------------------------------
 
-   Once the "pc-rules-2020-06-10.tar.bz2" tarball has been extracted to $HOME/pc, 
+   Once the "pc-rules-2020-12-06.tar.bz2" tarball has been extracted to $HOME/pc, 
    run all the commands listed in Appendix A.
 
 
@@ -140,7 +140,7 @@ Jun 10, 2020
 
    Whereas, with CentOS-7.6, the file below can be downloaded from Oracle. So,
    download the Source RPM for gcc, open a terminal in that directory and type:
-   rpm -i gcc-4.8.5-39.0.3.el7.src.rpm
+   rpm -i gcc-4.8.5-44.0.3.el7.src.rpm
 
 
    2.4) Update the gcc.spec File
@@ -180,7 +180,7 @@ Jun 10, 2020
 
    Start a new terminal session!
 
-   Run the following commands to build the "gcc-4.8.5-39.0.3.el7.src.rpm":
+   Run the following commands to build the "gcc-4.8.5-44.0.3.el7.src.rpm":
    cd ~/rpmbuild
    export RPM_BUILD_NCPUS=2
    export LD_LIBRARY_PATH=""
@@ -358,7 +358,8 @@ cp gcc48-pr65428.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr93835.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr93601.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr93580.patch  ~/rpmbuild/SOURCES
-
+cp gcc48-pr93635.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr98016.patch  ~/rpmbuild/SOURCES
 
 
 Note:
@@ -523,7 +524,8 @@ Patch9183: gcc48-pr65428.patch
 Patch9184: gcc48-pr93835.patch
 Patch9185: gcc48-pr93601.patch
 Patch9186: gcc48-pr93580.patch
-
+Patch9187: gcc48-pr93635.patch
+Patch9188: gcc48-pr98016.patch
 
 Appendix C
 -------
@@ -677,6 +679,8 @@ Appendix C
 %patch9184 -p0 -b .pr93835~
 %patch9185 -p0 -b .pr93601~
 %patch9186 -p0 -b .pr93580~
+%patch9187 -p0 -b .pr93635~
+%patch9188 -p0 -b .pr98016~
 
 
 Appendix D
@@ -684,54 +688,53 @@ Appendix D
 
 cd ~/rpmbuild/RPMS/x86_64
 
-sudo rpm --force --nodeps -i  cpp-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-base-debuginfo-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-c++-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-debuginfo-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-gfortran-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-go-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-objc-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-objc++-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  gcc-plugin-devel-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libasan-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libasan-static-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libatomic-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libatomic-static-4.8.5-39.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  cpp-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-base-debuginfo-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-c++-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-debuginfo-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-gfortran-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-go-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-objc-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-objc++-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  gcc-plugin-devel-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libasan-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libasan-static-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libatomic-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libatomic-static-4.8.5-44.0.3.el7.x86_64.rpm
 
-sudo rpm --force --nodeps -i  libgcc-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libgfortran-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libgfortran-static-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libgo-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libgo-devel-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libgomp-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libgo-static-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libitm-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libitm-devel-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libitm-static-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libmudflap-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libmudflap-devel-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libmudflap-static-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libobjc-4.8.5-39.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libgcc-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libgfortran-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libgfortran-static-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libgo-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libgo-devel-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libgomp-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libgo-static-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libitm-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libitm-devel-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libitm-static-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libmudflap-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libmudflap-devel-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libmudflap-static-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libobjc-4.8.5-44.0.3.el7.x86_64.rpm
 
-sudo rpm --force --nodeps -i  libquadmath-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libquadmath-devel-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libquadmath-static-4.8.5-39.0.3.el7.x86_64.rpm
-
-sudo rpm --force --nodeps -i  libstdc++-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libstdc++-devel-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libstdc++-static-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libtsan-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force --nodeps -i  libtsan-static-4.8.5-39.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libquadmath-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libquadmath-devel-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libquadmath-static-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libstdc++-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libstdc++-devel-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libstdc++-static-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libtsan-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force --nodeps -i  libtsan-static-4.8.5-44.0.3.el7.x86_64.rpm
 
 
 
 #if you have built libgnat along with the C++ documentation also:
-sudo rpm --force -i libgnat-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force -i libgnat-devel-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force -i libgnat-static-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force -i gcc-gnat-4.8.5-39.0.3.el7.x86_64.rpm
-sudo rpm --force -i libstdc++-docs-4.8.5-39.0.3.el7.x86_64.rpm
+sudo rpm --force -i libgnat-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force -i libgnat-devel-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force -i libgnat-static-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force -i gcc-gnat-4.8.5-44.0.3.el7.x86_64.rpm
+sudo rpm --force -i libstdc++-docs-4.8.5-44.0.3.el7.x86_64.rpm
 
 
 Appendix E
@@ -1046,6 +1049,17 @@ Same results as above.
 [2020-06-10]
 
 Same results as above.
+
+[suser@miniserver rpmbuild]$
+
+
+---------------------------------------------------------------------------
+[2020-10-16]
+
+I've seen/noticed this failure for the first time:
+
+FAIL: gcc.dg/guality/pr54693-2.c  -Os  line 21 x == 10 - i
+
 
 [suser@miniserver rpmbuild]$
 
