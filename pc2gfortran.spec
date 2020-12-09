@@ -33,7 +33,7 @@ Dec 08, 2020
       ------------
 
    This document describes how you can manually extract some GNU Fortran patches
-   from the zip file "pc-rules-2020-10-14.tar.bz2" and apply them to the source 
+   from the zip file "pc-rules-2020-12-06.tar.bz2" and apply them to the source 
    RPM "gcc-4.8.5-44.0.3.el7.src.rpm" in a RHEL/CentOS/Oracle-Linux 7.6 system. 
 
    In specific, the above mentioned zip file (pc-rules-2020-12-06.tar.bz2) contains 
@@ -109,8 +109,8 @@ Dec 08, 2020
    You should download a tested tarball. Cross check with the date reported in Appendix G.
 
    curl -L -k \
-   https://github.com/drikosev/pc/raw/master/pc-rules-2020-10-14.tar.bz2 \
-   -o ${HOME}/Downloads/pc-rules-2020-10-14.tar.bz2
+   https://github.com/drikosev/pc/raw/master/pc-rules-2020-12-06.tar.bz2 \
+   -o ${HOME}/Downloads/pc-rules-2020-12-06.tar.bz2
 
    Confirm that the tarball has the sha1 stamp "47f1a22e7727349dc821b2198cec9cfa2185d4c6": 
    openssl sha1 ${HOME}/Downloads/pc-rules-2020-12-06.tar.bz2 | awk '{print $2}'
