@@ -1082,7 +1082,7 @@ advantage of the existing recipes.
 3. Use the PC script to rebuild the PlugIn, always from scratch,
    each time you rebuild or update the system compiler. 
    If the LLVM project hasn't been built so far, this step will
-   normally run now. Yet, I always build the PlugIn with gcc4.
+   normally run now. Yet, I always build LLVM with gcc4.
 4. Manually copy the PlugIn shared library to the right place. In
    this case it also has to be uninstalled manually if you decide
    that it is no longer useful to you.
