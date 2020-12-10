@@ -1072,9 +1072,9 @@ Appendix H: How to use the LLVM Backend with the system compiler
 [2020-12-09]
 
 To use the LLVM Backend (DragonEgg) with the system compiler, you
-have to build it with the system compiler. But the PC Script does
-not contain such a recipe. Yet you can follow these steps to take
-advantage of the existing recipes.
+have to build it with the system compiler. Although the PC Script
+doesn't contain such a recipe, you can follow these steps to take
+advantage of the existing ones.
 
 1. Clean the gcc4 & gcc48 destination area at /tmp/gcc.dst
 2. Create soft links to the system compiler. Because the recipe
@@ -1082,7 +1082,7 @@ advantage of the existing recipes.
 3. Use the PC script to rebuild the PlugIn, always from scratch,
    each time you rebuild or update the system compiler. 
    If the LLVM project hasn't been built so far, this step will
-   normally run now. Yet, I always build LLVM with gcc4.
+   normally run now. Yet, I usually build LLVM with gcc4/gcc48.
 4. Manually copy the PlugIn shared library to the right place. In
    this case it also has to be uninstalled manually if you decide
    that it is no longer useful to you.
