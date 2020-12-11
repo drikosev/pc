@@ -189,12 +189,17 @@
          FAIL: elemental_function_3.f90
     -The PR/82036 reports an allocation error that appears as ICE or initialization error.
          FAIL: pr82036-00.f90
-    -The PRs 35718, 86576, 88735, 93691, 97123, mainly report invalid deallocations. 
+    -The PRs 57965, 59252, 67539 receive a SIGSEGV, due to an invalid memory reference. 
+         FAIL: pr57965-00.f90
+         FAIL: pr59252-00.f90
+         FAIL: pr67539-00.f90
+    -The PRs 35718, 86576, 88735, 93691, 97123, 97920 mainly report invalid deallocations. 
          FAIL: pr35718-00.f90
          FAIL: pr86576-00.f90
          FAIL: pr88735-00.f90
          FAIL: pr93691-00.f90
          FAIL: pr97123-00.f90
+         FAIL: pr97920-00.f90
     -(...)
 
 
