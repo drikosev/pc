@@ -193,13 +193,12 @@
          FAIL: pr57965-00.f90
          FAIL: pr59252-00.f90
          FAIL: pr67539-00.f90
-    -The PRs 35718, 86576, 88735, 93691, 97123, 97920 mainly report invalid deallocations. 
+    -The PRs 35718, 86576, 88735, 93691, 97123 mainly report invalid deallocations. 
          FAIL: pr35718-00.f90
          FAIL: pr86576-00.f90
          FAIL: pr88735-00.f90
          FAIL: pr93691-00.f90
          FAIL: pr97123-00.f90
-         FAIL: pr97920-00.f90
     -(...)
 
 
