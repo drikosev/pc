@@ -202,8 +202,8 @@ Known Issues
   Although the PlugIn facilitates debugging for Fortran programs with LLDB, one should
   expect that it has bugs. Yet, it can overcome few problems, mainly on a Mac, like ie the
   test failure of pr49866.c (PLTOFF isn't acceptable by mac linkers). On Linux, the PlugIn
-  can compile and run ie the Fortran programs found in PRs 82065, 87659, and 97920. On 
-  May 3, 2020 however I couldn't use the PlugIn to build the (static) LAPACK library. 
+  can compile and run ie the Fortran programs found in PRs 82065 and 87659. On May 3, 2020 
+  however I couldn't use the PlugIn to build the (static) LAPACK library. 
   
   There are some failures with the "guality" tests on Linux (gcc.dg/quality/) whereas on a
   Mac the PCH tests have been adjusted to run without warnings & core dumps. One of
