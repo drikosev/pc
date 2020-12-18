@@ -240,8 +240,8 @@ Known Issues
   detailed information about the supported features per version can be found at
   https://gcc.gnu.org/wiki/Fortran2003Status 
 
-  Note: You can bypass several finalization bugs with the optimization option -O2 or
-  -O3, ie the bugs in PRs 69298, 70863, 82996, and 96122 (2020-12-17). 
+  Note: You can bypass/trick several finalization bugs with the optimization option -O2 
+  or -O3, ie the bugs in PRs 69298, 70863, 82996, and 96122 (2020-12-17). 
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
