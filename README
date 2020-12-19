@@ -243,6 +243,9 @@ Known Issues
   Note: You can bypass/trick several finalization seg. faults with the optimization option 
   -O2 or -O3, ie the ones in PRs 69298, 70863, 82996, and 96122 (2020-12-18). 
 
+  It turns out that the function Random Init (2018) isn't standard confirming. See ie:
+  https://groups.google.com/g/comp.lang.fortran/c/Z0TKn4q6UgQ
+
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
   this issue has been solved for the newer Darwin systems with the solution applied to 
