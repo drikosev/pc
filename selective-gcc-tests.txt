@@ -174,10 +174,9 @@
     -The PR/52268 seems to be an enhancement request.
     -The backport of the PR/54613 implements the "BACK=" argument for the MAXLOC, MINLOC,
      and FINDLOC intrinsics. Running "autoreconf" and the like is an untested step though. 
-    -The mem. leaks reported in PRs 60913, 61819, 86481, and 80477 are allocation errors:
+    -The mem. leaks reported in PRs 60913, 61819, 84472, and 80477 are allocation errors:
          FAIL: allocate_with_source_13.f03
-         FAIL: allocate_with_source_25.f90 
-         FAIL: pr86481-00.f90
+         FAIL: pr84472-00.f90
          FAIL: pr60913-08.f90
          FAIL: pr80477-00.f90
          FAIL: pr87359-37.f90
@@ -189,7 +188,7 @@
          FAIL: elemental_function_3.f90
     -The PR/82036 reports an allocation error that appears as ICE or initialization error.
          FAIL: pr82036-00.f90
-    -The PRs 57965, 59252, 67539 receive a SIGSEGV, due to an invalid memory reference. 
+    -The PRs 57965, 59252, 67539 report a SIGSEGV due to an invalid memory reference. 
          FAIL: pr57965-00.f90
          FAIL: pr59252-00.f90
          FAIL: pr67539-00.f90
