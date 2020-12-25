@@ -54,7 +54,7 @@ cd ~/pc
 tar -xjSf ~/Downloads/pc-rules-2020-12-06.tar.bz2 
 ln -sf rules/port port
 
-
+*SHA1 pc-rules-2019-11-13.tar.bz2: 7d05037304677ccf65e6a58b794416f088800881
 *SHA1 pc-rules-2019-12-06.tar.bz2: 29f65de5e10cf0dbb8152a8f9812482d3d2b5199
 *SHA1 pc-rules-2020-04-04.tar.bz2: 7bf09f61eb34834e7d8d9b826961eb9b03dea798
 *SHA1 pc-rules-2020-05-11.tar.bz2: 63e81b8e393276dcf569ec0ff35a7dfb87f018e3
@@ -255,6 +255,8 @@ Known Issues
   coarrays. That explained, I don't see regressions and I couldn't tolerate such a bug
   until we've the right patch committed to GNU GCC Bugzilla. 
 
+  Latest tarball before PR/60322 seems to be pc-rules-2019-11-13.tar.bz2, commit details:
+  https://github.com/drikosev/pc/commit/e02c47f1918f33bde18ddee57bd907b815df97ea 
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
