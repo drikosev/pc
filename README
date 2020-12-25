@@ -246,6 +246,16 @@ Known Issues
   It turns out that the function Random Init (2018) isn't standard confirming. See ie:
   https://groups.google.com/g/comp.lang.fortran/c/Z0TKn4q6UgQ
 
+- It turns out that class arrays in Fortran are broken as mentioned in PR/92065 due to
+  PR/60322, which I unfortunately ported to gcc-4.8 in November 2019. See comment 18:
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92065#c18
+
+  To remedy the situation I've applied a hack on the 2020-12-12 tarball that is nothing 
+  more than an interim solution, as outlined in PR/92065, comment 23. It doesn't work for
+  coarrays. That explained, I don't see regressions and I couldn't tolerate such a bug
+  until we've the right patch committed to GNU GCC Bugzilla. 
+
+
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
   this issue has been solved for the newer Darwin systems with the solution applied to 
