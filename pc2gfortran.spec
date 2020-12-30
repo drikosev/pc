@@ -1,5 +1,5 @@
 
-Dec 08, 2020 
+Dec 25, 2020 
 
 
                  FORTRAN PATCHES FOR GCC 4.8.5 in CentOS 7.6
@@ -33,11 +33,11 @@ Dec 08, 2020
       ------------
 
    This document describes how you can manually extract some GNU Fortran patches
-   from the zip file "pc-rules-2020-12-06.tar.bz2" and apply them to the source 
+   from the zip file "pc-rules-2020-12-25.tar.bz2" and apply them to the source 
    RPM "gcc-4.8.5-44.0.3.el7.src.rpm" in a RHEL/CentOS/Oracle-Linux 7.6 system. 
 
-   In specific, the above mentioned zip file (pc-rules-2020-12-06.tar.bz2) contains 
-   146 unofficial GNU Fortran patches, mainly backports, which have been tested on
+   In specific, the above mentioned zip file (pc-rules-2020-12-25.tar.bz2) contains 
+   150 unofficial GNU Fortran patches, mainly backports, which have been tested on
    both macOS and Linux. In addition, I've applied them to the source RPM and could
    build and test it without any Fortran regressions. 
 
@@ -109,16 +109,16 @@ Dec 08, 2020
    You should download a tested tarball. Cross check with the date reported in Appendix G.
 
    curl -L -k \
-   https://github.com/drikosev/pc/raw/master/pc-rules-2020-12-06.tar.bz2 \
-   -o ${HOME}/Downloads/pc-rules-2020-12-06.tar.bz2
+   https://github.com/drikosev/pc/raw/master/pc-rules-2020-12-25.tar.bz2 \
+   -o ${HOME}/Downloads/pc-rules-2020-12-25.tar.bz2
 
-   Confirm that the tarball has the sha1 stamp "47f1a22e7727349dc821b2198cec9cfa2185d4c6": 
-   openssl sha1 ${HOME}/Downloads/pc-rules-2020-12-06.tar.bz2 | awk '{print $2}'
+   Confirm that the tarball has the sha1 stamp "ee2f1c95d857ca9dd02a615c2890c5460b24e5c7": 
+   openssl sha1 ${HOME}/Downloads/pc-rules-2020-12-25.tar.bz2 | awk '{print $2}'
 
    Setup a working area for the pc:
    install -d ~/pc 
    cd ~/pc 
-   tar xf ~/Downloads/pc-rules-2020-12-06.tar.bz2 
+   tar xf ~/Downloads/pc-rules-2020-12-25.tar.bz2 
    ln -sf rules/port port
    ./port details gcc48 | grep patches
 
@@ -126,7 +126,7 @@ Dec 08, 2020
    2.2) Copy the Fortran Patches to the ~/rpmbuild/SOURCES Directory
         ------------------------------------------------------------
 
-   Once the "pc-rules-2020-12-06.tar.bz2" tarball has been extracted to $HOME/pc, 
+   Once the "pc-rules-2020-12-25.tar.bz2" tarball has been extracted to $HOME/pc, 
    run all the commands listed in Appendix A.
 
 
@@ -360,6 +360,10 @@ cp gcc48-pr93601.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr93580.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr93635.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr98016.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr97920.hacks  ~/rpmbuild/SOURCES
+cp gcc48-pr96012.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr92065.hacks  ~/rpmbuild/SOURCES
+cp gcc48-pr45424.patch  ~/rpmbuild/SOURCES
 
 
 Note:
@@ -526,6 +530,11 @@ Patch9185: gcc48-pr93601.patch
 Patch9186: gcc48-pr93580.patch
 Patch9187: gcc48-pr93635.patch
 Patch9188: gcc48-pr98016.patch
+Patch9189: gcc48-pr97920.hacks
+Patch9190: gcc48-pr96012.patch
+Patch9191: gcc48-pr92065.hacks
+Patch9192: gcc48-pr45424.patch
+
 
 Appendix C
 -------
@@ -681,6 +690,10 @@ Appendix C
 %patch9186 -p0 -b .pr93580~
 %patch9187 -p0 -b .pr93635~
 %patch9188 -p0 -b .pr98016~
+%patch9189 -p0 -b .pr97920~ 
+%patch9190 -p0 -b .pr96012~ 
+%patch9191 -p0 -b .pr92065~ 
+%patch9192 -p0 -b .pr45424~ 
 
 
 Appendix D
@@ -1090,13 +1103,13 @@ advantage of the existing ones.
 
 To execute the above four steps, run all the following commands:
 
-   rm -rf             /tmp/gcc.dst
-   install -d         /tmp/gcc.dst/usr/local/bin
-   ln -s /usr/bin/c++ /tmp/gcc.dst/usr/local/bin/c++
-   ln -s /usr/bin/cpp /tmp/gcc.dst/usr/local/bin/cpp
-   ln -s /usr/bin/gcc /tmp/gcc.dst/usr/local/bin/gcc
+   rm -rf       /tmp/gcc.dst
+   install -d   /tmp/gcc.dst/usr
+   ln -s /usr   /tmp/gcc.dst/usr/local
    cd ~/pc
    ./port clean dragonegg34
    ./port make  dragonegg34
-   sudo cp dragonegg34/dragonegg-3.4/dragonegg.so \
-           /usr/lib/gcc/x86_64-redhat-linux/4.8.5/plugin/
+   sudo cp      dragonegg34/dragonegg-3.4/dragonegg.so \
+                /usr/lib/gcc/x86_64-redhat-linux/4.8.5/plugin/
+   rm -rf       /tmp/gcc.dst
+
