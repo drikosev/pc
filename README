@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-12-06.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-12-25.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2020-12-06.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2020-12-25.tar.bz2 
 ln -sf rules/port port
 
 *SHA1 pc-rules-2019-11-13.tar.bz2: 7d05037304677ccf65e6a58b794416f088800881
@@ -63,7 +63,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2020-06-10.tar.bz2: cddf3c3b85bc0c72e4b1d6ffa2d54bf861011862
 *SHA1 pc-rules-2020-10-14.tar.bz2: 9b3db6f6c420b0d857e8d8a72114055ab19b7f6f
 *SHA1 pc-rules-2020-12-06.tar.bz2: 47f1a22e7727349dc821b2198cec9cfa2185d4c6
-
+*SHA1 pc-rules-2020-12-25.tar.bz2: ee2f1c95d857ca9dd02a615c2890c5460b24e5c7
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -250,10 +250,10 @@ Known Issues
   PR/60322, which I unfortunately ported to gcc-4.8 in November 2019. See comment 18: 
   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92065#c18 
 
-  To remedy the situation I've applied a hack on the 2020-12-12 tarball and thereafter 
+  To remedy the situation I've applied a hack on the 2020-12-25 tarball and thereafter 
   that is nothing more than an interim solution, as outlined in PR/92065, comment 23. 
   That explained, I don't see regressions, and once aware I couldn't tolerate such a 
-  bug until we've an official solution with the right patch committed to GNU GCC Bugzilla. 
+  bug until we've the perfect solution committed to GNU GCC Bugzilla. 
 
   Latest tarball before PR/60322 may be the pc-rules-2019-11-13.tar.bz2, commit details:
   https://github.com/drikosev/pc/commit/e02c47f1918f33bde18ddee57bd907b815df97ea 
