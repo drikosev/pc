@@ -19,8 +19,8 @@
 
 
  1. Recurring Issues
-    These tests fail steadily on a specific system/version only. I've not identified
-    ie C/C++ test cases that fail in both MacOS & Linux.
+    These tests fail steadily or randomly, usually on a specific system/version. I
+    have not identified ie C/C++ test cases that fail in both MacOS & Linux.
 
  2. Solved Issues
     These tests had failed at least one time, they are now solved but errors have
@@ -79,6 +79,10 @@
      #fail: These two test cases fail if you run them individually:
      ./port test gcc4 gcc4-test-options=check-fortran RUNTESTFLAGS="dg.exp=binding_label_tests_11_main.f03"
      ./port test gcc4 gcc4-test-options=check-fortran RUNTESTFLAGS="dg.exp=binding_label_tests_13_main.f03"
+
+     #fail: These two test cases fail randomly. In the past, these were closed issues:
+     ./port test gcc4 gcc4-test-options=check-fortran RUNTESTFLAGS="dg.exp=pr42051.f03"
+     ./port test gcc4 gcc4-test-options=check-fortran RUNTESTFLAGS="dg.exp=pr87907.f90"
 
 
  2. Solved Issues
