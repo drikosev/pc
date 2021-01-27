@@ -261,20 +261,21 @@ Known Issues
   Note: This hack is applied also to 7.4 - 7.5 and 8.2 - 8.4 (8.3 is untested though).
 
 - The PR/64290 will remain in a probational state as long as needed. To be more specific,
-  modern Fortran has introduced, a likely unique, concept of ALLOCATABLE entities. At
-  least I'm not aware of such functionality in languages like C/C++, Java, and ABAP. The
-  promise is similar to that with the garbage collector in Java. The runtime automatically
-  deallocates the dynamically allocated memory in such entities (maybe oversimplified).  
+  modern Fortran has introduced a likely unique concept of ALLOCATABLE entities. At least
+  I'm not aware of such functionality in languages like C/C++, Java, and ABAP. The promise 
+  is similar to that of the garbage collector in Java. The runtime automatically frees the 
+  dynamically allocated memory in such entities (maybe oversimplified).  
 
-  One known issue with such an allocatable entity is that any pointers to it may become
-  undefined, as the runtime may reallocate the latter on assignment. To my surprise also,
-  a constructor may be finalized, because ie a function result may have to be finalized.
-  Further, the standard doesn't explain in detail the behaviour of this new concept. At
-  least, it's not obvious to me.
+  One known issue with such allocatable entities is that any pointers to them may become
+  undefined when the runtime makes a reallocation on assignment. To my surprise also, a
+  constructor may be finalized, as ie a function result may have to be finalized. Further,
+  the standard doesn't explain in detail the behaviour of such entities.
 
-  So, I'm stuck here and the implementation in gfortran is partial. Whereas the PR/64290,
-  which is unofficial, handles only just few cases. To my understanding, gfortran may not
-  build perfectly your code if it contain finalizers or pointers to derived type objects.
+  After all, who needs finalizable constructors?
+
+  So, I'm stuck here and the implementation in gfortran is partial, whereas the unofficial
+  PR/64290 handles only just few cases. To my understanding, gfortran may not build your
+  code properly if it contains finalizers or pointers to allocatable derived type objects.
 
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
