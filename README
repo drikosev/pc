@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2020-12-25.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2021-01-17.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2020-12-25.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2021-01-17.tar.bz2 
 ln -sf rules/port port
 
 *SHA1 pc-rules-2019-11-13.tar.bz2: 7d05037304677ccf65e6a58b794416f088800881
@@ -64,6 +64,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2020-10-14.tar.bz2: 9b3db6f6c420b0d857e8d8a72114055ab19b7f6f
 *SHA1 pc-rules-2020-12-06.tar.bz2: 47f1a22e7727349dc821b2198cec9cfa2185d4c6
 *SHA1 pc-rules-2020-12-25.tar.bz2: ee2f1c95d857ca9dd02a615c2890c5460b24e5c7
+*SHA1 pc-rules-2021-01-17.tar.bz2: 913126eff0226e8c21ba7bf8f8dbd73143842efc
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -243,40 +244,6 @@ Known Issues
   Note: You can bypass/trick several finalization seg. faults with the optimization option 
   -O2 or -O3, ie the ones in PRs 69298, 70863, 82996, and 96122 (2020-12-18). 
 
-  It turns out that the function Random Init (2018) isn't standard confirming. See ie:
-  https://groups.google.com/g/comp.lang.fortran/c/Z0TKn4q6UgQ
-
-- It turns out that class arrays in gfortran are broken as mentioned in PR/92065 due to 
-  PR/60322, which I unfortunately ported to gcc-4.8 in November 2019. See comment 18: 
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92065#c18 
-
-  To remedy the situation I've applied a hack on the 2020-12-25 tarball and thereafter 
-  that is nothing more than an interim solution, as outlined in PR/92065, comment 23. 
-  That explained, I don't see regressions, and once aware I couldn't tolerate such a 
-  bug until we've the perfect solution committed to GNU GCC Bugzilla. 
-
-  Latest tarball before PR/60322 may be the pc-rules-2019-11-13.tar.bz2, commit details:
-  https://github.com/drikosev/pc/commit/e02c47f1918f33bde18ddee57bd907b815df97ea 
-
-  Note: This hack is applied also to 7.4 - 7.5 and 8.2 - 8.4 (8.3 is untested though).
-
-- The PR/64290 will remain in a probational state as long as needed. To be more specific,
-  modern Fortran has introduced a likely unique concept of ALLOCATABLE entities. At least
-  I'm not aware of such functionality in languages like C/C++, Java, and ABAP. The promise 
-  is similar to that of the garbage collector in Java. The runtime automatically frees the 
-  dynamically allocated memory in such entities (maybe oversimplified).  
-
-  One known issue with such allocatable entities is that any pointers to them may become
-  undefined when the runtime makes a reallocation on assignment. To my surprise also, a
-  constructor may be finalized, as ie a function result may have to be finalized. Further,
-  the standard doesn't explain in detail the behaviour of such entities.
-
-  After all, who needs finalizable constructors?
-
-  So, I'm stuck here and the implementation in gfortran is partial, whereas the unofficial
-  PR/64290 handles only just few cases. To my understanding, gfortran may not build your
-  code properly if it contains finalizers or pointers to allocatable derived type objects.
-
 - A long standing problem of GNU GCC in macOS had been that the destructors of local
   thread objects were running on deallocated memory (Emulated TLS). To my understanding,
   this issue has been solved for the newer Darwin systems with the solution applied to 
@@ -293,6 +260,54 @@ Known Issues
   a fresh compiler with size_t, simply run: "./port configure gcc4  LONG_CHARLEN=1".
     
   Note that this back-port can change the API but not the actual limit of a string length.
+
+- It turns out that class arrays in gfortran are broken as mentioned in PR/92065 due to 
+  PR/60322, which I unfortunately ported to gcc-4.8 in November 2019. See comment 18: 
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92065#c18 
+
+  To remedy the situation I've applied a hack on the 2020-12-25 tarball and thereafter 
+  that is nothing more than an interim solution, as outlined in PR/92065, comment 23. 
+  That explained, I don't see regressions, and once aware I couldn't tolerate such a 
+  bug until we've the perfect solution committed to GNU GCC Bugzilla. 
+
+  Latest tarball before PR/60322 may be the pc-rules-2019-11-13.tar.bz2, commit details:
+  https://github.com/drikosev/pc/commit/e02c47f1918f33bde18ddee57bd907b815df97ea 
+
+  Note: This hack is applied also to 7.4 - 7.5 and 8.2 - 8.4 (8.3 is untested though).
+
+- It turns out that the function Random Init (2018) isn't standard confirming. See ie:
+  https://groups.google.com/g/comp.lang.fortran/c/Z0TKn4q6UgQ
+
+- The unofficial PR/64290 has been applied without passing strict testing. Specifically,
+  modern Fortran has introduced a likely unique concept of ALLOCATABLE entities. At least 
+  I'm not aware of such functionality in languages like C/C++, Java, and ABAP. The promise 
+  is similar to that of the garbage collector in Java. The runtime automatically frees the 
+  dynamically allocated memory in such entities (maybe oversimplified).
+ 
+  One known issue with such allocatable entities is that any pointers to them may become 
+  undefined when the runtime makes a reallocation on assignment. To my surprise also, a 
+  constructor may be finalized, as ie a function result may have to be finalized. Further,
+  the standard doesn't explain in much detail the behaviour of such entities. 
+ 
+  This patch however affects only class re-allocations on intrinsic assignments, if either 
+  the LHS or the RHS is polymorphic and none of them is an array, which is implemented in
+ 'trans_class_assignment' and I've received very limited feedback for just two test cases:
+  https://gist.github.com/drikosev/a9e9e8357dbc45aeb02773198069222b
+
+  The implementation of finalizers in gfortran remains partial (2021-01-17 tarball).
+
+- The PR/44504 is also a personal effort for a nice to have feature in gfortran. The patch
+  sets the optional STAT argument in Fortran DEALLOCATE statements for undefined pointers.
+
+  So far, I've not received though any feedback at all for a multithreading related issue: 
+  - https://groups.google.com/g/comp.lang.fortran/c/ntoCosjDwb0
+  - stackoverflow.com/questions/65973285/after-a-call-to-setjmp-can-pthread-t-be-different
+
+  As a result, this workaround is restricted to run as long as no race conditions are
+  detected due to multithreading, ie by OpenMP statements. This work may be abandoned as a
+  somewhat risky patch, which however is also ie an interim solution for PR/93691 as well.
+
+  To avoid this patch, one may choose the previous tarball (2020-12-25 tarball).
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
