@@ -1,5 +1,5 @@
 
-Dec 25, 2020 
+Jan 17, 2021 
 
 
                  FORTRAN PATCHES FOR GCC 4.8.5 in CentOS 7.6
@@ -33,11 +33,11 @@ Dec 25, 2020
       ------------
 
    This document describes how you can manually extract some GNU Fortran patches
-   from the zip file "pc-rules-2020-12-25.tar.bz2" and apply them to the source 
+   from the zip file "pc-rules-2021-01-17.tar.bz2" and apply them to the source 
    RPM "gcc-4.8.5-44.0.3.el7.src.rpm" in a RHEL/CentOS/Oracle-Linux 7.6 system. 
 
-   In specific, the above mentioned zip file (pc-rules-2020-12-25.tar.bz2) contains 
-   150 unofficial GNU Fortran patches, mainly backports, which have been tested on
+   In specific, the above mentioned zip file (pc-rules-2021-01-17.tar.bz2) contains 
+   153 unofficial GNU Fortran patches, mainly backports, which have been tested on
    both macOS and Linux. In addition, I've applied them to the source RPM and could
    build and test it without any Fortran regressions. 
 
@@ -109,16 +109,16 @@ Dec 25, 2020
    You should download a tested tarball. Cross check with the date reported in Appendix G.
 
    curl -L -k \
-   https://github.com/drikosev/pc/raw/master/pc-rules-2020-12-25.tar.bz2 \
-   -o ${HOME}/Downloads/pc-rules-2020-12-25.tar.bz2
+   https://github.com/drikosev/pc/raw/master/pc-rules-2021-01-17.tar.bz2 \
+   -o ${HOME}/Downloads/pc-rules-2021-01-17.tar.bz2
 
-   Confirm that the tarball has the sha1 stamp "ee2f1c95d857ca9dd02a615c2890c5460b24e5c7": 
-   openssl sha1 ${HOME}/Downloads/pc-rules-2020-12-25.tar.bz2 | awk '{print $2}'
+   Confirm that the tarball has the sha1 stamp "913126eff0226e8c21ba7bf8f8dbd73143842efc": 
+   openssl sha1 ${HOME}/Downloads/pc-rules-2021-01-17.tar.bz2 | awk '{print $2}'
 
    Setup a working area for the pc:
    install -d ~/pc 
    cd ~/pc 
-   tar xf ~/Downloads/pc-rules-2020-12-25.tar.bz2 
+   tar xf ~/Downloads/pc-rules-2021-01-17.tar.bz2 
    ln -sf rules/port port
    ./port details gcc48 | grep patches
 
@@ -126,7 +126,7 @@ Dec 25, 2020
    2.2) Copy the Fortran Patches to the ~/rpmbuild/SOURCES Directory
         ------------------------------------------------------------
 
-   Once the "pc-rules-2020-12-25.tar.bz2" tarball has been extracted to $HOME/pc, 
+   Once the "pc-rules-2021-01-17.tar.bz2" tarball has been extracted to $HOME/pc, 
    run all the commands listed in Appendix A.
 
 
@@ -365,6 +365,10 @@ cp gcc48-pr96012.patch  ~/rpmbuild/SOURCES
 cp gcc48-pr92065.hacks  ~/rpmbuild/SOURCES
 cp gcc48-pr45424.patch  ~/rpmbuild/SOURCES
 
+cp gcc48-pr78618.patch  ~/rpmbuild/SOURCES
+cp gcc48-pr64290.hacks  ~/rpmbuild/SOURCES
+cp gcc48-pr44504.hacks  ~/rpmbuild/SOURCES
+
 
 Note:
 If you want to convert the characters length field from int to size_t, then run:
@@ -535,6 +539,10 @@ Patch9190: gcc48-pr96012.patch
 Patch9191: gcc48-pr92065.hacks
 Patch9192: gcc48-pr45424.patch
 
+Patch9193: gcc48-pr78618.patch
+Patch9194: gcc48-pr64290.hacks
+Patch9195: gcc48-pr44504.hacks
+
 
 Appendix C
 -------
@@ -694,6 +702,10 @@ Appendix C
 %patch9190 -p0 -b .pr96012~ 
 %patch9191 -p0 -b .pr92065~ 
 %patch9192 -p0 -b .pr45424~ 
+
+%patch9193 -p0 -b .pr78618~
+%patch9194 -p0 -b .pr64290~
+%patch9195 -p0 -b .pr44504~
 
 
 Appendix D
@@ -1072,6 +1084,13 @@ Same results as above.
 I've seen/noticed this failure for the first time:
 
 FAIL: gcc.dg/guality/pr54693-2.c  -Os  line 21 x == 10 - i
+
+
+[2021-01-17]
+
+This is also mentioned in 'selective-gcc-tests.txt'.
+
+FAIL: libmudflap.c++/pass41-frag.cxx ( -O) execution test
 
 
 [suser@miniserver rpmbuild]$
