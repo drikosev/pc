@@ -278,7 +278,7 @@ Known Issues
 - It turns out that the function Random Init (2018) isn't standard confirming. See ie:
   https://groups.google.com/g/comp.lang.fortran/c/Z0TKn4q6UgQ
 
-- The unofficial PR/64290 has been applied without passing strict testing. Specifically,
+- My own patch for PR/64290 has been applied without passing strict testing. Specifically,
   modern Fortran has introduced a likely unique concept of ALLOCATABLE entities. At least 
   I'm not aware of such functionality in languages like C/C++, Java, and ABAP. The promise 
   is similar to that of the garbage collector in Java. The runtime automatically frees the 
