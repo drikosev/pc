@@ -294,7 +294,7 @@ Known Issues
  'trans_class_assignment' and I've received very limited feedback for just two test cases:
   https://gist.github.com/drikosev/a9e9e8357dbc45aeb02773198069222b
 
-  The implementation of finalizers in gfortran remains partial (2021-01-17 tarball).
+  The implementation of finalizers in gfortran remains partial (2021-01-17). See PR/88735.
 
 - The patch for PR/44504 is a personal effort for a nice to have feature in gfortran that
   sets the optional STAT argument in Fortran DEALLOCATE statements for undefined pointers.
@@ -308,6 +308,16 @@ Known Issues
   somewhat risky patch, which however is also ie an interim solution for PR/93691 as well.
 
   To avoid this patch, one may choose the previous tarball (2020-12-25 tarball).
+
+- The bug fix for PR/88735 is also a personal, unofficial effort that is partial. Although
+  the symptom is the finalization of the RHS, the real problem seems to be that gfortran
+  makes a normal assignment and then calls the user defined assignment operator. In which
+  case the LHS already contains the data of the RHS. 
+     
+  The common denominator (κοινός παρονομαστής) with the PR/64290 seems to be a deep design
+  error in the assignment implementation for derived type variables that may cause a real
+  headache to GNU Fortran maintainers, unless they don't fix it. That explained, my bug
+  fix is quite small but nonetheless partial.
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
