@@ -321,7 +321,7 @@ Known Issues
 
   Note: When the criteria of the bug fix are loosen, ie a finalizer isn't a prerequisite,
         no warning is issued in 'pr25923.f90', and my bug fix would be a little fragile
-        if a function result is involved in the RHS. Also, if the variables A and B in 
+        if a function result were involved in the RHS. Also, if the variables A and B in 
         the program of PR/88735 are declared as classes, the user defined OP isn't called. 
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
