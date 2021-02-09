@@ -317,7 +317,12 @@ Known Issues
   The common denominator (κοινός παρονομαστής) with the PR/64290 seems to be a deep design
   error in the assignment implementation for derived type variables that may cause a real
   headache to GNU Fortran maintainers, unless they don't fix it. That explained, my bug
-  fix is quite small but nonetheless partial.
+  fix is quite small but nonetheless partial, and obviously work in progress.
+
+  Note: When the criteria of the bug fix are loosen, ie a finalizer isn't a prerequisite,
+        I've a Linux specific failure with the test case 'defined_assignment_2.f90' which
+        has been introduced by the PR/46897. Currently, I can't debug in Linux. My bug fix
+        also seems to be somewhat fragile when a function result is involved in the RHS.
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
