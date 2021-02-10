@@ -309,20 +309,23 @@ Known Issues
 
   To avoid this patch, one may choose the previous tarball (2020-12-25 tarball).
 
-- The bug fix for PR/88735 is also a personal, unofficial effort that is partial. Although
-  the symptom is the finalization of the RHS, the real problem seems to be that gfortran
-  makes a normal assignment and then calls the user defined assignment operator. In which
-  case the LHS already contains the data of the RHS. 
-     
-  The common denominator (κοινός παρονομαστής) with the PR/64290 seems to be a deep design
-  error in the assignment implementation for derived type variables that may cause a real
-  headache to GNU Fortran maintainers, unless they don't fix it. That explained, my bug
-  fix is quite small but nonetheless partial, and obviously work in progress.
 
-  Note: When the criteria of the bug fix are loosen, ie a finalizer isn't a prerequisite,
-        no warning is issued in 'pr25923.f90', and my bug fix would be a little fragile
-        if a function result were involved in the RHS. Also, if the variables A and B in 
-        the program of PR/88735 are declared as classes, the user defined OP isn't called. 
+- The bug fix for PR/88735 is also a personal, unofficial effort that is partial. Although
+  the symptom is the finalization of the RHS and I can't reproduce the bug without a final
+  routine, the real problem seemed to be that gfortran makes a normal assignment even for
+  fields with a defined assignment operator. So, this bug fix copies recursively all the
+  fields of a structure from RHS to LHS, except those having a defined assignment operator.
+
+  The common denominator (κοινός παρονομαστής) with the PR/64290 seems to be some design
+  error in the assignment implementation for derived type variables that may cause a real
+  headache to GNU Fortran maintainers, unless they skip it. That explained, my bug fix is
+  obviously partial and perhaps solves a problem the wrong way, but I saw just few issues.
+
+  Note: When the bug fix is applied unconditionally, no finalizer or assignment operator,
+        no warning is issued in 'pr25923.f90' and the 'derived_constructor_comps_6.f90'
+        would present memory leaks. Also my bug fix would be likely fragile if a function
+        result were involved in the RHS. Further, if the variables A and B in the first
+        program of PR/88735 are declared as classes, the user defined OP isn't called. 
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
