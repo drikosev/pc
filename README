@@ -314,18 +314,21 @@ Known Issues
   the symptom is the finalization of the RHS and I can't reproduce the bug without a final
   routine, the real problem seemed to be that gfortran makes a normal assignment even for
   fields with a defined assignment operator. So, this bug fix copies recursively all the
-  fields of a structure from RHS to LHS, except those having a defined assignment operator.
+  fields of a structure from RHS to LHS except those having a defined assignment operator.
 
   The common denominator (κοινός παρονομαστής) with the PR/64290 seems to be some design
   error in the assignment implementation for derived type variables that may cause a real
   headache to GNU Fortran maintainers, unless they skip it. That explained, my bug fix is
   obviously partial and perhaps solves a problem the wrong way, but I saw just few issues.
 
-  Note: When the bug fix is applied unconditionally, no finalizer or assignment operator,
+  Note: When I test the patch without a finalizer or assignment operator as prerequisites,
         no warning is issued in 'pr25923.f90' and the 'derived_constructor_comps_6.f90'
-        would present memory leaks. Also my bug fix would be likely fragile if a function
-        result were involved in the RHS. Further, if the variables A and B in the first
-        program of PR/88735 are declared as classes, the user defined OP isn't called. 
+        presents memory leaks. Also, this patch doesn't accept a function as the RHS. It
+        could accept and run smoothly only in few cases, ie for the 'proc_ptr_48.f90'. Not
+        sure why this happens but it's one of the reasons that this patch is just partial.
+        
+  Note: If the variables A and B in the first program of PR/88735 are declared as classes, 
+        the user defined OP isn't called. Also not sure if this is the correct behaviour.
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
