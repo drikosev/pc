@@ -326,7 +326,8 @@ Known Issues
         presents memory leaks. Also, this patch doesn't accept a function as the RHS. It
         could accept and run smoothly only in few cases, ie for the 'proc_ptr_48.f90'. Not
         sure why this happens but it's one of the reasons that this patch is just partial.
-        
+        Another reason is that the problem remains for arrays of derived type.      (todo)     
+
   Note: If the variables A and B in the first program of PR/88735 are declared as classes, 
         the user defined OP isn't called. Also not sure if this is the correct behaviour.
 
