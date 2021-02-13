@@ -85,6 +85,10 @@
      ./port test gcc4 gcc4-test-options=check-fortran RUNTESTFLAGS="dg.exp=pr87907.f90"
 
 
+     #fail: in macOS Mojave (10.14), also from the command line but not with the 'gfc' wrapper:
+     ./port test gcc4 gcc4-test-options=check-fortran RUNTESTFLAGS="dg.exp=type_to_class_5.f03"
+
+
  2. Solved Issues
  --------------
 
