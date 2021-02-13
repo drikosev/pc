@@ -46,12 +46,12 @@ source package. To see more type: "~/pc/port --help"
 Download & Setup
 ----------------
 
-Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2021-01-17.tar.bz2), the
+Once the tarball has been downloaded (ie at ~/Downloads/pc-rules-2021-02-14.tar.bz2), the
 following four commands will setup the port center:
 
 install -d ~/pc 
 cd ~/pc 
-tar -xjSf ~/Downloads/pc-rules-2021-01-17.tar.bz2 
+tar -xjSf ~/Downloads/pc-rules-2021-02-14.tar.bz2 
 ln -sf rules/port port
 
 *SHA1 pc-rules-2019-11-13.tar.bz2: 7d05037304677ccf65e6a58b794416f088800881
@@ -65,6 +65,7 @@ ln -sf rules/port port
 *SHA1 pc-rules-2020-12-06.tar.bz2: 47f1a22e7727349dc821b2198cec9cfa2185d4c6
 *SHA1 pc-rules-2020-12-25.tar.bz2: ee2f1c95d857ca9dd02a615c2890c5460b24e5c7
 *SHA1 pc-rules-2021-01-17.tar.bz2: 913126eff0226e8c21ba7bf8f8dbd73143842efc
+*SHA1 pc-rules-2021-02-14.tar.bz2: 5a5013316e3ff9184387de5cce51829c100f3f08
 
 To see ie the build instructions for gcc-4.8.5, type:
 
@@ -322,14 +323,13 @@ Known Issues
   obviously partial and perhaps solves a problem the wrong way, but I saw just few issues.
 
   Note: When I test the patch without a finalizer or assignment operator as prerequisites,
-        no warning is issued in 'pr25923.f90' and the 'derived_constructor_comps_6.f90'
-        presents memory leaks. Also, this patch doesn't accept a function as the RHS. It
-        could accept and run smoothly only in few cases, ie for the 'proc_ptr_48.f90'. Not
-        sure why this happens but it's one of the reasons that this patch is just partial.
-        Another reason is that the problem remains for arrays of derived type.      (todo)     
+        no warning is issued in 'pr25923.f90'. Also, this patch doesn't accept a function
+        as the RHS, as it would run smoothly only in few cases, ie the 'proc_ptr_48.f90'.
+        Not sure why this happens but it's one reason that this patch is partial. Another
+        reason is that it fully copies arrays of derived type objects as the assignment 
+        defined operator is ignored. Which also happens when the variables A and B in the   
+        first program of PR/88735 are declared as classes (also not sure if this is ok).
 
-  Note: If the variables A and B in the first program of PR/88735 are declared as classes, 
-        the user defined OP isn't called. Also not sure if this is the correct behaviour.
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
