@@ -330,8 +330,7 @@ Known Issues
         defined operator is ignored. Which is also ignored if the variables A and B in the   
         first program of PR/88735 were declared as classes (also not sure if this is ok).
 
-  Note: A test case with deep nested structures containing arrays of structures is likely
-        necessary.
+  Note: A test case with deep nested structures containing arrays of structures is a must.
 
 - Too many test cases of Valgrind (3.13) fail on a mac 10.12, ie 73 of the 215 "memcheck"
   tests fail. Whereas the ratio of the failures is worse when one runs all the tests:
