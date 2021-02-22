@@ -308,9 +308,12 @@ Known Issues
   detected due to multithreading, ie by OpenMP statements. This work may be abandoned as a
   somewhat risky patch, which however is also ie an interim solution for PR/93691 as well,
   or for PRs 98433, 97123, and 52774. The relevant error message is fully suppressed with
-  the option 'MallocDebugReport=none' in Mojave and 'MALLOC_CHECK_=0' in CentOS-7.6, ie:
+  the option 'MallocDebugReport=none' in Mojave and 'MALLOC_CHECK_=2' in CentOS-7.6, ie:
            $ gfc -g pr97123-00.f90 && MallocDebugReport=none ./a.out   
            $
+
+  Note: the example in PR/93691 behaves differently in macOS and Linux and the DEALLOCATE
+        statement requires the STAT argument.
 
   To avoid this patch, one may choose the previous tarball (2020-12-25 tarball).
 
