@@ -313,7 +313,7 @@ Known Issues
            $
 
   Note: the example in PR/93691 behaves differently in macOS and Linux and the DEALLOCATE
-        statement requires the STAT argument.
+        statement needs the STAT argument.
 
   To avoid this patch, one may choose the previous tarball (2020-12-25 tarball).
 
