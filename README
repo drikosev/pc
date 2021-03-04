@@ -431,6 +431,13 @@ Known Issues
   this library is patched to provide few dual APIs, useful on Mojave if DYLD_LIBRAY_PATH
   has some values. Otherwise, you may face the error "dyld: Symbol not found: _iconv".
 
+- A recurring problem when one uses the PC script are broken downloading links. If you can
+  not download a tarball, then you have to manually download from an alternative site and
+  place it in folder ~/Downloads or ~/Downloads/tars.
 
+  In most cases, the PC script lists a mirror site. In any case the tarball must have the
+  expected signature or someone has improperly touched the tarball (as they shouldn't).  
+  
+  
  ----------------------------------------------------------------------------------------
  [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
