@@ -438,6 +438,13 @@ Known Issues
   In most cases, the PC script lists a mirror site. In any case the tarball must have the
   expected signature or someone has improperly touched the tarball (as they shouldn't).  
   
+- Experimental support for Cygwin was added on March 3, 2021 for just two packages. There
+  are other known problems however, see ie https://cmplx.sourceforge.io
+  
+  Also, I've seen in another project that Libtool fails to link some executables. Likely I
+  will need some time to figure out if there are many more issues. Usually, I build my own
+  Fortran front-end in Cygwin without any important issues, but yes I've seen variations.
+
   
  ----------------------------------------------------------------------------------------
  [ The Port Center (pc) was originally hosted at http://users.otenet.gr/~drikosev/ ]
