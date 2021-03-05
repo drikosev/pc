@@ -443,7 +443,7 @@ Known Issues
   
   Also, I've seen in another project that Libtool fails to link some executables. Likely I
   will need some time to figure out if there are many more issues. Usually, I build my own
-  Fortran front-end in Cygwin without any important issues, but yes I've seen variations.
+  Fortran front-end in Cygwin without any important issues.
 
   
  ----------------------------------------------------------------------------------------
