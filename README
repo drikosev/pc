@@ -441,8 +441,8 @@ Known Issues
 - Experimental support for Cygwin was added on March 3, 2021 for just two packages. There 
   are some known problems however, see ie https://cmplx.sourceforge.io 
 
-  Shortly after, on Mar 8, another issue appeared in a c.l.f thread exhibiting numeric 
-  results produced by gfortran that steadily differ in Linux & Cygwin vs Windows & Mac OS:
+  Shortly after, on Mar 8, a posting appeared in a c.l.f thread exhibiting numeric results
+  produced by gfortran that steadily differ in Linux & Cygwin vs Windows & Mac OS:
   https://groups.google.com/g/comp.lang.fortran/c/Wkc4M-FQKdw   
 
 
