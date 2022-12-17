@@ -286,9 +286,9 @@ Known Issues
   dynamically allocated memory in such entities (maybe oversimplified).
  
   One known issue with such allocatable entities is that any pointers to them may become 
-  undefined when the runtime makes a reallocation on assignment. To my surprise also, a 
-  constructor may be finalized, as ie a function result may have to be finalized. Further,
-  the standard doesn't explain in much detail the behaviour of such entities. 
+  undefined when the runtime makes a reallocation on assignment. The correction F08/0011,
+  eliminates finalization of constructors. Yet, the standard doesn't explain in much
+  detail the behaviour of such entities. 
  
   This patch however affects only class re-allocations on intrinsic assignments, if either 
   the LHS or the RHS is polymorphic and none of them is an array, which is implemented in
